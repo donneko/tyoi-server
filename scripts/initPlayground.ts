@@ -18,14 +18,11 @@ async function getPackagePath(): Promise<string> {
     const packPath = items.filter((i) => PACK_REGEX.test(i));
     if (!packPath) throw Error("パッケージがありませんでした");
 
-    const index = await new Ask().select({
-        message: "使用するパッケージを選択してください",
-        selects: packPath,
-    });
+    const selectPack = await new Ask().select("使用するパッケージを選択してください", packPath);
 
     if (!process.stdin.isTTY) return packPath[0] as string;
-    if (!packPath[index]) throw Error("パッケージが見つかりませんでした");
-    return packPath[index];
+    if (!selectPack) throw Error("パッケージが見つかりませんでした");
+    return selectPack;
 }
 
 function getPlaygroundPath(): string {

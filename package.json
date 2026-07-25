@@ -1,13 +1,13 @@
 {
   "name": "@donneko/tyoi-server",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "scripts": {
     "test": "npm run test:use && npm run test:vitest",
     "test:vitest": "npx vitest run",
     "test:type": "npx tsc --noEmit",
     "test:templates": "npx tsc -p tsconfig.templates.json && npx tsc --ignoreConfig --noEmit --allowJs --checkJs templates/project/static-ts/public/main/assets/app.js && node --check templates/project/static-ts/public/main/assets/app.js && node --check templates/project/realtime-ts/public/main/assets/app.js",
-    "test:use--init": "npm pack && tsx ./scripts/initPlayground.ts",
-    "test:use": "npm run test:use--init && tsx ./scripts/testPlayground.ts",
+    "test:use:init": "npm pack && tsx ./scripts/initPlayground.ts",
+    "test:use": "npm run test:use:init && tsx ./scripts/testPlayground.ts",
     "test:ci": "npm run test:type && npm run test:templates && npm run check:format:check && npm run test:vitest",
     "test:nonTTY": "npm run test </dev/null",
     "check:format:write": "npx prettier . --write",
@@ -66,7 +66,7 @@
   "description": "Small local API and static file server framework built with Express and TypeScript.",
   "dependencies": {
     "@donneko/tyoi-cli": "^0.0.2",
-    "@donneko/tyoi-logger": "^0.1.0",
+    "@donneko/tyoi-logger": "^0.1.1",
     "@types/express": "^5.0.6",
     "@types/ws": "^8.18.1",
     "express": "^5.2.1",
