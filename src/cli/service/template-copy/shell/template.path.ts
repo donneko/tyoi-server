@@ -1,5 +1,5 @@
 import path from "node:path";
-import { readDirectory } from "../../../../util/read-directory.js";
+import { readDirectory } from "../../read-directory.js";
 import { Ask, Logger } from "@donneko/tyoi-logger";
 import { isValidTemplate } from "../core/is-valid-template.js";
 
@@ -23,12 +23,7 @@ export async function getTemplatePath(
         throw new Error(`コピー元のテンプレートが見つかりません: ${template}`);
     }
 
-    const index = await ask.select({
-        message: "テンプレートを選択してください",
-        selects: templateFiles,
-    });
-
-    template = templateFiles[index === -1 ? 0 : index];
+    template = await ask.select("テンプレートを選択してください", templateFiles);
 
     if (!template) {
         throw new Error(`コピー元のテンプレートが指定されていません: ${template}`);

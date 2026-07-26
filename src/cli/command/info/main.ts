@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { CmdMetaData } from "../../../types/tyoi-cli.type.js";
+import type { CmdMetaData } from "../../types/tyoi-cli.type.js";
 import { getConfigFile } from "./service/getConfigFile.js";
 import { pathToFileURL } from "node:url";
 import { Logger } from "@donneko/tyoi-logger";
@@ -40,10 +40,7 @@ function addLog(config: unknown) {
         logs.push(`${key} : ${value}`);
     }
 
-    logger.window({
-        title: "config info",
-        content: [...logs.map((l) => logger.createSystem(l))],
-    });
+    logger.window("config info", [...logs.map((l) => logger.createSystem(l))]);
 }
 
 export default async function serverCreate(data: CmdMetaData) {

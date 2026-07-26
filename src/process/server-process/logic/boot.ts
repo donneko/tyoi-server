@@ -1,5 +1,6 @@
-import { Server, type ServerOptions } from "../../../server/app/server.js";
-import type { MainMessage } from "../../../types/process.type.js";
+import { Server } from "../../../server/index.js";
+import type { ServerOptions } from "../../../server/index.js";
+import type { MainMessage } from "../../types/process.type.js";
 
 type BootMessage = Extract<MainMessage, { type: "boot" }>;
 

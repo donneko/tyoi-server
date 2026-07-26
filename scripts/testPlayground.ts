@@ -68,17 +68,13 @@ function main() {
             return `テスト回数 : ${results.length}\nOK : ${ok.length}\nERROR : ${error.length}`;
         })()
     );
-
-    logger.window({
-        title: "CLIテスト結果の結果",
-        content: [
-            summary,
-            logger.createBar(),
-            ...results.map((r) =>
-                r.ok ? logger.createSuccess(r.args.join(" ")) : logger.createError(r.args.join(" "))
-            ),
-        ],
-    });
+    logger.window("CLIテスト結果の結果", [
+        summary,
+        logger.createBar(),
+        ...results.map((r) =>
+            r.ok ? logger.createSuccess(r.args.join(" ")) : logger.createError(r.args.join(" "))
+        ),
+    ]);
 }
 
 main();

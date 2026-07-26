@@ -1,9 +1,9 @@
-import type { Server } from "../../../server/app/server.js";
-import type { ServerMessage } from "../../../types/process.type.js";
+import type { Server } from "../../../server/index.js";
+import type { ServerMessage } from "../../types/process.type.js";
 import { processSend } from "../../process-send.js";
 
 export default async function serverStart(server: Server) {
-    await server.startServer();
+    await server.start();
 
     processSend<ServerMessage>(process, {
         type: "ready",
