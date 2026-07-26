@@ -5,7 +5,7 @@ export function setupSignalStop(
     dependencies: ServerSetupSignalStopDependencies
 ) {
     if (signalShutdownHandling) {
-        process.on("SIGINT", dependencies.stop);
-        process.on("SIGTERM", dependencies.stop);
+        process.on("SIGINT", dependencies.stop.bind(dependencies));
+        process.on("SIGTERM", dependencies.stop.bind(dependencies));
     }
 }

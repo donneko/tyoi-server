@@ -18,7 +18,7 @@ export class Server<
     WebSocketNameList extends string = string,
 > {
     private serverDependencies = createServerDependencies<RequestNameList, WebSocketNameList>(
-        this.stop
+        this.stop.bind(this)
     );
 
     private httpServer: http.Server | null = null;
@@ -137,34 +137,44 @@ export class Server<
         return this.httpServer;
     }
     /** 解決済みのサーバー設定を取得します。 */
-    getConfig = this.serverDependencies.serverConfig.getConfig;
+    getConfig = this.serverDependencies.serverConfig.getConfig.bind(
+        this.serverDependencies.serverConfig
+    );
 
     /** イベントハンドラを登録します。 */
-    onEvent = this.serverDependencies.outEventBus.on;
+    onEvent = this.serverDependencies.outEventBus.on.bind(this.serverDependencies.outEventBus);
     /** 一度だけ実行するイベントハンドラを登録します。 */
-    onceEvent = this.serverDependencies.outEventBus.once;
+    onceEvent = this.serverDependencies.outEventBus.once.bind(this.serverDependencies.outEventBus);
     /** イベントハンドラを解除します。 */
-    offEvent = this.serverDependencies.outEventBus.off;
+    offEvent = this.serverDependencies.outEventBus.off.bind(this.serverDependencies.outEventBus);
     /** 指定したイベントにハンドラが登録されているかを返します。 */
-    hasEvent = this.serverDependencies.outEventBus.has;
+    hasEvent = this.serverDependencies.outEventBus.has.bind(this.serverDependencies.outEventBus);
 
     /** HTTP API ハンドラを登録します。 */
-    onAPI = this.serverDependencies.serverAPIs.on;
+    onAPI = this.serverDependencies.serverAPIs.on.bind(this.serverDependencies.serverAPIs);
     /** 一度だけ実行する HTTP API ハンドラを登録します。 */
-    onceAPI = this.serverDependencies.serverAPIs.once;
+    onceAPI = this.serverDependencies.serverAPIs.once.bind(this.serverDependencies.serverAPIs);
     /** HTTP API ハンドラを解除します。 */
-    offAPI = this.serverDependencies.serverAPIs.off;
+    offAPI = this.serverDependencies.serverAPIs.off.bind(this.serverDependencies.serverAPIs);
     /** 指定した HTTP API ハンドラが登録されているかを返します。 */
-    hasAPI = this.serverDependencies.serverAPIs.has;
+    hasAPI = this.serverDependencies.serverAPIs.has.bind(this.serverDependencies.serverAPIs);
     /** HTTP API ハンドラをリクエストなしで実行します。 */
-    emitAPI = this.serverDependencies.serverAPIs.emit;
+    emitAPI = this.serverDependencies.serverAPIs.emit.bind(this.serverDependencies.serverAPIs);
 
     /** WebSocket ハンドラを登録します。 */
-    onWebSocket = this.serverDependencies.webSocketRouter.on;
+    onWebSocket = this.serverDependencies.webSocketRouter.on.bind(
+        this.serverDependencies.webSocketRouter
+    );
     /** 一度だけ実行する WebSocket ハンドラを登録します。 */
-    onceWebSocket = this.serverDependencies.webSocketRouter.once;
+    onceWebSocket = this.serverDependencies.webSocketRouter.once.bind(
+        this.serverDependencies.webSocketRouter
+    );
     /** WebSocket ハンドラを解除します。 */
-    offWebSocket = this.serverDependencies.webSocketRouter.off;
+    offWebSocket = this.serverDependencies.webSocketRouter.off.bind(
+        this.serverDependencies.webSocketRouter
+    );
     /** 指定した WebSocket ハンドラが登録されているかを返します。 */
-    hasWebSocket = this.serverDependencies.webSocketRouter.has;
+    hasWebSocket = this.serverDependencies.webSocketRouter.has.bind(
+        this.serverDependencies.webSocketRouter
+    );
 }

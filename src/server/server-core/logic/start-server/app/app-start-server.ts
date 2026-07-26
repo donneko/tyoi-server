@@ -22,9 +22,9 @@ export async function startServer(
         );
 
         // config の port 実際の httpServer のに書き換える。
-        updatePort(serverConfig.port, httpServer, dependencies);
+        updatePort(serverConfig, httpServer, dependencies);
 
-        serverPostStartup(serverConfig, dependencies);
+        await serverPostStartup(serverConfig, dependencies);
 
         return httpServer;
     } catch (error) {
