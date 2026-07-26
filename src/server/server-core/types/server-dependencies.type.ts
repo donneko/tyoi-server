@@ -23,7 +23,8 @@ export type ServerStartServerDependencies = ServerCreateServerConfigDependencies
     ServerCreateHttpServerDependencies &
     ServerUpdatePortDependencies &
     ServerStartCatchErrorDependencies &
-    ServerPostStartupDependencies;
+    ServerPostStartupDependencies &
+    ServerSignalStopDependencies;
 
 export type ServerCreateServerConfigDependencies = {
     serverConfig: configManager;
@@ -52,6 +53,10 @@ export type ServerStartSummaryDependencies = {
     serverLogger: ServerLogger;
 };
 
+export type ServerSignalStopDependencies = {
+    stop: (dependencies: ServerStopServerDependencies) => Promise<void>;
+};
+
 export type ServerOpenBrowserDependencies = {
     serverLogger: ServerLogger;
     systemMetaManager: SystemMetaManager;
@@ -63,10 +68,12 @@ export type ServerStartCatchErrorDependencies = {
     innerEventBus: EventBus<InnerEventBusMap>;
 };
 
-export type ServerStopServerDependencies = {
+export type ServerStopServerDependencies<WebSocketNameList extends string = string> = {
     serverLogger: ServerLogger;
     systemMetaManager: SystemMetaManager;
-} & ServerCreateFinishDependencies;
+    webSocketRouter: WebSocketRouter<WebSocketNameList>;
+} & ServerCreateFinishDependencies &
+    ServerSignalStopDependencies;
 
 export type ServerCreateFinishDependencies = {
     serverLogger: ServerLogger;
@@ -104,17 +111,11 @@ export type ServerSetupStaticFileDependencies = {
 };
 
 export type ServerSetupServerDependencies = ServerSetupPublicPathDependencies &
-    ServerCreateConfigDependencies &
-    ServerSetupSignalStopDependencies;
-
+    ServerCreateConfigDependencies;
 export type ServerSetupPublicPathDependencies = {
     serverRegister: RegisterManager;
 };
 
 export type ServerCreateConfigDependencies = {
     serverConfig: configManager;
-};
-
-export type ServerSetupSignalStopDependencies = {
-    stop: (dependencies: ServerStopServerDependencies) => Promise<void>;
 };

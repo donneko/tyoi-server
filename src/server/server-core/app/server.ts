@@ -87,9 +87,9 @@ export class Server<
 
         this.isStarting = true;
 
-        const httpServer = await startServer(options, deps).finally(
-            () => (this.isStarting = false)
-        );
+        const httpServer = await startServer(options, deps).finally(() => {
+            this.isStarting = false;
+        });
 
         this.httpServer = httpServer;
 

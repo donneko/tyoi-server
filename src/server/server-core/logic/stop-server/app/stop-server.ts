@@ -1,6 +1,7 @@
 import type http from "node:http";
 import type { ServerStopServerDependencies } from "../../../types/server-dependencies.type.js";
 import { createFinish } from "../service/create-finish.js";
+import { offSignalStop } from "../service/off-signal-stop.js";
 
 export async function stopServer(
     httpServer: http.Server,
@@ -16,7 +17,9 @@ export async function stopServer(
         const finishObj = createFinish(httpServer, resolve, dependencies);
 
         serverLogger.logger("process", getMessage(104));
+        offSignalStop(dependencies);
 
+        dependencies.webSocketRouter.close();
         httpServer.close((error) => {
             // ログが二重に出力されないようにするために、必要
             if (finishObj.settled) return;

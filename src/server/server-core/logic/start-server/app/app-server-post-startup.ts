@@ -10,6 +10,10 @@ export async function serverPostStartup(
     // スタートログ
     serverSummary(config, dependencies);
 
-    // ブラウザオープン
-    await openBrowser({ ...config, target: config.openBrowser }, dependencies);
+    try {
+        // ブラウザオープン
+        await openBrowser({ ...config, target: config.openBrowser }, dependencies);
+    } catch {
+        dependencies.serverLogger.logger("warn", "ブラウザを開けませんでした");
+    }
 }

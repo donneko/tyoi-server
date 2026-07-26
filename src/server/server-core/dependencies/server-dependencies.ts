@@ -30,6 +30,8 @@ export function createServerDependencies<
         outEventBus,
         expressServer: express(),
         serverAPIs: new ApiRegistry<RequestEventMap<RequestNameList>>(),
-        stop,
+        stop: async (deps: ServerStopServerDependencies) => {
+            await stop(deps);
+        },
     };
 }

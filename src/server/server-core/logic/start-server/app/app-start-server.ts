@@ -6,6 +6,7 @@ import { createHttpServer } from "./app-create-http-server.js";
 import { updatePort } from "../service/update-port.js";
 import { serverPostStartup } from "./app-server-post-startup.js";
 import { startCatchError } from "../service/start-catch-error.js";
+import { setupSignalStop } from "../service/setup-signal-stop.js";
 
 export async function startServer(
     options: ServerStartOptions = {},
@@ -20,6 +21,8 @@ export async function startServer(
             serverConfig.host,
             dependencies
         );
+
+        setupSignalStop(serverConfig.signalShutdownHandling, dependencies);
 
         // config の port 実際の httpServer のに書き換える。
         updatePort(serverConfig, httpServer, dependencies);

@@ -1,8 +1,8 @@
-import type { ServerSetupSignalStopDependencies } from "../../../types/server-dependencies.type.js";
+import type { ServerSignalStopDependencies } from "../../../types/server-dependencies.type.js";
 
 export function setupSignalStop(
     signalShutdownHandling: boolean,
-    dependencies: ServerSetupSignalStopDependencies
+    dependencies: ServerSignalStopDependencies
 ) {
     if (signalShutdownHandling) {
         process.on("SIGINT", dependencies.stop.bind(dependencies));

@@ -6,12 +6,12 @@ import type { WsHandler } from "../types/server.type.js";
 
 export class WebSocketRouter<typeMAP extends string> {
     private webSocketRegistry = new ApiRegistry<Record<typeMAP, WsHandler>>();
-
+    private webSocket: WebSocketServer | null = null;
     start(server: Server) {
-        const wss = new WebSocketServer({
+        const ws = new WebSocketServer({
             noServer: true,
         });
-
+        this.webSocket = ws;
         server.on("upgrade", (req, socket, head) => {
             const url = new URL(req.url ?? "/", `http://${req.headers.host}`);
             const pathname = url.pathname;
@@ -21,10 +21,45 @@ export class WebSocketRouter<typeMAP extends string> {
                 return;
             }
 
-            wss.handleUpgrade(req, socket as Duplex, head, (ws) => {
+            ws.handleUpgrade(req, socket as Duplex, head, (ws) => {
                 this.webSocketRegistry.emit(pathname, { ws, req });
             });
         });
+    }
+    async close() {
+        const webSocketServer = this.webSocket;
+
+        if (!webSocketServer) {
+            return;
+        }
+
+        for (const client of webSocketServer.clients) {
+            client.close(1001, "Server shutting down");
+        }
+
+        const forceCloseTimer = setTimeout(() => {
+            for (const client of webSocketServer.clients) {
+                if (client.readyState !== WebSocket.CLOSED) {
+                    client.terminate();
+                }
+            }
+        }, 3_000);
+
+        try {
+            await new Promise<void>((resolve, reject) => {
+                webSocketServer.close((error) => {
+                    if (error) {
+                        reject(error);
+                        return;
+                    }
+
+                    resolve();
+                });
+            });
+        } finally {
+            clearTimeout(forceCloseTimer);
+            this.webSocket = null;
+        }
     }
 
     // WebSocket登録
