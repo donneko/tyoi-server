@@ -1,5 +1,5 @@
 import { expect, describe, test, vi } from "vitest";
-import { ApiRegistry } from "../../../src/util/api-registry.js";
+import { ApiRegistry } from "./api-registry.js";
 
 describe("ApiRegistry", () => {
     const apiRegistry = new ApiRegistry();

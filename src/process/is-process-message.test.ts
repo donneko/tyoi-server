@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { isProcessMessage } from "../../../src/process/is-process-message.js";
-import type { ServerMessage } from "../../../src/types/process.type.js";
+import { isProcessMessage } from "./is-process-message.js";
+import type { ServerMessage } from "./types/process.type.js";
 
 describe("isProcessMessage", () => {
     const messageTypes = ["ready", "error", "stopped"];

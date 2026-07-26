@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { copyFolder } from "../../../src/cli/service/template-copy/shell/copy-folder.js";
+import { copyFolder } from "./copy-folder.js";
 
 const temporaryDirectories: string[] = [];
 

@@ -1,6 +1,6 @@
 import type { ChildProcess } from "node:child_process";
 import { describe, expect, it, vi } from "vitest";
-import { processSend } from "../../../src/process/process-send.js";
+import { processSend } from "./process-send.js";
 
 type ProcessSender = Pick<ChildProcess, "connected" | "send">;
 

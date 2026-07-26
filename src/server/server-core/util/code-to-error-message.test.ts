@@ -1,5 +1,5 @@
 import { expect, describe, test } from "vitest";
-import { CodeToMetaManager } from "../../../src/util/code-to-error-message.js";
+import { CodeToMetaManager } from "./code-to-error-message.js";
 
 describe("CodeToMetaManager", () => {
     const TEST_DATA = [

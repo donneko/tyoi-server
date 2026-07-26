@@ -1,5 +1,5 @@
 import { expect, describe, test } from "vitest";
-import { getLanIp } from "../../../src/util/get-lan-ip";
+import { getLanIp } from "./get-lan-ip.js";
 
 describe("getLanIp", () => {
     test("", () => {
