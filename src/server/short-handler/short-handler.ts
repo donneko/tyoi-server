@@ -1,7 +1,7 @@
 import { Server } from "../server-core/index.js";
-import http from "node:http";
+import type http from "node:http";
 import type {
-    ServerStartUseConfig,
+    ServerStartOptions,
     ServerOptions,
     ApiRegistryHandler,
     WsHandler,
@@ -40,11 +40,11 @@ export class ShortHandler {
         return this;
     }
     /** `start()` の別名です。 */
-    async listen(options?: ServerStartUseConfig): Promise<http.Server | undefined> {
+    async listen(options?: ServerStartOptions): Promise<http.Server | undefined> {
         return this.start(options);
     }
     /** サーバーを起動します。 */
-    async start(options?: ServerStartUseConfig): Promise<http.Server | undefined> {
+    async start(options?: ServerStartOptions): Promise<http.Server | undefined> {
         return this.tyoiServer.start(options);
     }
     /** サーバーを停止し、接続の終了を待機します。 */

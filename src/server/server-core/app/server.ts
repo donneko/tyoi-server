@@ -3,7 +3,7 @@ import type {
     ServerStartServerDependencies,
     ServerStopDependencies,
 } from "../types/server-dependencies.type.js";
-import type { ServerStartUseConfig, ServerOptions } from "../types/server.type.js";
+import type { ServerStartOptions, ServerOptions } from "../types/server.type.js";
 import { createServerDependencies } from "../dependencies/server-dependencies.js";
 import { isServerStop, stopServer } from "../logic/stop-server/index.js";
 import { setupExpress } from "../logic/setup-express/index.js";
@@ -78,7 +78,7 @@ export class Server<
      * ```
      */
     async start(
-        options?: ServerStartUseConfig,
+        options?: ServerStartOptions,
         dependencies: Partial<ServerStartServerDependencies> = {}
     ): Promise<http.Server | undefined> {
         const deps = {
