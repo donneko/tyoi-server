@@ -14,12 +14,10 @@ export type ServerDependencies = {
     innerEventBus: EventBus<InnerEventBusMap>;
     outEventBus: EventBus<OutEventBusMap>;
     serverLogger: ServerLogger;
-} & ServerStartDependencies &
-    ServerStopDependencies &
+} & ServerStartServerDependencies &
+    ServerStopServerDependencies &
     ServerSetupExpressDependencies &
     ServerSetupServerDependencies;
-
-export type ServerStartDependencies = ServerStartServerDependencies;
 
 export type ServerStartServerDependencies = ServerCreateServerConfigDependencies &
     ServerCreateHttpServerDependencies &
@@ -64,7 +62,6 @@ export type ServerStartCatchErrorDependencies = {
     systemMetaManager: SystemMetaManager;
     innerEventBus: EventBus<InnerEventBusMap>;
 };
-export type ServerStopDependencies = ServerStopServerDependencies;
 
 export type ServerStopServerDependencies = {
     serverLogger: ServerLogger;

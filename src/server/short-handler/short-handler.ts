@@ -47,6 +47,10 @@ export class ShortHandler {
     async start(options?: ServerStartOptions): Promise<http.Server | undefined> {
         return this.tyoiServer.start(options);
     }
+    /** `close()` の別名です。 */
+    async stop(): Promise<void> {
+        return this.close();
+    }
     /** サーバーを停止し、接続の終了を待機します。 */
     async close(): Promise<void> {
         return this.tyoiServer.stop();

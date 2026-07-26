@@ -1,8 +1,4 @@
 import type http from "node:http";
-import type {
-    ServerStartServerDependencies,
-    ServerStopDependencies,
-} from "../types/server-dependencies.type.js";
 import type { ServerStartOptions, ServerOptions } from "../types/server.type.js";
 import { createServerDependencies } from "../dependencies/server-dependencies.js";
 import { isServerStop, stopServer } from "../logic/stop-server/index.js";
@@ -59,6 +55,10 @@ export class Server<
         setupExpress(this.serverDependencies);
     }
 
+    /** `start()` の別名です。 */
+    async listen(options?: ServerStartOptions): Promise<http.Server | undefined> {
+        return this.start(options);
+    }
     private isStarting: boolean = false;
     /**
      * HTTP サーバーを起動します。
@@ -77,14 +77,8 @@ export class Server<
      * });
      * ```
      */
-    async start(
-        options?: ServerStartOptions,
-        dependencies: Partial<ServerStartServerDependencies> = {}
-    ): Promise<http.Server | undefined> {
-        const deps = {
-            ...dependencies,
-            ...this.serverDependencies,
-        };
+    async start(options?: ServerStartOptions): Promise<http.Server | undefined> {
+        const deps = this.serverDependencies;
 
         if (!isServerStart(this.httpServer, this.isStarting)) {
             deps.serverLogger.logger("warn", deps.systemMetaManager.getMeta(102).message);
@@ -102,6 +96,11 @@ export class Server<
         return httpServer;
     }
 
+    /** `stop()` の別名です。 */
+    async close(): Promise<void> {
+        return this.stop();
+    }
+
     private isStopping: boolean = false;
     /**
      * HTTP サーバーを停止し、既存の接続を終了します。
@@ -112,11 +111,8 @@ export class Server<
      * @returns 停止完了時に解決する Promise。
      * @throws HTTP サーバーの停止に失敗した場合。
      */
-    async stop(dependencies: Partial<ServerStopDependencies> = {}): Promise<void> {
-        const deps = {
-            ...dependencies,
-            ...this.serverDependencies,
-        };
+    async stop(): Promise<void> {
+        const deps = this.serverDependencies;
 
         if (!isServerStop(this.httpServer, this.isStopping)) return;
 
