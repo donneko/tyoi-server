@@ -3,7 +3,7 @@ import { spawnSync } from "node:child_process";
 import { undoPlayground } from "./undoPlayground.js";
 import { Logger } from "@donneko/tyoi-logger";
 
-const PLAYGROUND_PASS = "../test/playground";
+const PLAYGROUND_PASS = "../playground";
 
 function getPlaygroundPath(): string {
     const dirname = import.meta.dirname;

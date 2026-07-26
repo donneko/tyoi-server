@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { spawnSync } from "node:child_process";
 import { Ask } from "@donneko/tyoi-logger";
 
-const PLAYGROUND_PASS = "../test/playground";
+const PLAYGROUND_PASS = "../playground";
 const PACK_PASS = "../";
 const TEMPLATE_PASS = "./template/package.json";
 
