@@ -1,7 +1,7 @@
 import readline from "node:readline/promises";
 
 // TODO 後で、tyoi-logger に統合
-export async function AskPermission(message: string): Promise<boolean> {
+export async function askPermission(message: string): Promise<boolean> {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,

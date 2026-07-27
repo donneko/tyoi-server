@@ -1,5 +1,4 @@
 export * from "./types/server-config.type.js";
-export * from "./types/server-dependencies.type.js";
 export * from "./types/server-event.type.js";
 export * from "./types/server.type.js";
 export { Server } from "./app/server.js";

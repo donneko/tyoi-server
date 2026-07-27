@@ -2,8 +2,34 @@
 
 ## [Unreleased]
 
-## [0.0.7] - 2026-07-13
+## [0.0.8] - 2026-07-27
+
 ### Added
+
+- `static-ts`、`api-ts`、`realtime-ts` の用途別プロジェクトテンプレートを追加
+- サーバー起動、停止、Express セットアップのユニットテストを追加
+- 実際に生成した npm パッケージを使い、CLI 起動と HTTP 応答を確認する E2E テストを追加
+
+### Changed
+
+- サーバーのコンテキスト、依存関係、起動・停止処理を責務ごとに分離
+- CLI の親プロセスが、サーバープロセスの停止または異常終了まで監視するよう変更
+- WebSocket ハンドラ失敗時に接続をステータスコード `1011` で終了するよう変更
+- 公開 API のドキュメントを `start()` / `stop()` に統一
+
+### Fixed
+
+- `SIGINT` / `SIGTERM` の停止ハンドラが実際のプロセスへ登録・解除されない問題を修正
+- WebSocket の停止に失敗すると HTTP サーバーが稼働したまま参照を失う問題を修正
+- WebSocket ハンドラとログイベントハンドラの例外が未処理 Promise 拒否になる問題を修正
+- QR コード生成関数のコンテキストが失われ、LAN 公開時のサマリー生成に失敗する問題を修正
+- 起動後のサーバープロセスエラーが CLI へ伝播しない問題を修正
+- CLI E2E がタイムアウトやパッケージ未検出を成功として扱う問題を修正
+
+## [0.0.7] - 2026-07-13
+
+### Added
+
 - `tyoi run` / `tyoi dev` のサーバー起動をメインプロセスとサーバープロセスに分離
 - サーバープロセス用の IPC メッセージ、起動、終了処理を追加
 - `ShortHandler.listen()` を追加
@@ -125,7 +151,8 @@
 - 使用中ポートの自動切り替え対応
 - Express middleware　対応
 
-[Unreleased]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.7...HEAD
+[Unreleased]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.8...HEAD
+[0.0.8]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.4...v0.0.5

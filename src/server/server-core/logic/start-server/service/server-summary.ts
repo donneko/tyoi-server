@@ -1,17 +1,24 @@
-import qrcode from "qrcode-terminal";
-import type { ServerStartSummaryDependencies } from "../../../types/server-dependencies.type.js";
+import type { ServerSummaryDependencies } from "../../../types/dependencies/start-server/server-post-startup.type.js";
+import type { ServerSummaryContext } from "../../../types/context/start-server/start-server.type.js";
+import { defaultServerSummaryDependencies } from "../dependencies/server-post-startup.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
 import type { ServerStartSummaryArgs } from "../../../types/server.type.js";
-import { createNetworkData } from "./create-network-data.js";
 
 export function serverSummary(
-    summaryData: ServerStartSummaryArgs,
-    dependencies: ServerStartSummaryDependencies
+    args: ServerStartSummaryArgs,
+    context: ServerSummaryContext,
+    dependencies: Partial<ServerSummaryDependencies> = {}
 ): void {
-    const { host, port, publicPath, publicFullPath, apiPrefix, showQrCode } = summaryData;
-    const { networkUrl, isLAN } = createNetworkData(port, host);
+    const deps = createDependencies<ServerSummaryDependencies>(
+        defaultServerSummaryDependencies,
+        dependencies
+    );
 
-    const serverLogger = dependencies.serverLogger;
-    const systemMetaManager = dependencies.systemMetaManager;
+    const { host, port, publicPath, publicFullPath, apiPrefix, showQrCode } = args;
+    const { networkUrl, isLAN } = deps.createNetworkData(port, host);
+
+    const serverLogger = context.serverLogger;
+    const systemMetaManager = context.systemMetaManager;
     const getMessage = (code: Parameters<typeof systemMetaManager.getMeta>[0]) =>
         systemMetaManager.getMeta(code).message;
 
@@ -34,7 +41,7 @@ export function serverSummary(
                 "createInfo",
                 (() => {
                     let qrString = "";
-                    qrcode.generate(networkUrl, { small: true }, (qr) => {
+                    deps.qrcodeGenerate(networkUrl, { small: true }, (qr) => {
                         qrString = qr;
                     });
                     return qrString;

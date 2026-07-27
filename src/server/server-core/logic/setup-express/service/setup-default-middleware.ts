@@ -1,6 +1,6 @@
-import type { ServerSetupMiddlewareDependencies } from "../../../types/server-dependencies.type.js";
+import type { SetupDefaultMiddlewareContext } from "../../../types/context/setup-express/stop-express.type.js";
 import express from "express";
 
-export function setupDefaultMiddleware(dependencies: ServerSetupMiddlewareDependencies) {
-    dependencies.expressServer.use(express.json());
+export function setupDefaultMiddleware(context: SetupDefaultMiddlewareContext) {
+    context.expressServer.use(express.json());
 }

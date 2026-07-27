@@ -1,6 +1,6 @@
 import type http from "node:http";
 import type { ServerStartOptions, ServerOptions } from "../types/server.type.js";
-import { createServerDependencies } from "../dependencies/server-dependencies.js";
+import { createServerContext } from "../context/create-server-context.js";
 import { isServerStop, stopServer } from "../logic/stop-server/index.js";
 import { setupExpress } from "../logic/setup-express/index.js";
 import { setupServer } from "../logic/setup-server/index.js";
@@ -17,8 +17,8 @@ export class Server<
     RequestNameList extends string = string,
     WebSocketNameList extends string = string,
 > {
-    private serverDependencies = createServerDependencies<RequestNameList, WebSocketNameList>(
-        this.stop
+    private serverContext = createServerContext<RequestNameList, WebSocketNameList>(
+        this.stop.bind(this)
     );
 
     private httpServer: http.Server | null = null;
@@ -26,7 +26,7 @@ export class Server<
     /**
      * サーバーを作成し、ルーティングと静的ファイル配信を初期化します。
      *
-     * `baseDirname` は必須です。起動は `startServer()` で明示的に行います。
+     * `baseDirname` は必須です。起動は `start()` で明示的に行います。
      *
      * @param options サーバー設定。
      * @example
@@ -44,15 +44,15 @@ export class Server<
      *  server.onAPI("GET:/test", (data) => {
      *      return data;
      *  });
-     *  await server.startServer();
+     *  await server.start();
      */
     constructor(options?: ServerOptions) {
         if (options) {
-            this.serverDependencies.serverConfig.updateConfig(removeUndefined(options));
+            this.serverContext.serverConfig.updateConfig(removeUndefined(options));
         }
 
-        setupServer(this.serverDependencies);
-        setupExpress(this.serverDependencies);
+        setupServer(this.serverContext);
+        setupExpress(this.serverContext);
     }
 
     /** `start()` の別名です。 */
@@ -71,25 +71,25 @@ export class Server<
      * @throws ポートの確保や HTTP サーバーの起動に失敗した場合。
      * @example
      * ```ts
-     * await server.startServer({
+     * await server.start({
      *   port: 3000,
      *   showQrCode: false,
      * });
      * ```
      */
     async start(options?: ServerStartOptions): Promise<http.Server | undefined> {
-        const deps = this.serverDependencies;
+        const context = this.serverContext;
 
         if (!isServerStart(this.httpServer, this.isStarting)) {
-            deps.serverLogger.logger("warn", deps.systemMetaManager.getMeta(102).message);
+            context.serverLogger.logger("warn", context.systemMetaManager.getMeta(102).message);
             return;
         }
 
         this.isStarting = true;
 
-        const httpServer = await startServer(options, deps).finally(
-            () => (this.isStarting = false)
-        );
+        const httpServer = await startServer(options, context).finally(() => {
+            this.isStarting = false;
+        });
 
         this.httpServer = httpServer;
 
@@ -112,14 +112,17 @@ export class Server<
      * @throws HTTP サーバーの停止に失敗した場合。
      */
     async stop(): Promise<void> {
-        const deps = this.serverDependencies;
+        const context = this.serverContext;
 
         if (!isServerStop(this.httpServer, this.isStopping)) return;
 
         this.isStopping = true;
 
-        await stopServer(this.httpServer, deps).finally(() => {
-            this.httpServer = null;
+        const httpServer = this.httpServer;
+        await stopServer(httpServer, context).finally(() => {
+            if (!httpServer.listening) {
+                this.httpServer = null;
+            }
             this.isStopping = false;
         });
     }
@@ -130,41 +133,43 @@ export class Server<
     }
     /** 現在設定されているポート番号を返します。 */
     getPort(): number {
-        return this.serverDependencies.serverConfig.getConfig("port");
+        return this.serverContext.serverConfig.getConfig("port");
     }
     /** 基盤となる Node.js の HTTP サーバーを取得します。 */
     getHttpServer(): http.Server | null {
         return this.httpServer;
     }
     /** 解決済みのサーバー設定を取得します。 */
-    getConfig = this.serverDependencies.serverConfig.getConfig;
+    getConfig = this.serverContext.serverConfig.getConfig.bind(this.serverContext.serverConfig);
 
     /** イベントハンドラを登録します。 */
-    onEvent = this.serverDependencies.outEventBus.on;
+    onEvent = this.serverContext.outEventBus.on.bind(this.serverContext.outEventBus);
     /** 一度だけ実行するイベントハンドラを登録します。 */
-    onceEvent = this.serverDependencies.outEventBus.once;
+    onceEvent = this.serverContext.outEventBus.once.bind(this.serverContext.outEventBus);
     /** イベントハンドラを解除します。 */
-    offEvent = this.serverDependencies.outEventBus.off;
+    offEvent = this.serverContext.outEventBus.off.bind(this.serverContext.outEventBus);
     /** 指定したイベントにハンドラが登録されているかを返します。 */
-    hasEvent = this.serverDependencies.outEventBus.has;
+    hasEvent = this.serverContext.outEventBus.has.bind(this.serverContext.outEventBus);
 
     /** HTTP API ハンドラを登録します。 */
-    onAPI = this.serverDependencies.serverAPIs.on;
+    onAPI = this.serverContext.serverAPIs.on.bind(this.serverContext.serverAPIs);
     /** 一度だけ実行する HTTP API ハンドラを登録します。 */
-    onceAPI = this.serverDependencies.serverAPIs.once;
+    onceAPI = this.serverContext.serverAPIs.once.bind(this.serverContext.serverAPIs);
     /** HTTP API ハンドラを解除します。 */
-    offAPI = this.serverDependencies.serverAPIs.off;
+    offAPI = this.serverContext.serverAPIs.off.bind(this.serverContext.serverAPIs);
     /** 指定した HTTP API ハンドラが登録されているかを返します。 */
-    hasAPI = this.serverDependencies.serverAPIs.has;
+    hasAPI = this.serverContext.serverAPIs.has.bind(this.serverContext.serverAPIs);
     /** HTTP API ハンドラをリクエストなしで実行します。 */
-    emitAPI = this.serverDependencies.serverAPIs.emit;
+    emitAPI = this.serverContext.serverAPIs.emit.bind(this.serverContext.serverAPIs);
 
     /** WebSocket ハンドラを登録します。 */
-    onWebSocket = this.serverDependencies.webSocketRouter.on;
+    onWebSocket = this.serverContext.webSocketRouter.on.bind(this.serverContext.webSocketRouter);
     /** 一度だけ実行する WebSocket ハンドラを登録します。 */
-    onceWebSocket = this.serverDependencies.webSocketRouter.once;
+    onceWebSocket = this.serverContext.webSocketRouter.once.bind(
+        this.serverContext.webSocketRouter
+    );
     /** WebSocket ハンドラを解除します。 */
-    offWebSocket = this.serverDependencies.webSocketRouter.off;
+    offWebSocket = this.serverContext.webSocketRouter.off.bind(this.serverContext.webSocketRouter);
     /** 指定した WebSocket ハンドラが登録されているかを返します。 */
-    hasWebSocket = this.serverDependencies.webSocketRouter.has;
+    hasWebSocket = this.serverContext.webSocketRouter.has.bind(this.serverContext.webSocketRouter);
 }

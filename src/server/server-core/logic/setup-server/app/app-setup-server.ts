@@ -1,11 +1,19 @@
-import { setupPublicPath } from "../service/setup-public-path.js";
-import { createServerConfig } from "../service/create-server-config.js";
-import { setupSignalStop } from "../service/setup-signal-stop.js";
-import type { ServerSetupServerDependencies } from "../../../types/server-dependencies.type.js";
+import type { SetupServerDependencies } from "../../../types/dependencies/setup-server/setup-server.type.js";
+import type { ServerSetupContext } from "../../../types/context/setup-server/setup-server.type.js";
 
-export function setupServer(dependencies: ServerSetupServerDependencies) {
-    const serverConfig = createServerConfig(dependencies);
+import { defaultSetupServerDependencies } from "../dependencies/setup-server.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
-    setupPublicPath(serverConfig.baseDirname, serverConfig.publicDirname, dependencies);
-    setupSignalStop(serverConfig.signalShutdownHandling, dependencies);
+export function setupServer(
+    context: ServerSetupContext,
+    dependencies: Partial<SetupServerDependencies> = {}
+) {
+    const deps = createDependencies<SetupServerDependencies>(
+        defaultSetupServerDependencies,
+        dependencies
+    );
+
+    const serverConfig = deps.createServerConfig(context);
+
+    deps.setupPublicPath(serverConfig.baseDirname, serverConfig.publicDirname, context);
 }

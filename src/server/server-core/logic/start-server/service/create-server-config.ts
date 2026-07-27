@@ -1,34 +1,44 @@
 import type { ServerStartOptions, ServerStartUseConfig } from "../../../types/server.type.js";
-import type { ServerCreateServerConfigDependencies } from "../../../types/server-dependencies.type.js";
-import { findAvailablePort } from "./find-available-port.js";
+import type { CreateServerConfigDependencies } from "../../../types/dependencies/start-server/create-server-config.type.js";
+import type { CreateServerConfigContext } from "../../../types/context/start-server/start-server.type.js";
+import { defaultCreateServerConfigDependencies } from "../dependencies/create-server-config.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export async function createServerConfig(
     options: ServerStartOptions = {},
-    dependencies: ServerCreateServerConfigDependencies
+    context: CreateServerConfigContext,
+    dependencies: Partial<CreateServerConfigDependencies> = {}
 ): Promise<ServerStartUseConfig> {
+    const deps = createDependencies<CreateServerConfigDependencies>(
+        defaultCreateServerConfigDependencies,
+        dependencies
+    );
+
     if (options) {
-        dependencies.serverConfig.updateConfig(options);
+        context.serverConfig.updateConfig(options);
     }
-    const exposeLan = dependencies.serverConfig.getConfig("exposeLan");
-    const autoPort = dependencies.serverConfig.getConfig("autoPort");
-    const showQrCode = dependencies.serverConfig.getConfig("showQrCode");
-    const publicPath = dependencies.serverConfig.getConfig("publicDirname");
-    const openBrowser = dependencies.serverConfig.getConfig("openBrowser");
-    const apiPrefix = dependencies.serverConfig.getConfig("apiPrefix");
-    const configPort = dependencies.serverConfig.getConfig("port");
-    const publicFullPath = dependencies.serverRegister.getConfig("publicDirectoryPath") ?? "";
+
+    const exposeLan = context.serverConfig.getConfig("exposeLan");
+    const autoPort = context.serverConfig.getConfig("autoPort");
+    const showQrCode = context.serverConfig.getConfig("showQrCode");
+    const publicPath = context.serverConfig.getConfig("publicDirname");
+    const openBrowser = context.serverConfig.getConfig("openBrowser");
+    const apiPrefix = context.serverConfig.getConfig("apiPrefix");
+    const configPort = context.serverConfig.getConfig("port");
+    const signalShutdownHandling = context.serverConfig.getConfig("signalShutdownHandling");
+    const publicFullPath = context.serverRegister.getConfig("publicDirectoryPath") ?? "";
 
     // ホスト設定
     const host = exposeLan ? "0.0.0.0" : "127.0.0.1";
 
     // ポート設定
-    const port = await findAvailablePort(
+    const port = await deps.findAvailablePort(
         {
             startPort: configPort,
             host,
             isAutoPort: autoPort,
         },
-        dependencies
+        context
     );
 
     return {
@@ -40,5 +50,6 @@ export async function createServerConfig(
         openBrowser,
         apiPrefix,
         host,
+        signalShutdownHandling,
     };
 }

@@ -1,33 +1,36 @@
-import { createServerConfig } from "../service/create-server-config.js";
+import type http from "node:http";
 import type { ServerStartOptions } from "../../../types/server.type.js";
-import type { ServerStartServerDependencies } from "../../../types/server-dependencies.type.js";
-import http from "node:http";
-import { createHttpServer } from "./app-create-http-server.js";
-import { updatePort } from "../service/update-port.js";
-import { serverPostStartup } from "./app-server-post-startup.js";
-import { startCatchError } from "../service/start-catch-error.js";
+import type { ServerStartDependencies } from "../../../types/dependencies/start-server/server-start.type.js";
+import type { ServerStartContext } from "../../../types/context/start-server/start-server.type.js";
+import { defaultServerStartDependencies } from "../dependencies/server-start.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export async function startServer(
     options: ServerStartOptions = {},
-    dependencies: ServerStartServerDependencies
+    context: ServerStartContext,
+    dependencies: Partial<ServerStartDependencies> = {}
 ): Promise<http.Server> {
+    const deps = createDependencies<ServerStartDependencies>(
+        defaultServerStartDependencies,
+        dependencies
+    );
+
+    let httpServer: http.Server | null = null;
     try {
-        const serverConfig = await createServerConfig(options, dependencies);
+        const serverConfig = await deps.createServerConfig(options, context);
 
         // サーバー起動処理
-        const httpServer = await createHttpServer(
-            serverConfig.port,
-            serverConfig.host,
-            dependencies
-        );
+        httpServer = await deps.createHttpServer(serverConfig.port, serverConfig.host, context);
+
+        deps.setupSignalStop(serverConfig.signalShutdownHandling, context);
 
         // config の port 実際の httpServer のに書き換える。
-        updatePort(serverConfig.port, httpServer, dependencies);
+        deps.updatePort(serverConfig, httpServer, context);
 
-        serverPostStartup(serverConfig, dependencies);
+        await deps.serverPostStartup(serverConfig, context);
 
         return httpServer;
     } catch (error) {
-        startCatchError(error, dependencies);
+        return deps.startCatchError(error, httpServer, context);
     }
 }

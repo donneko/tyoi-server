@@ -1,12 +1,12 @@
-import type { ServerCreateConfigDependencies } from "../../../types/server-dependencies.type.js";
+import type { CreateServerConfigContext } from "../../../types/context/setup-server/setup-server.type.js";
 import type { ServerCreateServerConfigReturn } from "../../../types/server.type.js";
 
 export function createServerConfig(
-    dependencies: ServerCreateConfigDependencies
+    context: CreateServerConfigContext
 ): ServerCreateServerConfigReturn {
-    const baseDirname = dependencies.serverConfig.getConfig("baseDirname");
-    const publicDirname = dependencies.serverConfig.getConfig("publicDirname");
-    const signalShutdownHandling = dependencies.serverConfig.getConfig("signalShutdownHandling");
+    const baseDirname = context.serverConfig.getConfig("baseDirname");
+    const publicDirname = context.serverConfig.getConfig("publicDirname");
+    const signalShutdownHandling = context.serverConfig.getConfig("signalShutdownHandling");
 
     if (!baseDirname) throw new Error("baseDirname is required");
 

@@ -6,7 +6,5 @@ export async function getConfigFile(processCwd: string): Promise<string | undefi
 
     if (files.length === 0) return;
 
-    if (files.length > 1) {
-        return await new Ask().select("使用する設定ファイルを選択してください。", files);
-    }
+    return await new Ask().select("使用する設定ファイルを選択してください。", files);
 }

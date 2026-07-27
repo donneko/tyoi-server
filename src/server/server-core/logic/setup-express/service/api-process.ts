@@ -1,15 +1,15 @@
-import type { ServerApiProcessDependencies } from "../../../types/server-dependencies.type.js";
+import type { ApiProcessContext } from "../../../types/context/setup-express/stop-express.type.js";
 import type express from "express";
 
 export async function apiProcess(
     req: express.Request,
     res: express.Response,
-    dependencies: ServerApiProcessDependencies
+    context: ApiProcessContext
 ) {
     try {
         const key = `${req.method}:${req.path}`;
 
-        if (!dependencies.serverAPIs.has(key)) {
+        if (!context.serverAPIs.has(key)) {
             res.status(404).json({
                 ok: false,
                 code: "API_NOT_FOUND",
@@ -18,7 +18,7 @@ export async function apiProcess(
             return;
         }
 
-        const result = await dependencies.serverAPIs.emit(key, {
+        const result = await context.serverAPIs.emit(key, {
             query: req.query,
             body: req.body,
             headers: req.headers,

@@ -43,6 +43,7 @@ export type ServerStartUseConfig = {
     openBrowser: ServerOpenBrowserTarget;
     apiPrefix: string;
     host: "0.0.0.0" | "127.0.0.1";
+    signalShutdownHandling: boolean;
 };
 
 export type ServerStartFindPortArgs = {
