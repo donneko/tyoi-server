@@ -2,6 +2,7 @@ import { AskPermission } from "../util/ask-permission.js";
 import { isPortUsed } from "../util/is-port-used.js";
 import type { ServerStartFindPortArgs } from "../../../types/server.type.js";
 import type { ServerAvailablePortDependencies } from "../../../types/server-dependencies.type.js";
+import { CustomError } from "../../../error/custom-error.js";
 
 export async function findAvailablePort(
     findPortArgs: ServerStartFindPortArgs,
@@ -31,8 +32,9 @@ export async function findAvailablePort(
 
         if (!pass) {
             //許可されなかったら、例外
-            throw new Error(
-                systemMetaManager.getMeta(110).message.replace("__PORT__", port.toString())
+            throw new CustomError(
+                systemMetaManager.getMeta(110).message.replace("__PORT__", port.toString()),
+                { errorName: "PORT_NOT_PERMISSION" }
             );
         }
 

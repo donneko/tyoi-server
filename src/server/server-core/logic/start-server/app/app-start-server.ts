@@ -1,7 +1,7 @@
 import { createServerConfig } from "../service/create-server-config.js";
 import type { ServerStartOptions } from "../../../types/server.type.js";
 import type { ServerStartServerDependencies } from "../../../types/server-dependencies.type.js";
-import http from "node:http";
+import type http from "node:http";
 import { createHttpServer } from "./app-create-http-server.js";
 import { updatePort } from "../service/update-port.js";
 import { serverPostStartup } from "./app-server-post-startup.js";
@@ -12,15 +12,12 @@ export async function startServer(
     options: ServerStartOptions = {},
     dependencies: ServerStartServerDependencies
 ): Promise<http.Server> {
+    let httpServer: http.Server | null = null;
     try {
         const serverConfig = await createServerConfig(options, dependencies);
 
         // サーバー起動処理
-        const httpServer = await createHttpServer(
-            serverConfig.port,
-            serverConfig.host,
-            dependencies
-        );
+        httpServer = await createHttpServer(serverConfig.port, serverConfig.host, dependencies);
 
         setupSignalStop(serverConfig.signalShutdownHandling, dependencies);
 
@@ -31,6 +28,6 @@ export async function startServer(
 
         return httpServer;
     } catch (error) {
-        startCatchError(error, dependencies);
+        return startCatchError(error, httpServer, dependencies);
     }
 }

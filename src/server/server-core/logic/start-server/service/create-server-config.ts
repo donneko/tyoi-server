@@ -16,6 +16,7 @@ export async function createServerConfig(
     const openBrowser = dependencies.serverConfig.getConfig("openBrowser");
     const apiPrefix = dependencies.serverConfig.getConfig("apiPrefix");
     const configPort = dependencies.serverConfig.getConfig("port");
+    const signalShutdownHandling = dependencies.serverConfig.getConfig("signalShutdownHandling");
     const publicFullPath = dependencies.serverRegister.getConfig("publicDirectoryPath") ?? "";
 
     // ホスト設定
@@ -40,5 +41,6 @@ export async function createServerConfig(
         openBrowser,
         apiPrefix,
         host,
+        signalShutdownHandling,
     };
 }

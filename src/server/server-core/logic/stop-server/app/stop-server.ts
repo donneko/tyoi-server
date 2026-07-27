@@ -7,6 +7,8 @@ export async function stopServer(
     httpServer: http.Server,
     dependencies: ServerStopServerDependencies
 ): Promise<void> {
+    await dependencies.webSocketRouter.close();
+
     return new Promise<void>((resolve, reject) => {
         const serverLogger = dependencies.serverLogger;
         const systemMetaManager = dependencies.systemMetaManager;
@@ -19,7 +21,6 @@ export async function stopServer(
         serverLogger.logger("process", getMessage(104));
         offSignalStop(dependencies);
 
-        dependencies.webSocketRouter.close();
         httpServer.close((error) => {
             // ログが二重に出力されないようにするために、必要
             if (finishObj.settled) return;
