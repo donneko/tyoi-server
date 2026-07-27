@@ -2,7 +2,7 @@ import type { ServerStartUseConfig } from "../../../types/server.type.js";
 import type {
     ServerSummaryContext,
     ServerOpenBrowserContext,
-} from "../../context/integration/server-context.type.js";
+} from "../../context/start-server/start-server.type.js";
 import type { ServerCreateNetworkReturn } from "../../../types/server.type.js";
 import type { ServerOpenBrowserArgs } from "../../../types/server.type.js";
 

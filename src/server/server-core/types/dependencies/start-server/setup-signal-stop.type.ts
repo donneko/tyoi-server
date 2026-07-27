@@ -1,4 +1,4 @@
-import type { SetupSignalStopContext } from "../../context/integration/server-context.type.js";
+import type { SetupSignalStopContext } from "../../context/start-server/start-server.type.js";
 
 export type SetupSignalStop = (
     signalShutdownHandling: boolean,

@@ -1,7 +1,7 @@
 import type {
     CreateServerConfigContext,
     FindAvailablePortContext,
-} from "../../context/integration/server-context.type.js";
+} from "../../context/start-server/start-server.type.js";
 import type { ServerStartOptions } from "../../../types/server.type.js";
 import type { ServerStartUseConfig } from "../../../types/server.type.js";
 import type { ServerStartFindPortArgs } from "../../../types/server.type.js";

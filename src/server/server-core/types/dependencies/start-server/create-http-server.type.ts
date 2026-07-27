@@ -1,4 +1,4 @@
-import type { ServerCreateHttpServerContext } from "../../context/integration/server-context.type.js";
+import type { ServerCreateHttpServerContext } from "../../context/start-server/start-server.type.js";
 import type http from "node:http";
 
 export type ServerCreateHttpServer = (

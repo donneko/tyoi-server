@@ -1,6 +1,6 @@
 import type { OutEventBusMap, InnerEventBusMap } from "./server-event.type.js";
 import type { EventBus } from "../util/event-bus.js";
-import type { configManager } from "../service/config-manager.js";
+import type { ConfigManager } from "../service/config-manager.js";
 import type { ApiRegistry } from "../util/api-registry.js";
 import type { ServerLogger } from "../service/server-logger.js";
 import type { SystemMetaManager } from "../service/system-meta/system-meta-manager.js";
@@ -27,7 +27,7 @@ export type ServerStartServerDependencies = ServerCreateServerConfigDependencies
     ServerSignalStopDependencies;
 
 export type ServerCreateServerConfigDependencies = {
-    serverConfig: configManager;
+    serverConfig: ConfigManager;
     serverRegister: RegisterManager;
 } & ServerAvailablePortDependencies;
 
@@ -42,7 +42,7 @@ export type ServerCreateHttpServerDependencies<WebSocketNameList extends string 
 };
 
 export type ServerUpdatePortDependencies = {
-    serverConfig: configManager;
+    serverConfig: ConfigManager;
 };
 
 export type ServerPostStartupDependencies = ServerOpenBrowserDependencies &
@@ -80,7 +80,7 @@ export type ServerCreateFinishDependencies = {
     systemMetaManager: SystemMetaManager;
 };
 export type ServerSetupExpressDependencies = {
-    serverConfig: configManager;
+    serverConfig: ConfigManager;
     serverLogger: ServerLogger;
     systemMetaManager: SystemMetaManager;
 } & ServerCreateExpressConfigDependencies &
@@ -89,7 +89,7 @@ export type ServerSetupExpressDependencies = {
     ServerSetupStaticFileDependencies;
 
 export type ServerCreateExpressConfigDependencies = {
-    serverConfig: configManager;
+    serverConfig: ConfigManager;
     serverRegister: RegisterManager;
 };
 
@@ -117,5 +117,5 @@ export type ServerSetupPublicPathDependencies = {
 };
 
 export type ServerCreateConfigDependencies = {
-    serverConfig: configManager;
+    serverConfig: ConfigManager;
 };

@@ -1,4 +1,4 @@
-import type { UpdatePortContext } from "../../context/integration/server-context.type.js";
+import type { UpdatePortContext } from "../../context/start-server/start-server.type.js";
 import type { ServerStartUseConfig } from "../../../types/server.type.js";
 import type http from "node:http";
 
