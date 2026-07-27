@@ -17,7 +17,7 @@ export type SetupPublicPath = (
     baseDirname: string,
     publicDirname: string,
     context: SetupPublicPathContext,
-    dependencies: SetupPublicPathDependencies
+    dependencies?: Partial<SetupPublicPathDependencies>
 ) => void;
 
 export type SetupPublicPathDependencies = {

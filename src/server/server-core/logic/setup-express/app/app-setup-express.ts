@@ -1,22 +1,29 @@
-import { createExpressConfig } from "../service/create-express-config.js";
-import type { ServerSetupExpressDependencies } from "../../../types/server-dependencies.type.js";
-import { setupMiddleware } from "../service/setup-middleware.js";
-import { setupDefaultMiddleware } from "../service/setup-default-middleware.js";
-import { setupApiProcess } from "./app-setup-api-process.js";
-import { setupStaticFile } from "./app-setup-static.js";
+import type { SetupExpressDependencies } from "../../../types/dependencies/setup-express/setup-express.type.js";
+import type { ServerExpressContext } from "../../../types/context/setup-express/stop-express.type.js";
 
-export function setupExpress(dependencies: ServerSetupExpressDependencies) {
-    const expressConfig = createExpressConfig(dependencies);
+import { defaultSetupExpressDependencies } from "../dependencies/setup-express.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
+
+export function setupExpress(
+    context: ServerExpressContext,
+    dependencies: Partial<SetupExpressDependencies> = {}
+) {
+    const deps = createDependencies<SetupExpressDependencies>(
+        defaultSetupExpressDependencies,
+        dependencies
+    );
+
+    const expressConfig = deps.createExpressConfig(context);
 
     // ミドルウェア
-    setupMiddleware(expressConfig.middlewares, dependencies);
+    deps.setupMiddleware(expressConfig.middlewares, context);
 
     // JSONを受け取れるようにする
-    setupDefaultMiddleware(dependencies);
+    deps.setupDefaultMiddleware(context);
 
     // API
-    setupApiProcess(expressConfig.apiPrefix, dependencies);
+    deps.setupApiProcess(expressConfig.apiPrefix, context);
 
     // 静的ファイル配信
-    setupStaticFile(expressConfig.publicDirectoryPath, dependencies);
+    deps.setupStaticFile(expressConfig.publicDirectoryPath, context);
 }

@@ -1,11 +1,11 @@
-import type { ServerSetupMiddlewareDependencies } from "../../../types/server-dependencies.type.js";
+import type { SetupMiddlewareContext } from "../../../types/context/setup-express/stop-express.type.js";
 import type express from "express";
 
 export function setupMiddleware(
     middlewares: express.RequestHandler[],
-    dependencies: ServerSetupMiddlewareDependencies
+    context: SetupMiddlewareContext
 ) {
     for (const ware of middlewares) {
-        dependencies.expressServer.use(ware);
+        context.expressServer.use(ware);
     }
 }

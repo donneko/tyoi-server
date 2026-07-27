@@ -1,13 +1,13 @@
 import type http from "node:http";
-import type { ServerCreateFinishDependencies } from "../../../types/server-dependencies.type.js";
+import type { CreateFinishContext } from "../../../types/context/stop-server/stop-server.type.js";
 
 export function createFinish(
     httpServer: http.Server,
     resolve: () => void,
-    dependencies: ServerCreateFinishDependencies
+    context: CreateFinishContext
 ) {
-    const serverLogger = dependencies.serverLogger;
-    const systemMetaManager = dependencies.systemMetaManager;
+    const serverLogger = context.serverLogger;
+    const systemMetaManager = context.systemMetaManager;
     const getMessage = (code: Parameters<typeof systemMetaManager.getMeta>[0]) =>
         systemMetaManager.getMeta(code).message;
 

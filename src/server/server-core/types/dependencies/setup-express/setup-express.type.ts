@@ -12,7 +12,7 @@ import express from "express";
 export type SetupExpressDependencies = {
     createExpressConfig: CreateExpressConfig;
     setupMiddleware: SetupMiddleware;
-    setupDefaultMiddleware: SetupMiddleware;
+    setupDefaultMiddleware: SetupDefaultMiddleware;
     setupApiProcess: SetupApiProcess;
     setupStaticFile: SetupStaticFile;
 };
@@ -31,7 +31,7 @@ export type SetupDefaultMiddleware = (context: SetupDefaultMiddlewareContext) =>
 export type SetupApiProcess = (
     apiPrefix: string,
     context: SetupApiProcessContext,
-    dependencies: SetupApiProcessDependencies
+    dependencies?: Partial<SetupApiProcessDependencies>
 ) => void;
 
 export type SetupApiProcessDependencies = {

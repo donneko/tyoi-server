@@ -11,7 +11,7 @@ export type ServerStopDependencies = {
 
 export type OffSignalStop = (
     context: OffSignalStopContext,
-    dependencies: OffSignalStopDependencies
+    dependencies?: Partial<OffSignalStopDependencies>
 ) => void;
 export type OffSignalStopDependencies = {
     processOff: typeof process.off;

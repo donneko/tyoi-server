@@ -1,25 +1,32 @@
+import type { ServerStopDependencies } from "../../../types/dependencies/stop-server/stop-server.type.js";
+import type { ServerStopContext } from "../../../types/context/stop-server/stop-server.type.js";
 import type http from "node:http";
-import type { ServerStopServerDependencies } from "../../../types/server-dependencies.type.js";
-import { createFinish } from "../service/create-finish.js";
-import { offSignalStop } from "../service/off-signal-stop.js";
+import { defaultServerStopDependencies } from "../dependencies/server-stop.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export async function stopServer(
     httpServer: http.Server,
-    dependencies: ServerStopServerDependencies
+    context: ServerStopContext,
+    dependencies: Partial<ServerStopDependencies> = {}
 ): Promise<void> {
-    await dependencies.webSocketRouter.close();
+    const deps = createDependencies<ServerStopDependencies>(
+        defaultServerStopDependencies,
+        dependencies
+    );
+
+    await context.webSocketRouter.close();
 
     return new Promise<void>((resolve, reject) => {
-        const serverLogger = dependencies.serverLogger;
-        const systemMetaManager = dependencies.systemMetaManager;
+        const serverLogger = context.serverLogger;
+        const systemMetaManager = context.systemMetaManager;
         const getMessage = (code: Parameters<typeof systemMetaManager.getMeta>[0]) =>
             systemMetaManager.getMeta(code).message;
 
         // !! オブジェクトを展開しないで！！ settled の参照が切れる。
-        const finishObj = createFinish(httpServer, resolve, dependencies);
+        const finishObj = deps.createFinish(httpServer, resolve, context);
 
         serverLogger.logger("process", getMessage(104));
-        offSignalStop(dependencies);
+        deps.offSignalStop(context);
 
         httpServer.close((error) => {
             // ログが二重に出力されないようにするために、必要
