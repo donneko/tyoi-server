@@ -16,7 +16,6 @@ export function createFinish(
         finishObj.settled = true;
 
         clearTimeout(timeout);
-        resolve();
     };
 
     const timeout = setTimeout(() => {
@@ -26,6 +25,7 @@ export function createFinish(
         serverLogger.logger("warn", getMessage(105));
 
         finish();
+        resolve();
     }, 10000);
 
     // オブジェクト内に settled を定義すると timeout と finish などに共有できる

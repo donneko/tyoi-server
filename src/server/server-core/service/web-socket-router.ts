@@ -21,8 +21,8 @@ export class WebSocketRouter<typeMAP extends string> {
                 return;
             }
 
-            ws.handleUpgrade(req, socket as Duplex, head, (ws) => {
-                this.webSocketRegistry.emit(pathname, { ws, req });
+            ws.handleUpgrade(req, socket as Duplex, head, async (ws) => {
+                await this.webSocketRegistry.emit(pathname, { ws, req });
             });
         });
     }
