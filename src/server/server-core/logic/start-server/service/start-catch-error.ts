@@ -1,15 +1,15 @@
-import type { ServerStartCatchErrorDependencies } from "../../../types/server-dependencies.type.js";
+import type { ServerStartCatchErrorContext } from "../../../types/context/start-server/start-server.type.js";
 import { CustomError } from "../../../error/custom-error.js";
 import type http from "node:http";
 
 export function startCatchError(
     error: unknown,
     httpServer: http.Server | null,
-    dependencies: ServerStartCatchErrorDependencies
-) {
-    const serverLogger = dependencies.serverLogger;
-    const systemMetaManager = dependencies.systemMetaManager;
-    const innerEventBus = dependencies.innerEventBus;
+    context: ServerStartCatchErrorContext
+): http.Server {
+    const serverLogger = context.serverLogger;
+    const systemMetaManager = context.systemMetaManager;
+    const innerEventBus = context.innerEventBus;
 
     serverLogger.logger("error", systemMetaManager.getMeta(103).message);
 

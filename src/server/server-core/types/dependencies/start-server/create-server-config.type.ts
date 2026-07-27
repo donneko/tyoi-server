@@ -10,7 +10,7 @@ import type net from "node:net";
 export type CreateServerConfig = (
     options: ServerStartOptions,
     context: CreateServerConfigContext,
-    dependencies: CreateServerConfigDependencies
+    dependencies?: Partial<CreateServerConfigDependencies>
 ) => Promise<ServerStartUseConfig>;
 
 export type CreateServerConfigDependencies = {
@@ -20,7 +20,7 @@ export type CreateServerConfigDependencies = {
 export type FindAvailablePort = (
     findPortArgs: ServerStartFindPortArgs,
     context: FindAvailablePortContext,
-    dependencies: FindAvailablePortDependencies
+    dependencies?: Partial<FindAvailablePortDependencies>
 ) => Promise<number>;
 
 export type FindAvailablePortDependencies = {
@@ -31,7 +31,7 @@ export type FindAvailablePortDependencies = {
 export type IsPortUsed = (
     port: number,
     host: string,
-    dependencies: IsPortUsedDependencies
+    dependencies?: Partial<IsPortUsedDependencies>
 ) => Promise<boolean>;
 
 export type IsPortUsedDependencies = {

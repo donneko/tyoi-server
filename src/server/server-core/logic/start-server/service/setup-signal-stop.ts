@@ -1,11 +1,20 @@
-import type { ServerSignalStopDependencies } from "../../../types/server-dependencies.type.js";
+import type { SetupSignalStopDependencies } from "../../../types/dependencies/start-server/setup-signal-stop.type.js";
+import type { SetupSignalStopContext } from "../../../types/context/start-server/start-server.type.js";
+import { defaultSetupSignalStopDependencies } from "../dependencies/setup-signal-stop.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export function setupSignalStop(
     signalShutdownHandling: boolean,
-    dependencies: ServerSignalStopDependencies
+    context: SetupSignalStopContext,
+    dependencies: Partial<SetupSignalStopDependencies> = {}
 ) {
+    const deps = createDependencies<SetupSignalStopDependencies>(
+        defaultSetupSignalStopDependencies,
+        dependencies
+    );
+
     if (signalShutdownHandling) {
-        process.on("SIGINT", dependencies.stop);
-        process.on("SIGTERM", dependencies.stop);
+        deps.processOn("SIGINT", context.stopHandler);
+        deps.processOn("SIGTERM", context.stopHandler);
     }
 }

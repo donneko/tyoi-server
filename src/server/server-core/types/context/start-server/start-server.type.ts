@@ -4,7 +4,6 @@ export type ServerStartContext = ServerCreateHttpServerContext &
     ServerSummaryContext &
     ServerOpenBrowserContext &
     CreateServerConfigContext &
-    FindAvailablePortContext &
     SetupSignalStopContext &
     UpdatePortContext &
     ServerStartCatchErrorContext;
@@ -18,12 +17,12 @@ export type ServerSummaryContext = Pick<ServerContext, "serverLogger" | "systemM
 
 export type ServerOpenBrowserContext = Pick<ServerContext, "serverLogger" | "systemMetaManager">;
 
-export type CreateServerConfigContext = Pick<ServerContext, "serverConfig" | "serverRegister">;
+export type CreateServerConfigContext = Pick<ServerContext, "serverConfig" | "serverRegister"> &
+    FindAvailablePortContext;
 
 export type FindAvailablePortContext = Pick<ServerContext, "serverLogger" | "systemMetaManager">;
 
-// TODO stopのハンドラーをどうやって渡すか考える
-export type SetupSignalStopContext = Pick<ServerContext, "expressServer">;
+export type SetupSignalStopContext = Pick<ServerContext, "stopHandler">;
 
 export type UpdatePortContext = Pick<ServerContext, "serverConfig">;
 

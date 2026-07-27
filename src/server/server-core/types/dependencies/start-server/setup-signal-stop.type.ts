@@ -3,7 +3,7 @@ import type { SetupSignalStopContext } from "../../context/start-server/start-se
 export type SetupSignalStop = (
     signalShutdownHandling: boolean,
     context: SetupSignalStopContext,
-    dependencies: SetupSignalStopDependencies
+    dependencies?: Partial<SetupSignalStopDependencies>
 ) => void;
 export type SetupSignalStopDependencies = {
     processOn: typeof process.on;

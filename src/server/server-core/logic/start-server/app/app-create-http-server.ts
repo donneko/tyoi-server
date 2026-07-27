@@ -1,15 +1,24 @@
-import http from "node:http";
-import type { ServerCreateHttpServerDependencies } from "../../../types/server-dependencies.type.js";
+import type { ServerCreateHttpServerDependencies } from "../../../types/dependencies/start-server/create-http-server.type.js";
+import type { ServerCreateHttpServerContext } from "../../../types/context/start-server/start-server.type.js";
+import { defaultCreateHttpServerDependencies } from "../dependencies/create-http-server.js";
+import { createDependencies } from "../../../dependencies/create-dependencies.js";
+import type http from "node:http";
 
 export async function createHttpServer(
     port: number,
     host: string,
-    dependencies: ServerCreateHttpServerDependencies
+    context: ServerCreateHttpServerContext,
+    dependencies: Partial<ServerCreateHttpServerDependencies> = {}
 ): Promise<http.Server> {
-    return new Promise<http.Server>((resolve, reject) => {
-        const server = http.createServer(dependencies.expressServer);
+    const deps = createDependencies<ServerCreateHttpServerDependencies>(
+        defaultCreateHttpServerDependencies,
+        dependencies
+    );
 
-        dependencies.webSocketRouter.start(server);
+    return new Promise<http.Server>((resolve, reject) => {
+        const server = deps.createServer(context.expressServer);
+
+        context.webSocketRouter.start(server);
 
         server.listen(port, host);
 

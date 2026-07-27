@@ -24,4 +24,5 @@ export type ServerContext<
     expressServer: express.Express;
     serverAPIs: ApiRegistry<RequestEventMap<RequestNameList>>;
     httpMetaManager: HttpMetaManager;
+    stopHandler: () => Promise<void> | void;
 };

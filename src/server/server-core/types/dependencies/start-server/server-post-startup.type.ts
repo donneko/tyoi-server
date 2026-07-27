@@ -3,8 +3,11 @@ import type {
     ServerSummaryContext,
     ServerOpenBrowserContext,
 } from "../../context/start-server/start-server.type.js";
-import type { ServerCreateNetworkReturn } from "../../../types/server.type.js";
-import type { ServerOpenBrowserArgs } from "../../../types/server.type.js";
+import type {
+    ServerCreateNetworkReturn,
+    ServerOpenBrowserArgs,
+    ServerStartSummaryArgs,
+} from "../../../types/server.type.js";
 
 import type open from "open";
 import type os from "node:os";
@@ -13,7 +16,7 @@ import type qrcode from "qrcode-terminal";
 export type ServerPostStartup = (
     config: ServerStartUseConfig,
     context: ServerSummaryContext,
-    dependencies: ServerPostStartupDependencies
+    dependencies?: Partial<ServerPostStartupDependencies>
 ) => Promise<void>;
 
 export type ServerPostStartupDependencies = {
@@ -24,7 +27,7 @@ export type ServerPostStartupDependencies = {
 export type ServerOpenBrowser = (
     openBrowserData: ServerOpenBrowserArgs,
     context: ServerOpenBrowserContext,
-    dependencies: ServerOpenBrowserDependencies
+    dependencies?: Partial<ServerOpenBrowserDependencies>
 ) => Promise<void>;
 
 export type ServerOpenBrowserDependencies = {
@@ -33,9 +36,9 @@ export type ServerOpenBrowserDependencies = {
 };
 
 export type ServerSummary = (
-    config: ServerStartUseConfig,
+    args: ServerStartSummaryArgs,
     context: ServerSummaryContext,
-    dependencies: ServerSummaryDependencies
+    dependencies?: Partial<ServerSummaryDependencies>
 ) => void;
 
 export type ServerSummaryDependencies = {
@@ -45,14 +48,14 @@ export type ServerSummaryDependencies = {
 export type ServerCreateNetworkData = (
     port: number,
     host: string,
-    dependencies: ServerCreateNetworkDataDependencies
+    dependencies?: Partial<ServerCreateNetworkDataDependencies>
 ) => ServerCreateNetworkReturn;
 
 export type ServerCreateNetworkDataDependencies = {
     getLanIp: ServerGetLanIp;
 };
 
-export type ServerGetLanIp = (dependencies: ServerGetLanIpDependencies) => string;
+export type ServerGetLanIp = (dependencies?: ServerGetLanIpDependencies) => string;
 
 export type ServerGetLanIpDependencies = {
     networkInterfaces: typeof os.networkInterfaces;

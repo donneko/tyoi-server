@@ -4,5 +4,10 @@ import type http from "node:http";
 export type ServerCreateHttpServer = (
     port: number,
     host: string,
-    context: ServerCreateHttpServerContext
+    context: ServerCreateHttpServerContext,
+    dependencies?: Partial<ServerCreateHttpServerDependencies>
 ) => Promise<http.Server>;
+
+export type ServerCreateHttpServerDependencies = {
+    createServer: typeof http.createServer;
+};
