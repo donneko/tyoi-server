@@ -129,7 +129,7 @@ tyoi --version
 - [Config](./docs/config.md): `tyoi.config.js` と設定項目
 - [CLI](./docs/cli.md): CLI コマンドとオプション
 
-機能ごとの最小コードは [Feature Examples](./examples/features/README.md) で確認できます。
+機能ごとの使い方とコード例は [Usage](./docs/usage.md) で確認できます。
 
 ## Development
 

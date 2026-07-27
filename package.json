@@ -8,7 +8,7 @@
     "test:templates": "npx tsc -p tsconfig.templates.json && npx tsc --ignoreConfig --noEmit --allowJs --checkJs templates/project/static-ts/public/main/assets/app.js && node --check templates/project/static-ts/public/main/assets/app.js && node --check templates/project/realtime-ts/public/main/assets/app.js",
     "test:use:init": "npm pack && tsx ./test/e2e/initPlayground.ts",
     "test:use": "npm run test:use:init && tsx ./test/e2e/testPlayground.ts",
-    "test:ci": "npm run test:type && npm run test:templates && npm run check:format:check && npm run test:vitest",
+    "test:ci": "npm run test:type && npm run test:templates && npm run check:format:check && npm run check:lint && npm run test:vitest",
     "test:nonTTY": "npm run test </dev/null",
     "check:format:write": "npx prettier . --write",
     "check:format:check": "npx prettier . --check",
@@ -24,7 +24,7 @@
     "compile": "rm -rf dist && tsc",
     "build": "npm run test:type && npm run compile",
     "prepack": "npm run build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run test:ci"
   },
   "engines": {
     "node": ">=20.14"
@@ -37,7 +37,6 @@
     "dist",
     "docs/*.md",
     "docs/src",
-    "examples/features",
     "LICENSE",
     "README.md",
     "CHANGELOG.md",
@@ -47,7 +46,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/donneko/tyoi-server.git"
+    "url": "git+https://github.com/donneko/tyoi-api-node-server.git"
+  },
+  "homepage": "https://github.com/donneko/tyoi-api-node-server#readme",
+  "bugs": {
+    "url": "https://github.com/donneko/tyoi-api-node-server/issues"
   },
   "keywords": [
     "server",
@@ -63,6 +66,9 @@
   },
   "author": "丼猫",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Small local API and static file server framework built with Express and TypeScript.",
   "dependencies": {
     "@donneko/tyoi-cli": "^0.0.2",
