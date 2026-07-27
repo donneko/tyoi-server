@@ -1,6 +1,6 @@
-import { ServerDependencies } from "../types/server-dependencies.type.js";
+import { ServerContext } from "../types/context/integration/server.type.js";
 import { EventBus } from "../util/event-bus.js";
-import { configManager } from "../service/config-manager.js";
+import { ConfigManager } from "../service/config-manager.js";
 import { ApiRegistry } from "../util/api-registry.js";
 import { ServerLogger } from "../service/server-logger.js";
 import { SystemMetaManager } from "../service/system-meta/system-meta-manager.js";
@@ -10,17 +10,16 @@ import { HttpMetaManager } from "../service/http-meta/http-meta-manager.js";
 import express from "express";
 import type { OutEventBusMap, InnerEventBusMap } from "../types/server-event.type.js";
 import type { RequestEventMap } from "../types/server.type.js";
-import type { ServerStopServerDependencies } from "../types/server-dependencies.type.js";
 
-export function createServerDependencies<
+export function createServerContext<
     RequestNameList extends string = string,
     WebSocketNameList extends string = string,
->(stop: (dependencies: ServerStopServerDependencies) => Promise<void>): ServerDependencies {
+>(stop: () => Promise<void>): ServerContext {
     const outEventBus = new EventBus<OutEventBusMap>();
     const innerEventBus = new EventBus<InnerEventBusMap>();
 
     return {
-        serverConfig: new configManager(),
+        serverConfig: new ConfigManager(),
         serverRegister: new RegisterManager(),
         serverLogger: new ServerLogger(innerEventBus, outEventBus),
         systemMetaManager: new SystemMetaManager(),
@@ -30,8 +29,8 @@ export function createServerDependencies<
         outEventBus,
         expressServer: express(),
         serverAPIs: new ApiRegistry<RequestEventMap<RequestNameList>>(),
-        stop: async (deps: ServerStopServerDependencies) => {
-            await stop(deps);
+        stopHandler: async () => {
+            await stop();
         },
     };
 }
