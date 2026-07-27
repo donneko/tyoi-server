@@ -1,4 +1,4 @@
-import { AskPermission } from "../util/ask-permission.js";
+import { askPermission } from "../util/ask-permission.js";
 import { isPortUsed } from "../util/is-port-used.js";
 import type { ServerStartFindPortArgs } from "../../../types/server.type.js";
 import type { ServerAvailablePortDependencies } from "../../../types/server-dependencies.type.js";
@@ -26,7 +26,7 @@ export async function findAvailablePort(
         serverLogger.logger("bar");
         serverLogger.logger("warn", getMessage(108, port));
 
-        const pass = await AskPermission(
+        const pass = await askPermission(
             serverLogger.logger("createSystem", getMessage(109, port + 1)).createMessage
         );
 

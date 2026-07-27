@@ -6,7 +6,7 @@ import {
 import TYOI_DEFAULT_CONFIG from "../config/tyoi.default.config.js";
 
 type ConfigControllerType = ConfigController<ServerDefaultConfig>;
-export class configManager {
+export class ConfigManager {
     private configController = new ConfigController<ServerDefaultConfig>(
         TYOI_DEFAULT_CONFIG,
         serverDefaultConfigSchema
