@@ -1,5 +1,5 @@
 import path from "node:path";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { undoPlayground } from "./undoPlayground.js";
 import { Logger } from "@donneko/tyoi-logger";
 
@@ -10,19 +10,63 @@ function getPlaygroundPath(): string {
     return path.join(dirname, PLAYGROUND_PASS);
 }
 
-function testCLI(playgroundPath: string): { args: string[]; ok: boolean }[] {
+async function waitForServer(port: number, timeoutMs: number): Promise<void> {
+    const deadline = Date.now() + timeoutMs;
+
+    while (Date.now() < deadline) {
+        try {
+            const response = await fetch(`http://127.0.0.1:${port}`);
+            if (response.ok) return;
+        } catch {
+            // 起動が完了するまで再試行する。
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+
+    throw new Error(`Server did not respond on port ${port}`);
+}
+
+async function testCLI(playgroundPath: string): Promise<{ args: string[]; ok: boolean }[]> {
     const testResult: { args: string[]; ok: boolean }[] = [];
-    const run = (args: string[], timeout?: number | undefined) => {
+    const run = (args: string[]) => {
         console.log(`[テスト実行] : `, ...args);
         const result = spawnSync("npx", ["tyoi", ...args], {
             cwd: playgroundPath,
             stdio: "inherit",
-            timeout,
         });
 
         testResult.push({
             args: ["npx", "tyoi", ...args],
-            ok: !result.status,
+            ok: result.status === 0 && result.error === undefined,
+        });
+    };
+    const runServer = async (args: string[], port: number) => {
+        console.log(`[サーバーテスト実行] : `, ...args);
+        const child = spawn("npx", ["tyoi", ...args], {
+            cwd: playgroundPath,
+            stdio: "inherit",
+        });
+        let ok = false;
+
+        try {
+            await waitForServer(port, 10_000);
+            ok = true;
+        } catch (error) {
+            console.error(error);
+        } finally {
+            child.kill("SIGTERM");
+            await new Promise<void>((resolve) => {
+                if (child.exitCode !== null) {
+                    resolve();
+                    return;
+                }
+                child.once("exit", () => resolve());
+            });
+        }
+
+        testResult.push({
+            args: ["npx", "tyoi", ...args],
+            ok,
         });
     };
     const undo = () => {
@@ -47,16 +91,16 @@ function testCLI(playgroundPath: string): { args: string[]; ok: boolean }[] {
     run(["create", "my-app", "--template", "realtime-ts"]);
     undo();
     run(["config", "my-app", "--template", "basic"]);
-    run(["run"], 3000);
-    run(["dev"], 3000);
+    await runServer(["run"], 3000);
+    await runServer(["dev"], 3000);
 
     return testResult;
 }
 
-function main() {
+async function main() {
     const playgroundPath = getPlaygroundPath();
 
-    const results = testCLI(playgroundPath);
+    const results = await testCLI(playgroundPath);
 
     const logger = new Logger();
 
@@ -75,6 +119,10 @@ function main() {
             r.ok ? logger.createSuccess(r.args.join(" ")) : logger.createError(r.args.join(" "))
         ),
     ]);
+
+    if (results.some((result) => !result.ok)) {
+        process.exitCode = 1;
+    }
 }
 
-main();
+await main();

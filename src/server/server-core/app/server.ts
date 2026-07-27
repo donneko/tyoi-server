@@ -26,7 +26,7 @@ export class Server<
     /**
      * サーバーを作成し、ルーティングと静的ファイル配信を初期化します。
      *
-     * `baseDirname` は必須です。起動は `startServer()` で明示的に行います。
+     * `baseDirname` は必須です。起動は `start()` で明示的に行います。
      *
      * @param options サーバー設定。
      * @example
@@ -44,7 +44,7 @@ export class Server<
      *  server.onAPI("GET:/test", (data) => {
      *      return data;
      *  });
-     *  await server.startServer();
+     *  await server.start();
      */
     constructor(options?: ServerOptions) {
         if (options) {
@@ -71,7 +71,7 @@ export class Server<
      * @throws ポートの確保や HTTP サーバーの起動に失敗した場合。
      * @example
      * ```ts
-     * await server.startServer({
+     * await server.start({
      *   port: 3000,
      *   showQrCode: false,
      * });
@@ -118,8 +118,11 @@ export class Server<
 
         this.isStopping = true;
 
-        await stopServer(this.httpServer, context).finally(() => {
-            this.httpServer = null;
+        const httpServer = this.httpServer;
+        await stopServer(httpServer, context).finally(() => {
+            if (!httpServer.listening) {
+                this.httpServer = null;
+            }
             this.isStopping = false;
         });
     }

@@ -13,7 +13,13 @@ export class WebSocketRouter<typeMAP extends string> {
         });
         this.webSocket = ws;
         server.on("upgrade", (req, socket, head) => {
-            const url = new URL(req.url ?? "/", `http://${req.headers.host}`);
+            let url: URL;
+            try {
+                url = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
+            } catch {
+                socket.destroy();
+                return;
+            }
             const pathname = url.pathname;
 
             if (!this.webSocketRegistry.has(pathname)) {
@@ -21,8 +27,10 @@ export class WebSocketRouter<typeMAP extends string> {
                 return;
             }
 
-            ws.handleUpgrade(req, socket as Duplex, head, async (ws) => {
-                await this.webSocketRegistry.emit(pathname, { ws, req });
+            ws.handleUpgrade(req, socket as Duplex, head, (client) => {
+                void this.webSocketRegistry
+                    .emit(pathname, { ws: client, req })
+                    .catch(() => client.close(1011, "WebSocket handler failed"));
             });
         });
     }

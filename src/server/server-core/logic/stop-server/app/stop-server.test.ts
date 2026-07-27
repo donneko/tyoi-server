@@ -25,7 +25,7 @@ function createContext() {
             systemMetaManager: {
                 getMeta: vi.fn((code: number) => ({ message: messages.get(code) ?? "" })),
             },
-            expressServer: vi.fn(),
+            stopHandler: vi.fn(),
         },
     };
 }
@@ -107,21 +107,24 @@ describe("stopServer", () => {
         expect(finishObj.finish).not.toHaveBeenCalled();
     });
 
-    it("WebSocket の停止失敗時は HTTP 停止処理へ進まない", async () => {
+    it("WebSocket の停止失敗時も HTTP サーバーを停止してから reject する", async () => {
         const error = new Error("websocket close failed");
         const { context } = createContext();
         context.webSocketRouter.close.mockRejectedValueOnce(error);
         const httpServer = {
-            close: vi.fn(),
+            close: vi.fn((callback: (error?: Error) => void) => callback()),
             closeIdleConnections: vi.fn(),
         };
+        const finishObj = { finish: vi.fn(), settled: false };
 
         await expect(
             stopServer(httpServer as never, context as never, {
-                createFinish: vi.fn(),
+                createFinish: vi.fn(() => finishObj),
                 offSignalStop: vi.fn(),
             })
         ).rejects.toBe(error);
-        expect(httpServer.close).not.toHaveBeenCalled();
+        expect(httpServer.close).toHaveBeenCalledOnce();
+        expect(httpServer.closeIdleConnections).toHaveBeenCalledOnce();
+        expect(finishObj.finish).toHaveBeenCalledOnce();
     });
 });

@@ -13,6 +13,6 @@ export function defaultServerStopDependencies(): ServerStopDependencies {
 }
 export function defaultOffSignalStopDependencies(): OffSignalStopDependencies {
     return {
-        processOff: process.off,
+        processOff: process.off.bind(process),
     };
 }

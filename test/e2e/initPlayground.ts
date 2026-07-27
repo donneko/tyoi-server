@@ -4,7 +4,7 @@ import { spawnSync } from "node:child_process";
 import { Ask } from "@donneko/tyoi-logger";
 
 const PLAYGROUND_PASS = "../playground";
-const PACK_PASS = "../";
+const PACK_PASS = "../../";
 const TEMPLATE_PASS = "./template/package.json";
 
 const PACK_REGEX = /^donneko-tyoi-server-.*\.tgz$/;
@@ -16,11 +16,10 @@ async function getPackagePath(): Promise<string> {
     const items = fs.readdirSync(packDirPath);
 
     const packPath = items.filter((i) => PACK_REGEX.test(i));
-    if (!packPath) throw Error("パッケージがありませんでした");
+    if (packPath.length === 0) throw Error("パッケージがありませんでした");
 
+    if (!process.stdin.isTTY) return packPath.toSorted().at(-1) as string;
     const selectPack = await new Ask().select("使用するパッケージを選択してください", packPath);
-
-    if (!process.stdin.isTTY) return packPath[0] as string;
     if (!selectPack) throw Error("パッケージが見つかりませんでした");
     return selectPack;
 }

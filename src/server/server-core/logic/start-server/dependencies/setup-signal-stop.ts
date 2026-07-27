@@ -2,6 +2,6 @@ import type { SetupSignalStopDependencies } from "../../../types/dependencies/st
 
 export function defaultSetupSignalStopDependencies(): SetupSignalStopDependencies {
     return {
-        processOn: process.on,
+        processOn: process.on.bind(process),
     };
 }

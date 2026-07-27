@@ -9,5 +9,4 @@ export type ServerStopContext = Pick<
 
 export type CreateFinishContext = Pick<ServerContext, "serverLogger" | "systemMetaManager">;
 
-// TODO stopのハンドラーをどうやって渡すか考える
-export type OffSignalStopContext = Pick<ServerContext, "expressServer">;
+export type OffSignalStopContext = Pick<ServerContext, "stopHandler">;

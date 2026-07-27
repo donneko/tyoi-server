@@ -12,6 +12,6 @@ export function offSignalStop(
         dependencies
     );
 
-    deps.processOff("SIGINT", context.expressServer);
-    deps.processOff("SIGTERM", context.expressServer);
+    deps.processOff("SIGINT", context.stopHandler);
+    deps.processOff("SIGTERM", context.stopHandler);
 }

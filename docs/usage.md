@@ -228,8 +228,8 @@ await app.close();
 
 内部 `Server` の関連メソッド:
 
-- `startServer(options?)`: サーバーを起動
-- `stopServer()`: サーバーを停止
+- `start(options?)`: サーバーを起動
+- `stop()`: サーバーを停止
 - `isRunning()`: サーバーが起動中か確認
 - `getPort()`: 現在のポート番号を取得
 - `getConfig(key)`: 現在の設定値を取得
@@ -271,5 +271,5 @@ server.onWebSocket("/ws", ({ ws }) => {
     ws.send("connected");
 });
 
-await server.startServer();
+await server.start();
 ```

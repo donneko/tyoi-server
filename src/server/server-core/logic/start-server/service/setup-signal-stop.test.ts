@@ -20,4 +20,18 @@ describe("setupSignalStop", () => {
 
         expect(processOn).not.toHaveBeenCalled();
     });
+
+    it("デフォルト依存で実際の process にリスナーを登録する", () => {
+        const stopHandler = vi.fn();
+
+        try {
+            setupSignalStop(true, { stopHandler });
+
+            expect(process.listeners("SIGINT")).toContain(stopHandler);
+            expect(process.listeners("SIGTERM")).toContain(stopHandler);
+        } finally {
+            process.off("SIGINT", stopHandler);
+            process.off("SIGTERM", stopHandler);
+        }
+    });
 });

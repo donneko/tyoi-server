@@ -28,7 +28,7 @@ export function defaultServerOpenBrowserDependencies(): ServerOpenBrowserDepende
 export function defaultServerSummaryDependencies(): ServerSummaryDependencies {
     return {
         createNetworkData: createNetworkData,
-        qrcodeGenerate: qrcode.generate,
+        qrcodeGenerate: qrcode.generate.bind(qrcode),
     };
 }
 

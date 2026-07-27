@@ -14,7 +14,12 @@ export async function stopServer(
         dependencies
     );
 
-    await context.webSocketRouter.close();
+    let webSocketCloseError: unknown;
+    try {
+        await context.webSocketRouter.close();
+    } catch (error) {
+        webSocketCloseError = error;
+    }
 
     return new Promise<void>((resolve, reject) => {
         const serverLogger = context.serverLogger;
@@ -23,7 +28,14 @@ export async function stopServer(
             systemMetaManager.getMeta(code).message;
 
         // !! オブジェクトを展開しないで！！ settled の参照が切れる。
-        const finishObj = deps.createFinish(httpServer, resolve, context);
+        const finishResolve = () => {
+            if (webSocketCloseError !== undefined) {
+                reject(webSocketCloseError);
+                return;
+            }
+            resolve();
+        };
+        const finishObj = deps.createFinish(httpServer, finishResolve, context);
 
         serverLogger.logger("process", getMessage(104));
         deps.offSignalStop(context);
@@ -36,13 +48,20 @@ export async function stopServer(
                 serverLogger.logger("error", getMessage(106));
 
                 finishObj.finish();
-                reject(error);
+                reject(
+                    webSocketCloseError === undefined
+                        ? error
+                        : new AggregateError(
+                              [webSocketCloseError, error],
+                              "WebSocket and HTTP server shutdown failed"
+                          )
+                );
                 return;
             }
             serverLogger.logger("success", getMessage(107));
 
             finishObj.finish();
-            resolve();
+            finishResolve();
         });
 
         httpServer.closeIdleConnections();

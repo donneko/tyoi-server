@@ -125,4 +125,30 @@ describe("serverSummary", () => {
 
         expect(qrcodeGenerate).not.toHaveBeenCalled();
     });
+
+    it("デフォルトの QR コード生成依存でも LAN サマリーを生成できる", () => {
+        const { context, logger } = createContext();
+
+        expect(() =>
+            serverSummary(
+                {
+                    host: "0.0.0.0",
+                    port: 4000,
+                    publicPath: "public",
+                    publicFullPath: "/project/public",
+                    apiPrefix: "/api",
+                    showQrCode: true,
+                },
+                context as never,
+                {
+                    createNetworkData: vi.fn(() => ({
+                        networkUrl: "http://192.168.1.10:4000",
+                        isLAN: true,
+                    })),
+                }
+            )
+        ).not.toThrow();
+
+        expect(logger).toHaveBeenCalledWith("createInfo", expect.stringContaining("\n"));
+    });
 });
