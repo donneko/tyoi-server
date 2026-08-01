@@ -1,5 +1,6 @@
 import type minimist from "minimist";
 import type { CommandHandler } from "@donneko/tyoi-cli";
+import type { MessageManager } from "../../messages/message-manager.js";
 
 type Data<META> = {
     meta: META;
@@ -17,7 +18,13 @@ export type MetaData = {
         cwd: string;
         dirname: string;
     };
+    config: {
+        language: string;
+    };
     option: minimist.ParsedArgs;
+    context: {
+        messageManager: MessageManager;
+    };
 };
 
 export type CmdMetaData = Data<MetaData>;

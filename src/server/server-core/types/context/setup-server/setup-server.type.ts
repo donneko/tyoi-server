@@ -5,3 +5,5 @@ export type ServerSetupContext = CreateServerConfigContext & SetupPublicPathCont
 export type CreateServerConfigContext = Pick<ServerContext, "serverConfig">;
 
 export type SetupPublicPathContext = Pick<ServerContext, "serverRegister">;
+
+export type SetupLanguagesContext = Pick<ServerContext, "serverConfig" | "messageManager">;

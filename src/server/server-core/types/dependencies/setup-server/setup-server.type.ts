@@ -2,11 +2,13 @@ import type { ServerCreateServerConfigReturn } from "../../../types/server.type.
 import type {
     CreateServerConfigContext,
     SetupPublicPathContext,
+    SetupLanguagesContext,
 } from "../../context/setup-server/setup-server.type.js";
 
 export type SetupServerDependencies = {
     createServerConfig: CreateServerConfig;
     setupPublicPath: SetupPublicPath;
+    setupLanguages: SetupLanguages;
 };
 
 export type CreateServerConfig = (
@@ -25,3 +27,5 @@ export type SetupPublicPathDependencies = {
 };
 
 export type PathNormalization = (baseDirname: string, publicDirname: string) => string;
+
+export type SetupLanguages = (context: SetupLanguagesContext) => void;

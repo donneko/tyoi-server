@@ -9,6 +9,7 @@ export default async function runDevServer(data: CmdMetaData) {
     const useConfigPath = path.join(import.meta.dirname, "../../config/tyoi.dev.config.js");
 
     const configOption = {
+        ...{ language: data.meta.config.language },
         ...data.meta.option,
         ...{ baseDirname: mainDirname },
     };

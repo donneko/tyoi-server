@@ -15,4 +15,6 @@ export default defineDefaultConfig({
     openBrowser: false,
 
     signalShutdownHandling: true,
+
+    languages: "ja-JP",
 });

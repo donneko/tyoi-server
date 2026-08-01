@@ -27,6 +27,7 @@ export default async function runStartServer(data: CmdMetaData) {
     }
 
     const configOption = {
+        ...{ language: data.meta.config.language },
         ...data.meta.option,
         ...{ baseDirname: file ? cwd : dirname },
     };

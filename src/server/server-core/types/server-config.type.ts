@@ -12,6 +12,7 @@ export const serverUserConfigSchema = z.object({
     openBrowser: z.union([z.boolean(), z.enum(["local", "network"])]).optional(),
     autoPort: z.boolean().optional(),
     signalShutdownHandling: z.boolean().optional(),
+    languages: z.string().optional(),
 });
 
 export type ServerUserConfig = z.infer<typeof serverUserConfigSchema>;
@@ -27,6 +28,7 @@ export const serverDefaultConfigSchema = z.object({
     openBrowser: z.union([z.boolean(), z.enum(["local", "network"])]),
     autoPort: z.boolean(),
     signalShutdownHandling: z.boolean(),
+    languages: z.string(),
 });
 
 export type ServerDefaultConfig = z.infer<typeof serverDefaultConfigSchema>;
