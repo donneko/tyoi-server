@@ -16,7 +16,7 @@ async function waitForServer(port: number, timeoutMs: number): Promise<void> {
     while (Date.now() < deadline) {
         try {
             const response = await fetch(`http://127.0.0.1:${port}`);
-            if (response.ok) return;
+            if (response.status === 200 || response.status === 404) return;
         } catch {
             // 起動が完了するまで再試行する。
         }

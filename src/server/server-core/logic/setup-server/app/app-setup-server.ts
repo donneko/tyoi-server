@@ -15,5 +15,6 @@ export function setupServer(
 
     const serverConfig = deps.createServerConfig(context);
 
+    deps.setupLanguages(context);
     deps.setupPublicPath(serverConfig.baseDirname, serverConfig.publicDirname, context);
 }

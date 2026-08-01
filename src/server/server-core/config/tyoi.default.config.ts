@@ -16,5 +16,5 @@ export default defineDefaultConfig({
 
     signalShutdownHandling: true,
 
-    languages: "ja-JP",
+    language: "ja-JP",
 });

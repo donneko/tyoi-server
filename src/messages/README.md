@@ -21,9 +21,6 @@ console.log(message);
 
 ```json
 {
-    "locale": "ja-JP",
-    "messages": {
-        "example.message": "こんにちは、{name}さん！"
-    }
+    "example.message": "こんにちは、{name}さん！"
 }
 ```

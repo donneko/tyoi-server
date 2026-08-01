@@ -1,7 +1,7 @@
 import type { SetupLanguagesContext } from "../../../types/context/setup-server/setup-server.type.js";
 
 export function setupLanguages(context: SetupLanguagesContext) {
-    const languages = context.serverConfig.getConfig("languages");
+    const language = context.serverConfig.getConfig("language");
 
-    context.messageManager.setLanguage(languages);
+    context.messageManager.setLanguage(language);
 }

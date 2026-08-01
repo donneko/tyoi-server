@@ -1,6 +1,8 @@
 import type { ServerContext } from "../integration/server.type.js";
 
-export type ServerSetupContext = CreateServerConfigContext & SetupPublicPathContext;
+export type ServerSetupContext = CreateServerConfigContext &
+    SetupPublicPathContext &
+    SetupLanguagesContext;
 
 export type CreateServerConfigContext = Pick<ServerContext, "serverConfig">;
 
