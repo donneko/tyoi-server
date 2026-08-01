@@ -4,9 +4,11 @@ import { Ask } from "@donneko/tyoi-logger";
 import type { CmdMetaData } from "../types/tyoi-cli.type.js";
 import { scanConfigFiles } from "../service/scan-config-files.js";
 import { serverRuntime } from "../../process/main-process/main-process.js";
-import { messageManager } from "../../messages/default-message-manager.js";
 
-async function getConfigFile(processCwd: string): Promise<string | undefined> {
+async function getConfigFile(
+    processCwd: string,
+    messageManager: CmdMetaData["meta"]["context"]["messageManager"]
+): Promise<string | undefined> {
     const files = await scanConfigFiles(processCwd);
 
     if (files.length === 0) return;
@@ -17,8 +19,9 @@ async function getConfigFile(processCwd: string): Promise<string | undefined> {
 export default async function runStartServer(data: CmdMetaData) {
     const cwd = data.meta.cli.cwd;
     const dirname = data.meta.cli.dirname;
+    const messageManager = data.meta.context.messageManager;
 
-    const file = await getConfigFile(cwd);
+    const file = await getConfigFile(cwd, messageManager);
     let useConfigPath: string = "";
 
     if (file) {

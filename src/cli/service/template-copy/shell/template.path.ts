@@ -2,12 +2,13 @@ import path from "node:path";
 import { readDirectory } from "../../read-directory.js";
 import { Ask, Logger } from "@donneko/tyoi-logger";
 import { isValidTemplate } from "../core/is-valid-template.js";
-import { messageManager } from "../../../../messages/default-message-manager.js";
+import type { MessageManager } from "../../../../messages/index.js";
 
 export async function getTemplatePath(
     templateName: string | undefined,
     base: string,
-    templatePath: string
+    templatePath: string,
+    messageManager: MessageManager
 ): Promise<string> {
     const readPath = path.join(base, templatePath);
     const templateFiles = await readDirectory(readPath, false);

@@ -37,6 +37,7 @@
     "cli.help.create": "create : 新しいフォルダーにサーバーを作成します",
     "cli.help.config": "config : 現在のディレクトリーに設定ファイルを追加します",
     "cli.help.info": "info   : \"tyoi run\" の設定が適用されるの確認結果が表示されます",
+    "cli.help.setting": "setting: 言語を設定できます。\"tyoi setting language ja-JP\"",
     "cli.config.select": "使用する設定ファイルを選択してください。",
     "cli.command.unknown": "未知のコマンドです",
     "cli.command.helpHint": "コマンドを探すには help を実行してみてください",

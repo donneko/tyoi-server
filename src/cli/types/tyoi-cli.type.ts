@@ -1,6 +1,6 @@
 import type minimist from "minimist";
 import type { CommandHandler } from "@donneko/tyoi-cli";
-import type { MessageManager } from "../../messages/message-manager.js";
+import type { MessageManager } from "../../messages/app/message-manager.js";
 
 type Data<META> = {
     meta: META;

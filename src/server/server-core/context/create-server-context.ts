@@ -5,7 +5,7 @@ import { ApiRegistry } from "../util/api-registry.js";
 import { ServerLogger } from "../service/server-logger.js";
 import { RegisterManager } from "../service/register-manager.js";
 import { WebSocketRouter } from "../service/web-socket-router.js";
-import { MessageManager } from "../../../messages/message-manager.js";
+import { MessageManager } from "../../../messages/index.js";
 import express from "express";
 import type { OutEventBusMap, InnerEventBusMap } from "../types/server-event.type.js";
 import type { RequestEventMap } from "../types/server.type.js";

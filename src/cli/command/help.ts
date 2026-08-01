@@ -1,8 +1,9 @@
-// import type { CmdMetaData } from "../types/tyoi-cli.js";
+import type { CmdMetaData } from "../types/tyoi-cli.type.js";
 import { Logger } from "@donneko/tyoi-logger";
-import { messageManager } from "../../messages/default-message-manager.js";
 
-export default function serverHelp() {
+export default function serverHelp(data: CmdMetaData) {
+    const messageManager = data.meta.context.messageManager;
+
     const logger = new Logger();
 
     logger.window(messageManager.message("cli.help.title"), [
@@ -15,5 +16,6 @@ export default function serverHelp() {
         logger.createMessage(messageManager.message("cli.help.create")),
         logger.createMessage(messageManager.message("cli.help.config")),
         logger.createMessage(messageManager.message("cli.help.info")),
+        logger.createMessage(messageManager.message("cli.help.setting")),
     ]);
 }

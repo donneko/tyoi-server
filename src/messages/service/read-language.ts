@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import type { LanguageDictionary } from "./types/message.type.js";
+import type { LanguageDictionary } from "../types/message.type.js";
 
 export function parseDictionary(filePath: string): LanguageDictionary {
     let value: unknown;

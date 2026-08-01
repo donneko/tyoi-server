@@ -9,7 +9,9 @@ export async function tyoiCli() {
 
     const cmdHandler = new CommandHandler<MetaData>();
     const meta = await getMetaData(argv);
-    cmdHandler.onError = getOnError;
+    cmdHandler.onError = () => {
+        getOnError(meta.context.messageManager);
+    };
     cmdHandler.meta = meta;
     meta.context.messageManager.setLanguage(meta.config.language);
 

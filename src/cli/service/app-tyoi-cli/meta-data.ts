@@ -3,21 +3,18 @@ import path from "node:path";
 import type { MetaData } from "../../types/tyoi-cli.type.js";
 import getPackData from "./pack-data/main.js";
 import getConfig from "./cli-config/main.js";
-import { MessageManager } from "../../../messages/message-manager.js";
-import { fileURLToPath } from "node:url";
+import { createContext } from "./create-context.js";
 
 export async function getMetaData(argv: string[]): Promise<MetaData> {
-    const languagesPath = fileURLToPath(new URL("../../../../languages", import.meta.url));
+    const context = createContext();
     return {
-        pack: await getPackData(),
+        pack: await getPackData(context.messageManager),
         cli: {
             cwd: process.cwd(),
             dirname: path.join(import.meta.dirname, "../../../"),
         },
-        config: await getConfig(),
+        config: await getConfig(context.messageManager),
         option: getOption(argv),
-        context: {
-            messageManager: new MessageManager("ja-JP", languagesPath),
-        },
+        context,
     };
 }

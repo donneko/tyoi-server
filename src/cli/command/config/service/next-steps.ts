@@ -1,7 +1,7 @@
 import { Logger } from "@donneko/tyoi-logger";
-import { messageManager } from "../../../../messages/default-message-manager.js";
+import type { MessageManager } from "../../../../messages/index.js";
 
-export function showNextSteps(): void {
+export function showNextSteps(messageManager: MessageManager): void {
     const logger = new Logger();
 
     logger.bar();

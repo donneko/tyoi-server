@@ -11,7 +11,7 @@ export default async function main(data: CmdMetaData) {
         return;
     }
     if (data.meta.option?.help) {
-        help();
+        help(data);
         return;
     }
     await run(data);

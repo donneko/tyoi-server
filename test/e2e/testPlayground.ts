@@ -76,6 +76,13 @@ async function testCLI(playgroundPath: string): Promise<{ args: string[]; ok: bo
 
     run(["help"]);
     run(["info"]);
+    run(["setting", "language", "en-US"]);
+    run(["help"]);
+    run(["setting", "language", "ja-JP"]);
+    run(["help"]);
+    run(["setting", "language", "ja-JP"]);
+    run(["help"]);
+    undo();
     run(["init", "my-app", "--template", "basic-ts"]);
     undo();
     run(["init", "my-app", "--template", "basic-js"]);

@@ -8,6 +8,7 @@ import run from "../../command/start.js";
 import config from "../../command/config/main.js";
 import info from "../../command/info/main.js";
 import def from "../../command/default.js";
+import setting from "../../command/setting.js";
 
 export function addCommand(cmdHandler: CmdHandler) {
     cmdHandler
@@ -18,5 +19,6 @@ export function addCommand(cmdHandler: CmdHandler) {
         .add("config", config)
         .add("init", init)
         .add("info", info)
-        .add("help", help);
+        .add("help", help)
+        .add("setting", setting);
 }

@@ -1,13 +1,16 @@
 import { Logger } from "@donneko/tyoi-logger";
-import { messageManager } from "../../../../messages/default-message-manager.js";
+import type { MessageManager } from "../../../../messages/index.js";
 
-export function createCopyResult({
-    error,
-    ok,
-}: {
-    error: string[];
-    ok: string[];
-}): [string, ReturnType<Logger["createError"]>[]] {
+export function createCopyResult(
+    {
+        error,
+        ok,
+    }: {
+        error: string[];
+        ok: string[];
+    },
+    messageManager: MessageManager
+): [string, ReturnType<Logger["createError"]>[]] {
     const logger = new Logger();
 
     return [

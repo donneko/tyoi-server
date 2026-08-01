@@ -1,6 +1,6 @@
 import path from "node:path";
-import { parseDictionary } from "./read-language.js";
-import type { MessageVariables } from "./types/message.type.js";
+import { parseDictionary } from "../service/read-language.js";
+import type { MessageVariables } from "../types/message.type.js";
 
 export class MessageManager {
     private readonly languagePath: string;

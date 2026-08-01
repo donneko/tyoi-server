@@ -1,11 +1,12 @@
 import path from "node:path";
 import { Ask, Logger } from "@donneko/tyoi-logger";
 import { isValidProjectName } from "../core/is-valid-project-name.js";
-import { messageManager } from "../../../../messages/default-message-manager.js";
+import type { MessageManager } from "../../../../messages/index.js";
 
 export async function getProjectName(
     inputName: string | undefined,
-    target: string
+    target: string,
+    messageManager: MessageManager
 ): Promise<string> {
     let projectName = inputName;
     const ask = new Ask();
