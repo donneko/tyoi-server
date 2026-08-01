@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { Logger } from "@donneko/tyoi-logger";
+import { messageManager } from "../../../../messages/default-message-manager.js";
 
 type AppTemplateCopyDestination = "target" | "target-project";
 
@@ -49,9 +50,7 @@ function createProjectDirectory(
     if (destination !== "target-project") return;
 
     if (fs.existsSync(projectPath)) {
-        throw Error(
-            `エラー: コピー先がすでに存在するため、安全のために終了します。 (${projectPath})`
-        );
+        throw Error(messageManager.message("cli.copy.destinationExists", { projectPath }));
     }
 
     fs.mkdirSync(projectPath);

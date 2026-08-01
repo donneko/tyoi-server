@@ -1,4 +1,5 @@
 import { Logger } from "@donneko/tyoi-logger";
+import { messageManager } from "../../../../messages/default-message-manager.js";
 
 export function createCopyResult({
     error,
@@ -10,7 +11,7 @@ export function createCopyResult({
     const logger = new Logger();
 
     return [
-        "コピー結果",
+        messageManager.message("cli.copy.result"),
         [...error.map((m) => logger.createError(m)), ...ok.map((m) => logger.createSuccess(m))],
     ];
 }
