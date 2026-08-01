@@ -4,8 +4,8 @@ import { createFinish } from "./create-finish.js";
 function createContext() {
     return {
         serverLogger: { logger: vi.fn() },
-        systemMetaManager: {
-            getMeta: vi.fn(() => ({ message: "強制的に接続を終了しました" })),
+        messageManager: {
+            message: vi.fn(() => "強制的に接続を終了しました"),
         },
     };
 }

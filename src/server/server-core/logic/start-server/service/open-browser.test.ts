@@ -4,8 +4,8 @@ import { openBrowser } from "./open-browser.js";
 function createContext() {
     return {
         serverLogger: { logger: vi.fn() },
-        systemMetaManager: {
-            getMeta: vi.fn(() => ({ message: "LAN 公開が無効です" })),
+        messageManager: {
+            message: vi.fn(() => "LAN 公開が無効です"),
         },
     };
 }

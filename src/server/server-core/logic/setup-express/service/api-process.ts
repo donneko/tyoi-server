@@ -13,7 +13,7 @@ export async function apiProcess(
             res.status(404).json({
                 ok: false,
                 code: "API_NOT_FOUND",
-                message: "API not found",
+                message: context.messageManager.message("http.api.notFound"),
             });
             return;
         }
@@ -32,7 +32,7 @@ export async function apiProcess(
         res.status(500).json({
             ok: false,
             code: "API_INTERNAL_ERROR",
-            message: "Internal server error",
+            message: context.messageManager.message("http.api.internalError"),
         });
     }
 }

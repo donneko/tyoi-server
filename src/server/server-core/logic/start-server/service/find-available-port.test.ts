@@ -7,17 +7,19 @@ function createContext() {
         createMessage: `${type}:${message ?? ""}`,
     }));
     const messages = new Map([
-        [108, "port __PORT__ is used"],
-        [109, "use port __PORT__?"],
-        [110, "port __PORT__ was rejected"],
-        [111, "using port __PORT__"],
+        ["server.port.unavailable", "port {port} is used"],
+        ["server.port.useAlternativePrompt", "use port {port}?"],
+        ["server.port.rejected", "port {port} was rejected"],
+        ["server.port.selected", "using port {port}"],
     ]);
 
     return {
         context: {
             serverLogger: { logger },
-            systemMetaManager: {
-                getMeta: vi.fn((code: number) => ({ message: messages.get(code) ?? "" })),
+            messageManager: {
+                message: vi.fn((key: string, variables: { port: number }) =>
+                    (messages.get(key) ?? "").replace("{port}", String(variables.port))
+                ),
             },
         },
         logger,

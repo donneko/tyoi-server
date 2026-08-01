@@ -18,9 +18,7 @@ export async function findAvailablePort(
     const { startPort, host, isAutoPort } = findPortArgs;
 
     const serverLogger = context.serverLogger;
-    const systemMetaManager = context.systemMetaManager;
-    const getMessage = (code: Parameters<typeof systemMetaManager.getMeta>[0], port: number) =>
-        systemMetaManager.getMeta(code).message.replace("__PORT__", port.toString());
+    const messageManager = context.messageManager;
     let port = startPort;
 
     // ポートが使用されていたら、別のポートへ
@@ -31,22 +29,24 @@ export async function findAvailablePort(
         }
 
         serverLogger.logger("bar");
-        serverLogger.logger("warn", getMessage(108, port));
+        serverLogger.logger("warn", messageManager.message("server.port.unavailable", { port }));
 
         const pass = await deps.askPermission(
-            serverLogger.logger("createSystem", getMessage(109, port + 1)).createMessage
+            serverLogger.logger(
+                "createSystem",
+                messageManager.message("server.port.useAlternativePrompt", { port: port + 1 })
+            ).createMessage
         );
 
         if (!pass) {
             //許可されなかったら、例外
-            throw new CustomError(
-                systemMetaManager.getMeta(110).message.replace("__PORT__", port.toString()),
-                { errorName: "PORT_NOT_PERMISSION" }
-            );
+            throw new CustomError(messageManager.message("server.port.rejected", { port }), {
+                errorName: "PORT_NOT_PERMISSION",
+            });
         }
 
         port++;
-        serverLogger.logger("info", getMessage(111, port));
+        serverLogger.logger("info", messageManager.message("server.port.selected", { port }));
     }
 
     return port;

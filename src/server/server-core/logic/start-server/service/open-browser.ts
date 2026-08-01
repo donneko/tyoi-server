@@ -19,12 +19,12 @@ export async function openBrowser(
     if (!target) return;
 
     const serverLogger = context.serverLogger;
-    const systemMetaManager = context.systemMetaManager;
+    const messageManager = context.messageManager;
 
     const { isLAN, networkUrl } = deps.createNetworkData(port, host);
 
     if (!isLAN && target === "network")
-        serverLogger.logger("warn", systemMetaManager.getMeta(112).message);
+        serverLogger.logger("warn", messageManager.message("server.network.unavailable"));
 
     const targetUrl = isLAN && target === "network" ? networkUrl : `http://localhost:${port}`;
 

@@ -11,6 +11,17 @@ function createResponse() {
     return response;
 }
 
+function createContext(serverAPIs: object) {
+    return {
+        serverAPIs,
+        messageManager: {
+            message: vi.fn((key: string) =>
+                key === "http.api.notFound" ? "API not found" : "Internal server error"
+            ),
+        },
+    };
+}
+
 describe("apiProcess", () => {
     it("登録済み API を実行して結果を返す", async () => {
         const request = {
@@ -24,7 +35,7 @@ describe("apiProcess", () => {
         const emit = vi.fn(async () => ({ id: 1 }));
         const serverAPIs = { has: vi.fn(() => true), emit };
 
-        await apiProcess(request as never, response as never, { serverAPIs } as never);
+        await apiProcess(request as never, response as never, createContext(serverAPIs) as never);
 
         expect(serverAPIs.has).toHaveBeenCalledWith("POST:/users");
         expect(emit).toHaveBeenCalledWith("POST:/users", {
@@ -52,7 +63,7 @@ describe("apiProcess", () => {
                 path: "/missing",
             } as never,
             response as never,
-            { serverAPIs } as never
+            createContext(serverAPIs) as never
         );
 
         expect(response.status).toHaveBeenCalledWith(404);
@@ -89,7 +100,7 @@ describe("apiProcess", () => {
         await apiProcess(
             { method: "GET", path: "/users" } as never,
             response as never,
-            { serverAPIs } as never
+            createContext(serverAPIs) as never
         );
 
         expect(response.status).toHaveBeenCalledWith(500);

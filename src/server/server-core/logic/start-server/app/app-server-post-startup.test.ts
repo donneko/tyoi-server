@@ -14,6 +14,14 @@ const config: ServerStartUseConfig = {
     signalShutdownHandling: true,
 };
 
+const messageManager = {
+    message: vi.fn((key: string) =>
+        key === "server.summary.failed"
+            ? "サーバーサマリー生成ができませんでした"
+            : "ブラウザを開けませんでした"
+    ),
+};
+
 describe("serverPostStartup", () => {
     it("サマリーを表示してからブラウザを開く", async () => {
         const calls: string[] = [];
@@ -21,7 +29,7 @@ describe("serverPostStartup", () => {
         const serverOpenBrowser = vi.fn(async () => {
             calls.push("browser");
         });
-        const context = {};
+        const context = { messageManager };
 
         await serverPostStartup(config, context as never, {
             serverSummary,
@@ -37,7 +45,7 @@ describe("serverPostStartup", () => {
         const cause = new Error("summary failed");
 
         await expect(
-            serverPostStartup(config, {} as never, {
+            serverPostStartup(config, { messageManager } as never, {
                 serverSummary: vi.fn(() => {
                     throw cause;
                 }),
@@ -54,7 +62,7 @@ describe("serverPostStartup", () => {
         const cause = new Error("browser failed");
 
         await expect(
-            serverPostStartup(config, {} as never, {
+            serverPostStartup(config, { messageManager } as never, {
                 serverSummary: vi.fn(),
                 serverOpenBrowser: vi.fn(async () => {
                     throw cause;

@@ -15,6 +15,6 @@ export type SetupDefaultMiddlewareContext = Pick<ServerContext, "expressServer">
 
 export type SetupApiProcessContext = Pick<ServerContext, "expressServer"> & ApiProcessContext;
 
-export type ApiProcessContext = Pick<ServerContext, "serverAPIs">;
+export type ApiProcessContext = Pick<ServerContext, "serverAPIs" | "messageManager">;
 
-export type SetupStaticFileContext = Pick<ServerContext, "expressServer" | "httpMetaManager">;
+export type SetupStaticFileContext = Pick<ServerContext, "expressServer" | "messageManager">;

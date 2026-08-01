@@ -2,16 +2,16 @@ import { describe, expect, it, vi } from "vitest";
 import { serverSummary } from "./server-summary.js";
 
 const messages = new Map([
-    [113, "started"],
-    [114, "local:"],
-    [115, "api:"],
-    [116, "network:"],
-    [117, "full:"],
-    [118, "public:"],
-    [119, "prefix:"],
-    [120, "scan"],
-    [121, "summary"],
-    [122, "qr"],
+    ["server.summary.started", "started"],
+    ["server.summary.port", "local:{port}"],
+    ["server.summary.local", "api:{port}"],
+    ["server.summary.network", "network:{networkUrl}"],
+    ["server.summary.publicFull", "full:{publicFullPath}"],
+    ["server.summary.public", "public:{publicPath}"],
+    ["server.summary.api", "prefix:{apiPrefix}"],
+    ["server.summary.networkQrCode", "scan"],
+    ["server.summary.title", "summary"],
+    ["server.summary.qrCodeTitle", "qr"],
 ]);
 
 function createContext() {
@@ -19,8 +19,12 @@ function createContext() {
     return {
         context: {
             serverLogger: { logger },
-            systemMetaManager: {
-                getMeta: vi.fn((code: number) => ({ message: messages.get(code) ?? "" })),
+            messageManager: {
+                message: vi.fn((key: string, variables: Record<string, unknown> = {}) =>
+                    (messages.get(key) ?? "").replace(/\{([^}]+)\}/g, (_, name: string) =>
+                        String(variables[name])
+                    )
+                ),
             },
         },
         logger,

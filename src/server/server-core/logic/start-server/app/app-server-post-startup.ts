@@ -19,7 +19,7 @@ export async function serverPostStartup(
         // スタートログ
         deps.serverSummary(config, context);
     } catch (cause) {
-        throw new CustomError("サーバーサマリー生成ができませんでした", {
+        throw new CustomError(context.messageManager.message("server.summary.failed"), {
             cause,
             errorName: "SUMMARY_ERROR",
         });
@@ -29,7 +29,7 @@ export async function serverPostStartup(
         // ブラウザオープン
         await deps.serverOpenBrowser({ ...config, target: config.openBrowser }, context);
     } catch (cause) {
-        throw new CustomError("ブラウザを開けませんでした", {
+        throw new CustomError(context.messageManager.message("server.browser.failed"), {
             cause,
             errorName: "BROWSER_OPEN_ERROR",
         });

@@ -7,9 +7,7 @@ export function createFinish(
     context: CreateFinishContext
 ) {
     const serverLogger = context.serverLogger;
-    const systemMetaManager = context.systemMetaManager;
-    const getMessage = (code: Parameters<typeof systemMetaManager.getMeta>[0]) =>
-        systemMetaManager.getMeta(code).message;
+    const messageManager = context.messageManager;
 
     const finish = () => {
         if (finishObj.settled) return;
@@ -22,7 +20,7 @@ export function createFinish(
         if (finishObj.settled) return;
 
         httpServer.closeAllConnections();
-        serverLogger.logger("warn", getMessage(105));
+        serverLogger.logger("warn", messageManager.message("server.stop.timeout"));
 
         finish();
         resolve();

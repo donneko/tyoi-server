@@ -13,14 +13,14 @@ export type ServerCreateHttpServerContext<WebSocketNameList extends string = str
     "expressServer" | "webSocketRouter"
 >;
 
-export type ServerSummaryContext = Pick<ServerContext, "serverLogger" | "systemMetaManager">;
+export type ServerSummaryContext = Pick<ServerContext, "serverLogger" | "messageManager">;
 
-export type ServerOpenBrowserContext = Pick<ServerContext, "serverLogger" | "systemMetaManager">;
+export type ServerOpenBrowserContext = Pick<ServerContext, "serverLogger" | "messageManager">;
 
 export type CreateServerConfigContext = Pick<ServerContext, "serverConfig" | "serverRegister"> &
     FindAvailablePortContext;
 
-export type FindAvailablePortContext = Pick<ServerContext, "serverLogger" | "systemMetaManager">;
+export type FindAvailablePortContext = Pick<ServerContext, "serverLogger" | "messageManager">;
 
 export type SetupSignalStopContext = Pick<ServerContext, "stopHandler">;
 
@@ -28,5 +28,5 @@ export type UpdatePortContext = Pick<ServerContext, "serverConfig">;
 
 export type ServerStartCatchErrorContext = Pick<
     ServerContext,
-    "serverLogger" | "systemMetaManager" | "innerEventBus"
+    "serverLogger" | "messageManager" | "innerEventBus"
 >;
