@@ -4,15 +4,13 @@ import { setupStaticFile } from "./app-setup-static.js";
 describe("setupStaticFile", () => {
     it("静的配信と404フォールバックを順番に登録する", () => {
         const use = vi.fn();
-        const getMeta = vi.fn(() => ({
-            code: 404,
-            message: "Not Found",
-            description: "Resource was not found",
-        }));
+        const message = vi.fn((key: string) =>
+            key.endsWith("description") ? "Resource was not found" : "Not Found"
+        );
 
         setupStaticFile("/project/public", {
             expressServer: { use } as never,
-            httpMetaManager: { getMeta } as never,
+            messageManager: { message } as never,
         });
 
         expect(use).toHaveBeenCalledTimes(2);
@@ -27,7 +25,8 @@ describe("setupStaticFile", () => {
         response.status.mockReturnValue(response);
         fallback?.({}, response);
 
-        expect(getMeta).toHaveBeenCalledWith(404);
+        expect(message).toHaveBeenCalledWith("http.static.notFound.message");
+        expect(message).toHaveBeenCalledWith("http.static.notFound.description");
         expect(response.status).toHaveBeenCalledWith(404);
         expect(response.send).toHaveBeenCalledWith(
             "<h1>Not Found</h1><br><p>Resource was not found</p>"

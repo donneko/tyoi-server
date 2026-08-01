@@ -2,9 +2,9 @@ import { describe, expect, it, vi } from "vitest";
 import { stopServer } from "./stop-server.js";
 
 const messages = new Map([
-    [104, "stopping"],
-    [106, "stop failed"],
-    [107, "stopped"],
+    ["server.stop.started", "stopping"],
+    ["server.stop.failed", "stop failed"],
+    ["server.stop.completed", "stopped"],
 ]);
 
 function createContext() {
@@ -22,8 +22,8 @@ function createContext() {
                     calls.push(`log:${type}`);
                 }),
             },
-            systemMetaManager: {
-                getMeta: vi.fn((code: number) => ({ message: messages.get(code) ?? "" })),
+            messageManager: {
+                message: vi.fn((key: string) => messages.get(key) ?? ""),
             },
             stopHandler: vi.fn(),
         },

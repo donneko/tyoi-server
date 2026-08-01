@@ -5,9 +5,8 @@ export function setupStaticFile(publicDirectoryPath: string, context: SetupStati
     context.expressServer.use(express.static(publicDirectoryPath));
 
     context.expressServer.use((req, res) => {
-        const sendData = context.httpMetaManager.getMeta(404);
-        res.status(sendData.code).send(
-            `<h1>${sendData.message}</h1><br><p>${sendData.description}</p>`
-        );
+        const message = context.messageManager.message("http.static.notFound.message");
+        const description = context.messageManager.message("http.static.notFound.description");
+        res.status(404).send(`<h1>${message}</h1><br><p>${description}</p>`);
     });
 }

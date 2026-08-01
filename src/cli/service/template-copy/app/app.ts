@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { Logger } from "@donneko/tyoi-logger";
+import type { MessageManager } from "../../../../messages/index.js";
 
 type AppTemplateCopyDestination = "target" | "target-project";
 
@@ -44,36 +45,38 @@ function getProjectPath(
 
 function createProjectDirectory(
     projectPath: string,
-    destination: AppTemplateCopyDestination
+    destination: AppTemplateCopyDestination,
+    messageManager: MessageManager
 ): void {
     if (destination !== "target-project") return;
 
     if (fs.existsSync(projectPath)) {
-        throw Error(
-            `エラー: コピー先がすでに存在するため、安全のために終了します。 (${projectPath})`
-        );
+        throw Error(messageManager.message("cli.copy.destinationExists", { projectPath }));
     }
 
     fs.mkdirSync(projectPath);
 }
 
-export async function appTemplateCopy(data: AppTemplateCopyData): Promise<AppTemplateCopyReturn> {
+export async function appTemplateCopy(
+    data: AppTemplateCopyData,
+    messageManager: MessageManager
+): Promise<AppTemplateCopyReturn> {
     const { target, base, option, pack, app } = data;
 
     const { template, projectName } = option;
     const logger = new Logger();
 
-    const templatePath = await getTemplatePath(template, base, app.templatePass);
+    const templatePath = await getTemplatePath(template, base, app.templatePass, messageManager);
 
-    const fixProjectName = await getProjectName(projectName, target);
+    const fixProjectName = await getProjectName(projectName, target, messageManager);
 
     const destination = app.destination ?? "target";
     const projectPath = getProjectPath(target, fixProjectName, destination);
 
-    createProjectDirectory(projectPath, destination);
+    createProjectDirectory(projectPath, destination, messageManager);
 
     const copyResult = await copyFolder(templatePath, projectPath);
-    logger.window(...createCopyResult(copyResult));
+    logger.window(...createCopyResult(copyResult, messageManager));
 
     if (app.replacePackageJson ?? true) {
         replacePackageJson(projectPath, fixProjectName, pack.version);

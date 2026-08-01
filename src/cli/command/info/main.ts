@@ -3,15 +3,17 @@ import type { CmdMetaData } from "../../types/tyoi-cli.type.js";
 import { getConfigFile } from "./service/getConfigFile.js";
 import { pathToFileURL } from "node:url";
 import { Logger } from "@donneko/tyoi-logger";
+import type { MessageManager } from "../../../messages/index.js";
 
 async function getConfig(
     processCwd: string,
     mainDirname: string,
-    optionArgs: unknown
+    optionArgs: unknown,
+    messageManager: MessageManager
 ): Promise<unknown> {
     if (!(typeof optionArgs === "object")) return;
 
-    const file = await getConfigFile(processCwd);
+    const file = await getConfigFile(processCwd, messageManager);
 
     let useConfig = {};
 
@@ -47,7 +49,12 @@ export default async function serverCreate(data: CmdMetaData) {
     const mainDirname = data.meta.cli.dirname;
     const processCwd = data.meta.cli.cwd;
 
-    const config = await getConfig(processCwd, mainDirname, data.meta.option);
+    const config = await getConfig(
+        processCwd,
+        mainDirname,
+        data.meta.option,
+        data.meta.context.messageManager
+    );
 
     addLog(config);
 }

@@ -2,11 +2,13 @@ import path from "node:path";
 import { readDirectory } from "../../read-directory.js";
 import { Ask, Logger } from "@donneko/tyoi-logger";
 import { isValidTemplate } from "../core/is-valid-template.js";
+import type { MessageManager } from "../../../../messages/index.js";
 
 export async function getTemplatePath(
     templateName: string | undefined,
     base: string,
-    templatePath: string
+    templatePath: string,
+    messageManager: MessageManager
 ): Promise<string> {
     const readPath = path.join(base, templatePath);
     const templateFiles = await readDirectory(readPath, false);
@@ -20,15 +22,17 @@ export async function getTemplatePath(
             return path.join(readPath, template);
         }
 
-        throw new Error(`コピー元のテンプレートが見つかりません: ${template}`);
+        throw new Error(messageManager.message("cli.template.notFound", { template }));
     }
 
-    template = await ask.select("テンプレートを選択してください", templateFiles);
+    template = await ask.select(messageManager.message("cli.template.select"), templateFiles);
 
     if (!template) {
-        throw new Error(`コピー元のテンプレートが指定されていません: ${template}`);
+        throw new Error(
+            messageManager.message("cli.template.notSelected", { template: String(template) })
+        );
     }
 
-    logger.info(`選択されたテンプレート[${template}]`);
+    logger.info(messageManager.message("cli.template.selected", { template }));
     return path.join(readPath, template);
 }

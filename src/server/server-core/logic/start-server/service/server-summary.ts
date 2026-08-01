@@ -18,25 +18,42 @@ export function serverSummary(
     const { networkUrl, isLAN } = deps.createNetworkData(port, host);
 
     const serverLogger = context.serverLogger;
-    const systemMetaManager = context.systemMetaManager;
-    const getMessage = (code: Parameters<typeof systemMetaManager.getMeta>[0]) =>
-        systemMetaManager.getMeta(code).message;
+    const messageManager = context.messageManager;
 
     // ステータス
-    serverLogger.logger("window", getMessage(121), [
-        serverLogger.logger("createSuccess", getMessage(113)),
-        serverLogger.logger("createInfo", `${getMessage(114)}${port}`),
-        serverLogger.logger("createInfo", `${getMessage(115)}${port}`),
-        ...(isLAN ? [serverLogger.logger("createInfo", `${getMessage(116)}${networkUrl}`)] : []),
-        serverLogger.logger("createInfo", `${getMessage(117)}${publicFullPath}`),
-        serverLogger.logger("createInfo", `${getMessage(118)}${publicPath}`),
-        serverLogger.logger("createInfo", `${getMessage(119)}${apiPrefix}`),
+    serverLogger.logger("window", messageManager.message("server.summary.title"), [
+        serverLogger.logger("createSuccess", messageManager.message("server.summary.started")),
+        serverLogger.logger("createInfo", messageManager.message("server.summary.port", { port })),
+        serverLogger.logger("createInfo", messageManager.message("server.summary.local", { port })),
+        ...(isLAN
+            ? [
+                  serverLogger.logger(
+                      "createInfo",
+                      messageManager.message("server.summary.network", { networkUrl })
+                  ),
+              ]
+            : []),
+        serverLogger.logger(
+            "createInfo",
+            messageManager.message("server.summary.publicFull", { publicFullPath })
+        ),
+        serverLogger.logger(
+            "createInfo",
+            messageManager.message("server.summary.public", { publicPath })
+        ),
+        serverLogger.logger(
+            "createInfo",
+            messageManager.message("server.summary.api", { apiPrefix })
+        ),
     ]);
 
     // QRcode生成
     if (showQrCode && isLAN) {
-        serverLogger.logger("window", getMessage(122), [
-            serverLogger.logger("createInfo", systemMetaManager.getMeta(120).message),
+        serverLogger.logger("window", messageManager.message("server.summary.qrCodeTitle"), [
+            serverLogger.logger(
+                "createInfo",
+                messageManager.message("server.summary.networkQrCode")
+            ),
             serverLogger.logger(
                 "createInfo",
                 (() => {

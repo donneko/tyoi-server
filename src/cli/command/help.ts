@@ -1,18 +1,21 @@
-// import type { CmdMetaData } from "../types/tyoi-cli.js";
+import type { CmdMetaData } from "../types/tyoi-cli.type.js";
 import { Logger } from "@donneko/tyoi-logger";
 
-export default function serverHelp() {
+export default function serverHelp(data: CmdMetaData) {
+    const messageManager = data.meta.context.messageManager;
+
     const logger = new Logger();
 
-    logger.window("help 表示", [
-        logger.createInfo(`現在使用できるコマンドは以下の通りです。\n更新 : [2026/06/07]`),
+    logger.window(messageManager.message("cli.help.title"), [
+        logger.createInfo(messageManager.message("cli.help.introduction")),
         logger.createBar(),
-        logger.createMessage(`dev    : 動作確認用の設定で動作確認用サーバーが起動します。`),
-        logger.createMessage(`help   : 使用できるコマンド一覧が確認できます。`),
-        logger.createMessage(`init   : 現在いるディレクトリーにサーバーを作成します`),
-        logger.createMessage(`run    : 現在のディレクトリーのサーバーを起動します`),
-        logger.createMessage(`create : 新しいフォルダーにサーバーを作成します`),
-        logger.createMessage(`config : 現在のディレクトリーに設定ファイルを追加します`),
-        logger.createMessage(`info   : "tyoi run" の設定が適用されるの確認結果が表示されます`),
+        logger.createMessage(messageManager.message("cli.help.dev")),
+        logger.createMessage(messageManager.message("cli.help.help")),
+        logger.createMessage(messageManager.message("cli.help.init")),
+        logger.createMessage(messageManager.message("cli.help.run")),
+        logger.createMessage(messageManager.message("cli.help.create")),
+        logger.createMessage(messageManager.message("cli.help.config")),
+        logger.createMessage(messageManager.message("cli.help.info")),
+        logger.createMessage(messageManager.message("cli.help.setting")),
     ]);
 }

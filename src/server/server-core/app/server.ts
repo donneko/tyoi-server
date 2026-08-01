@@ -81,7 +81,10 @@ export class Server<
         const context = this.serverContext;
 
         if (!isServerStart(this.httpServer, this.isStarting)) {
-            context.serverLogger.logger("warn", context.systemMetaManager.getMeta(102).message);
+            context.serverLogger.logger(
+                "warn",
+                context.messageManager.message("server.start.alreadyRunning")
+            );
             return;
         }
 

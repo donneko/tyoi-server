@@ -8,10 +8,10 @@ export function startCatchError(
     context: ServerStartCatchErrorContext
 ): http.Server {
     const serverLogger = context.serverLogger;
-    const systemMetaManager = context.systemMetaManager;
+    const messageManager = context.messageManager;
     const innerEventBus = context.innerEventBus;
 
-    serverLogger.logger("error", systemMetaManager.getMeta(103).message);
+    serverLogger.logger("error", messageManager.message("server.start.failed"));
 
     if (error instanceof Error) {
         serverLogger.logger("error", error.message);

@@ -1,9 +1,10 @@
 import { Logger } from "@donneko/tyoi-logger";
+import type { MessageManager } from "../../../messages/index.js";
 
-export function getOnError() {
+export function getOnError(messageManager: MessageManager) {
     const logger = new Logger();
 
     logger.bar();
-    logger.warn("未知のコマンドです");
-    logger.info("コマンドを探すには help を実行してみてください");
+    logger.warn(messageManager.message("cli.command.unknown"));
+    logger.info(messageManager.message("cli.command.helpHint"));
 }

@@ -1,10 +1,12 @@
 import path from "node:path";
 import { Ask, Logger } from "@donneko/tyoi-logger";
 import { isValidProjectName } from "../core/is-valid-project-name.js";
+import type { MessageManager } from "../../../../messages/index.js";
 
 export async function getProjectName(
     inputName: string | undefined,
-    target: string
+    target: string,
+    messageManager: MessageManager
 ): Promise<string> {
     let projectName = inputName;
     const ask = new Ask();
@@ -13,16 +15,16 @@ export async function getProjectName(
     if (!projectName) {
         const defaultName = path.basename(target);
         const InputProjectName =
-            (await ask.input(`Project名を入力してください。デフォルト(${defaultName}) : `)) ??
+            (await ask.input(messageManager.message("cli.project.input", { defaultName }))) ??
             defaultName;
 
         projectName = InputProjectName;
     }
 
     if (!isValidProjectName(projectName)) {
-        throw Error(`プロジェクト名に使える文字は英数字・- のみです。[${projectName}]`);
+        throw Error(messageManager.message("cli.project.invalidName", { projectName }));
     }
 
-    logger.info(`選択されたプロジェクト名[${projectName}]`);
+    logger.info(messageManager.message("cli.project.selected", { projectName }));
     return projectName;
 }

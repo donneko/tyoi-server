@@ -13,21 +13,24 @@ export default async function serverConfig(data: CmdMetaData) {
 
     const pack = data.meta.pack;
 
-    await copyTemplate({
-        target: processCwd,
-        base: mainDirname,
-        option: {
-            template: option?.template,
-            ...(projectName !== undefined ? { projectName } : {}),
+    await copyTemplate(
+        {
+            target: processCwd,
+            base: mainDirname,
+            option: {
+                template: option?.template,
+                ...(projectName !== undefined ? { projectName } : {}),
+            },
+            pack: {
+                version: pack.version,
+            },
+            app: {
+                templatePass: TEMPLATE_PASS,
+                replacePackageJson: false,
+            },
         },
-        pack: {
-            version: pack.version,
-        },
-        app: {
-            templatePass: TEMPLATE_PASS,
-            replacePackageJson: false,
-        },
-    });
+        data.meta.context.messageManager
+    );
 
-    showNextSteps();
+    showNextSteps(data.meta.context.messageManager);
 }

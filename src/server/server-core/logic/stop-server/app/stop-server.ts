@@ -23,9 +23,7 @@ export async function stopServer(
 
     return new Promise<void>((resolve, reject) => {
         const serverLogger = context.serverLogger;
-        const systemMetaManager = context.systemMetaManager;
-        const getMessage = (code: Parameters<typeof systemMetaManager.getMeta>[0]) =>
-            systemMetaManager.getMeta(code).message;
+        const messageManager = context.messageManager;
 
         // !! オブジェクトを展開しないで！！ settled の参照が切れる。
         const finishResolve = () => {
@@ -37,7 +35,7 @@ export async function stopServer(
         };
         const finishObj = deps.createFinish(httpServer, finishResolve, context);
 
-        serverLogger.logger("process", getMessage(104));
+        serverLogger.logger("process", messageManager.message("server.stop.started"));
         deps.offSignalStop(context);
 
         httpServer.close((error) => {
@@ -45,7 +43,7 @@ export async function stopServer(
             if (finishObj.settled) return;
 
             if (error) {
-                serverLogger.logger("error", getMessage(106));
+                serverLogger.logger("error", messageManager.message("server.stop.failed"));
 
                 finishObj.finish();
                 reject(
@@ -58,7 +56,7 @@ export async function stopServer(
                 );
                 return;
             }
-            serverLogger.logger("success", getMessage(107));
+            serverLogger.logger("success", messageManager.message("server.stop.completed"));
 
             finishObj.finish();
             finishResolve();

@@ -5,8 +5,8 @@ import { startCatchError } from "./start-catch-error.js";
 function createContext() {
     return {
         serverLogger: { logger: vi.fn() },
-        systemMetaManager: {
-            getMeta: vi.fn(() => ({ message: "サーバー起動エラー" })),
+        messageManager: {
+            message: vi.fn(() => "サーバー起動エラー"),
         },
         innerEventBus: { emit: vi.fn() },
     };
