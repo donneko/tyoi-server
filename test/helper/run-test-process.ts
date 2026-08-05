@@ -25,9 +25,8 @@ export function runTestProcess(fileUrl: URL, config: Partial<TestProcessConfig> 
     };
 
     const fixturePath = fileURLToPath(fileUrl.href);
-    console.log(fixturePath);
 
-    const result = spawnSync(process.execPath, [fixturePath], {
+    const result = spawnSync(process.execPath, ["--import=tsx", fixturePath], {
         encoding: "utf8",
         timeout: useConfig.timeout,
         input: useConfig.input,
