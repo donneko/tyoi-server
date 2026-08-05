@@ -3,7 +3,7 @@ import { Server } from "../../../src/index.js";
 const server = new Server({
     baseDirname: import.meta.dirname,
     port: 0,
-    apiPrefix: "api",
+    apiPrefix: "/api",
 });
 
 server.onAPI("GET:/a", () => {

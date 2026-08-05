@@ -3,7 +3,7 @@ import { Server } from "../../../src/index.js";
 const server = new Server({
     baseDirname: import.meta.dirname,
     port: 0,
-    apiPrefix: "api",
+    apiPrefix: "/api",
 });
 
 await server.start();
@@ -11,7 +11,8 @@ const port = server.getPort();
 
 const res = async (url: string, init?: RequestInit | undefined): Promise<object> => {
     const response = await fetch(url, init);
-    if (!(response.ok && [404, 200].includes(response.status))) throw new Error();
+    if (!(!response.ok && [404].includes(response.status)))
+        throw new Error(`response.ok:${response.ok},response.status:${response.status}`);
 
     const json = await response.json();
     return json;

@@ -3,14 +3,14 @@ import { Server } from "../../../src/index.js";
 const server = new Server({
     baseDirname: import.meta.dirname,
     port: 0,
-    apiPrefix: "api",
+    apiPrefix: "/api",
 });
 
 server.onAPI("GET:/get/a", () => {
     return "hello";
 });
 server.onAPI("POST:/post/a", (data) => {
-    return data.body;
+    if (typeof data.body === "object" && data.body && "post" in data.body) return data.body.post;
 });
 
 await server.start();
@@ -31,10 +31,14 @@ await res(`http://localhost:${port}/api/get/a`).then((json: any) => {
 
 await res(`http://localhost:${port}/api/post/a`, {
     method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
     body: JSON.stringify({ post: "hello" }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }).then((json: any) => {
-    if (!(json?.ok && json?.data.post === "hello")) throw new Error();
+    if (!(json.ok && json.data === "hello"))
+        throw new Error(`json.ok: ${json.ok},json.data: ${json.data}`);
 });
 
 await server.stop();
