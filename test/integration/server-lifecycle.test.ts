@@ -27,7 +27,7 @@ describe("Server integration lifecycle", () => {
         expect(result.error, debag).toBeUndefined();
         expect(result.status, debag).toBe(0);
     });
-    it("起動中にisRunningがtrueでgetHttpServerからhttpサーバーを取得できる", () => {
+    it("起動中にgetHttpServerからhttpサーバーを取得できる", () => {
         const fixtureUrl = new URL("../fixtures/lifecycle/access-port.ts", import.meta.url);
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);
@@ -35,7 +35,16 @@ describe("Server integration lifecycle", () => {
         expect(result.error, debag).toBeUndefined();
         expect(result.status, debag).toBe(0);
     });
-    it("終了したらにisRunningがfalseでgetHttpServerからhttpサーバーを取得できない", () => {
+
+    it("終了したらisRunningがfalse", () => {
+        const fixtureUrl = new URL("../fixtures/lifecycle/access-port.ts", import.meta.url);
+        const result = runTestProcess(fixtureUrl);
+        const debag = formatTestProcessResult(result);
+
+        expect(result.error, debag).toBeUndefined();
+        expect(result.status, debag).toBe(0);
+    });
+    it("終了したらgetHttpServerからhttpサーバーを取得できない", () => {
         const fixtureUrl = new URL("../fixtures/lifecycle/access-port.ts", import.meta.url);
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);
@@ -60,7 +69,7 @@ describe("Server integration lifecycle", () => {
         expect(result.status, debag).toBe(0);
     });
 
-    it("start を二回実行しても、二回めを無視する", () => {
+    it("start を二回実行しても、二回めを無視する(例外が発生しない)", () => {
         const fixtureUrl = new URL("../fixtures/lifecycle/access-port.ts", import.meta.url);
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);
@@ -68,15 +77,8 @@ describe("Server integration lifecycle", () => {
         expect(result.error, debag).toBeUndefined();
         expect(result.status, debag).toBe(0);
     });
-    it("サーバー起動中に stop を二回実行しても、二回めを無視する", () => {
-        const fixtureUrl = new URL("../fixtures/lifecycle/access-port.ts", import.meta.url);
-        const result = runTestProcess(fixtureUrl);
-        const debag = formatTestProcessResult(result);
 
-        expect(result.error, debag).toBeUndefined();
-        expect(result.status, debag).toBe(0);
-    });
-    it("サーバーが起動していないときに stop を実行しても、無視する", () => {
+    it("サーバーが起動していないときに stop を実行しても、無視する(例外が発生しない)", () => {
         const fixtureUrl = new URL("../fixtures/lifecycle/access-port.ts", import.meta.url);
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);

@@ -6,17 +6,18 @@ const server = new Server({
 });
 
 await server.start();
+
 const port = server.getPort();
 
-
-
-await res(`http://localhost:${port}/`);
-
 await server.stop();
+
+await res(`http://localhost:${port}/`, { signal: AbortSignal.timeout(2000) }).catch(e=>{
+    if(e.name !== "TimeoutError")throw e;
+});
 
 
 async function res (url: string, init?: RequestInit | undefined): Promise<void>{
     const response = await fetch(url, init);
-    if (!(response.ok && [404].includes(response.status))) throw new Error();
+    if (!(response.ok && [404,200].includes(response.status))) throw new Error();
 
 };

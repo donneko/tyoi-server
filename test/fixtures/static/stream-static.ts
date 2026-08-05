@@ -2,21 +2,18 @@ import { Server } from "../../../src/index.js";
 
 const server = new Server({
     baseDirname: import.meta.dirname,
+    publicDirname: "./test-data",
     port: 0,
-    apiPrefix: "api",
-});
-
-server.onAPI("GET:/a", () => {
-    return "hello";
 });
 
 await server.start();
 const port = server.getPort();
 
-const response = await fetch(`http://localhost:${port}/api/a`);
-if (!(response.ok && [404, 200].includes(response.status))) throw new Error();
-
-const json = await response.json();
-if (!(json.ok && json.data === "hello")) throw new Error();
+await res(`http://localhost:${port}/`);
 
 await server.stop();
+
+async function res(url: string, init?: RequestInit | undefined): Promise<void> {
+    const response = await fetch(url, init);
+    if (!(response.ok && [200].includes(response.status))) throw new Error();
+}

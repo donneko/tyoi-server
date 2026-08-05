@@ -7,8 +7,9 @@ const server = new Server({
 
 await server.start()
 
+await server.stop();
+
 const getHttpServer = server.getHttpServer();
 
-if(!(getHttpServer instanceof http.Server))throw new Error();
+if(getHttpServer instanceof http.Server)throw new Error();
 
-await server.stop();
