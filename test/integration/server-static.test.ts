@@ -1,0 +1,22 @@
+import { describe, expect, it } from "vitest";
+import { runTestProcess } from "../helper/run-test-process.js";
+import { formatTestProcessResult } from "../helper/format-test-process-result.js";
+
+describe("Server integration static", () => {
+    it("ページを配信できる", () => {
+        const fixtureUrl = new URL("../fixtures/lifecycle/start-then-stop.ts", import.meta.url);
+        const result = runTestProcess(fixtureUrl);
+        const debag = formatTestProcessResult(result);
+
+        expect(result.error, debag).toBeUndefined();
+        expect(result.status, debag).toBe(0);
+    });
+    it("ページが存在しない場合に 404 ページを返せる", () => {
+        const fixtureUrl = new URL("../fixtures/lifecycle/start-then-stop.ts", import.meta.url);
+        const result = runTestProcess(fixtureUrl);
+        const debag = formatTestProcessResult(result);
+
+        expect(result.error, debag).toBeUndefined();
+        expect(result.status, debag).toBe(0);
+    });
+});
