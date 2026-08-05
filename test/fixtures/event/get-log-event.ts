@@ -1,7 +1,7 @@
 import { Server } from "../../../src/index.js";
 
 const server = new Server({
-    baseDirname: "",
+    baseDirname: import.meta.dirname,
     port: 0,
 });
 
