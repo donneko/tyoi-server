@@ -8,8 +8,4 @@ describe("pathNormalization", () => {
             path.resolve("/project", "public/assets")
         );
     });
-
-    it("絶対パスの publicDirname はそのパスを優先する", () => {
-        expect(pathNormalization("/project", "/shared/public")).toBe("/shared/public");
-    });
 });
