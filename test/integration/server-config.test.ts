@@ -4,7 +4,10 @@ import { formatTestProcessResult } from "../helper/format-test-process-result.js
 
 describe("Server integration config", () => {
     it("サーバー作成時に、デフォルトの設定を上書きできる", () => {
-        const fixtureUrl = new URL("../fixtures/lifecycle/start-then-stop.ts", import.meta.url);
+        const fixtureUrl = new URL(
+            "../fixtures/config/create-server-config-overwrite.ts",
+            import.meta.url
+        );
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);
 
@@ -12,7 +15,10 @@ describe("Server integration config", () => {
         expect(result.status, debag).toBe(0);
     });
     it("サーバー起動時に、設定を上書きできる", () => {
-        const fixtureUrl = new URL("../fixtures/lifecycle/start-then-stop.ts", import.meta.url);
+        const fixtureUrl = new URL(
+            "../fixtures/config/start-server-config-overwrite.ts",
+            import.meta.url
+        );
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);
 

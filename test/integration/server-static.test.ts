@@ -4,7 +4,7 @@ import { formatTestProcessResult } from "../helper/format-test-process-result.js
 
 describe("Server integration static", () => {
     it("ページを配信できる", () => {
-        const fixtureUrl = new URL("../fixtures/lifecycle/start-then-stop.ts", import.meta.url);
+        const fixtureUrl = new URL("../fixtures/static/stream-static.ts", import.meta.url);
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);
 
@@ -12,7 +12,7 @@ describe("Server integration static", () => {
         expect(result.status, debag).toBe(0);
     });
     it("ページが存在しない場合に 404 ページを返せる", () => {
-        const fixtureUrl = new URL("../fixtures/lifecycle/start-then-stop.ts", import.meta.url);
+        const fixtureUrl = new URL("../fixtures/static/static-not-found.ts", import.meta.url);
         const result = runTestProcess(fixtureUrl);
         const debag = formatTestProcessResult(result);
 
