@@ -16,7 +16,7 @@ export function createPackToTmpDir(tmpDir: string): string {
 
     if (result.status !== 0) {
         throw new Error(
-            `npm pack failed\n\n${process.cwd()}\n\n${formatTestProcessResult({
+            `npm pack failed\n\n${formatTestProcessResult({
                 status: result.status,
                 signal: result.signal,
                 stdout: result.stdout,

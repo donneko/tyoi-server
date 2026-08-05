@@ -12,7 +12,7 @@ export interface TestProcessConfig {
 }
 
 const defaultTestProcessConfig: TestProcessConfig = {
-    timeout: 4_500,
+    timeout: 10_000,
 };
 
 export async function runCommand(

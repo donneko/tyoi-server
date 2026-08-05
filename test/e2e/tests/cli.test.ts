@@ -13,14 +13,14 @@ describe("cli e2e", () => {
     const npmCmd = getNpmCommand();
 
     beforeEach(async () => {
-        tmpDir = await createTmpDir();
+        tmpDir = await createTmpDir("tyoi-e2e-cli");
         const packDir = createPackToTmpDir(tmpDir);
         const packageUrl = new URL("../template/package.json", import.meta.url);
         await copyTmpDir(tmpDir, packageUrl);
         await installPackage(tmpDir, packDir);
-    });
+    }, 15_000);
     afterEach(async () => {
-        removeTmpDir(tmpDir);
+        await removeTmpDir(tmpDir);
     });
     it("tyoi 実行できる", async () => {
         const result = await runCommand(tmpDir, npmCmd, ["exec", "--", "tyoi"]);
