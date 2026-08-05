@@ -17,9 +17,9 @@ const response = await fetch(`http://localhost:${port}/api/post/a`, {
     method: "POST",
     body: JSON.stringify({ post: "hello" }),
 });
-if (!(response.ok && [404, 200].includes(response.status))) throw new Error();
-
+if (!(response.ok && [404, 200].includes(response.status)))
+    throw new Error(`response.ok:${response.ok},response.status:${response.status}`);
 const json = await response.json();
-if (!(json.ok && json.data.post === "hello")) throw new Error();
+if (!(json.ok && json.data.post === "hello")) throw new Error(JSON.stringify(json));
 
 await server.stop();

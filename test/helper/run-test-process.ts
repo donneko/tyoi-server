@@ -18,7 +18,10 @@ const defaultTestProcessConfig: TestProcessConfig = {
     input: undefined,
 };
 
-export function runTestProcess(fileUrl: URL, config: Partial<TestProcessConfig> = {}) {
+export function runTestProcess(
+    fileUrl: URL,
+    config: Partial<TestProcessConfig> = {}
+): TestProcessReturn {
     const useConfig = {
         ...defaultTestProcessConfig,
         ...config,
