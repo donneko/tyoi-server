@@ -1,5 +1,4 @@
 import { spawn } from "node:child_process";
-import { fileURLToPath } from "node:url";
 
 export interface TestProcessReturn {
     status: number | null;
@@ -16,8 +15,10 @@ const defaultTestProcessConfig: TestProcessConfig = {
     timeout: 4_500,
 };
 
-export async function runTestProcess(
-    fileUrl: URL,
+export async function runCommand(
+    cwd: string,
+    command: string,
+    args: string[] = [],
     config: Partial<TestProcessConfig> = {}
 ): Promise<TestProcessReturn> {
     const useConfig = {
@@ -25,7 +26,6 @@ export async function runTestProcess(
         ...config,
     };
 
-    const fixturePath = fileURLToPath(fileUrl.href);
     const result: TestProcessReturn = {
         status: null,
         signal: null,
@@ -35,9 +35,11 @@ export async function runTestProcess(
     };
 
     return new Promise((resolve) => {
-        const child = spawn(process.execPath, ["--import=tsx", fixturePath], {
+        const child = spawn(command, args, {
+            cwd,
             stdio: ["pipe", "pipe", "pipe"],
             timeout: useConfig.timeout,
+            shell: process.platform === "win32",
         });
 
         child.stdout.setEncoding("utf8");
