@@ -7,9 +7,7 @@ const server = new Server({
 });
 
 server.onWebSocket("/ws", ({ ws }) => {
-    ws.on("open", () => {
-        ws.send("hello");
-    });
+    ws.send("hello");
 });
 
 await server.start();

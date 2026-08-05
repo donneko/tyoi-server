@@ -6,10 +6,8 @@ const server = new Server({
     port: 0,
 });
 
-server.onWebSocket("/ws", ({ ws }) => {
-    ws.on("open", async () => {
-        await server.stop();
-    });
+server.onWebSocket("/ws", async () => {
+    await server.stop();
 });
 
 await server.start();

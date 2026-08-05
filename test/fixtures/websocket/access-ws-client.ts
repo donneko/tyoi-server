@@ -6,10 +6,8 @@ const server = new Server({
     port: 0,
 });
 
-server.onWebSocket("/ws", ({ ws }) => {
-    ws.on("open", () => {
-        process.exit(0);
-    });
+server.onWebSocket("/ws", () => {
+    server.stop();
 });
 
 await server.start();
@@ -18,15 +16,5 @@ const port = server.getPort();
 await testWs(`ws://localhost:${port}/ws`);
 
 async function testWs(url: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        const time = setTimeout(() => {
-            reject();
-        }, 3000);
-        const socket = new WebSocket(url);
-
-        socket.on("open", () => {
-            clearTimeout(time);
-            resolve();
-        });
-    });
+    new WebSocket(url);
 }

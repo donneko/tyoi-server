@@ -19,6 +19,8 @@ const port = server.getPort();
 await testWs(`ws://localhost:${port}/ws/a`);
 await testWs(`ws://localhost:${port}/ws/b`);
 
+await server.stop();
+
 async function testWs(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
         const time = setTimeout(() => {
