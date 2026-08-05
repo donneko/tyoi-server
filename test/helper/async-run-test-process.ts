@@ -14,7 +14,7 @@ export interface TestProcessConfig {
 }
 
 const defaultTestProcessConfig: TestProcessConfig = {
-    timeout: 5_000,
+    timeout: 4_500,
     input: undefined,
 };
 
