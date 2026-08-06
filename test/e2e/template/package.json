@@ -1,14 +1,6 @@
 {
-  "name": "playground",
+  "name": "e2e",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@donneko/tyoi-server": "file:__PACK_FILE_NAME__"
-  }
+  "private":"false",
+  "type": "module"
 }
