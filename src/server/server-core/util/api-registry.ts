@@ -19,7 +19,11 @@ export class ApiRegistry<ApiRegistryMap extends Record<string, unknown>> {
 
         this.#EVENT_DATA_STORE.set(type, fn as unknown);
 
-        return () => this.off(type);
+        return () => {
+            if (this.#EVENT_DATA_STORE.get(type) === fn) {
+                this.off(type);
+            }
+        };
     }
 
     /**
