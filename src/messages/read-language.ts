@@ -10,7 +10,7 @@ export function parseDictionary(filePath: string): LanguageDictionary {
         throw new Error(`Failed to read language dictionary: ${filePath}`, { cause });
     }
 
-    if (!value || typeof value !== "object") {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
         throw new Error(`Invalid language dictionary: ${filePath}`);
     }
 
