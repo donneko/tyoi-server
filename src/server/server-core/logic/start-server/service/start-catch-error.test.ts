@@ -6,59 +6,111 @@ function createContext() {
     return {
         serverLogger: { logger: vi.fn() },
         messageManager: {
-            message: vi.fn(() => "サーバー起動エラー"),
+            message: vi.fn(() => "server startup error"),
         },
         innerEventBus: { emit: vi.fn() },
+        webSocketRouter: { close: vi.fn(async () => undefined) },
+        stopHandler: vi.fn(),
     };
 }
 
 describe("startCatchError", () => {
     it.each(["SUMMARY_ERROR", "BROWSER_OPEN_ERROR"])(
-        "%s は起動済みサーバーを維持して返す",
-        (errorName) => {
+        "keeps a started server for %s",
+        async (errorName) => {
             const context = createContext();
-            const httpServer = { close: vi.fn() };
+            const httpServer = {
+                close: vi.fn((callback?: () => void) => callback?.()),
+            };
             const error = new CustomError("optional startup action failed", { errorName });
 
-            expect(startCatchError(error, httpServer as never, context as never)).toBe(httpServer);
+            await expect(
+                startCatchError(error, httpServer as never, context as never)
+            ).resolves.toBe(httpServer);
             expect(httpServer.close).not.toHaveBeenCalled();
-            expect(context.innerEventBus.emit).toHaveBeenCalledWith("server/start:error", {
-                error,
-            });
+            expect(context.webSocketRouter.close).not.toHaveBeenCalled();
         }
     );
 
-    it("通常の Error はログとイベントに記録し、サーバーを閉じて再送出する", () => {
+    it("cleans up WebSocket and HTTP resources for a normal error", async () => {
         const context = createContext();
-        const httpServer = { close: vi.fn() };
+        const httpServer = {
+            close: vi.fn((callback?: () => void) => callback?.()),
+        };
         const error = new Error("listen failed");
+        const processOff = vi.spyOn(process, "off");
 
-        expect(() => startCatchError(error, httpServer as never, context as never)).toThrow(error);
-        expect(context.serverLogger.logger).toHaveBeenNthCalledWith(
-            1,
-            "error",
-            "サーバー起動エラー"
-        );
-        expect(context.serverLogger.logger).toHaveBeenNthCalledWith(2, "error", "listen failed");
-        expect(context.innerEventBus.emit).toHaveBeenCalledWith("server/start:error", {
-            error,
-        });
-        expect(httpServer.close).toHaveBeenCalledOnce();
+        try {
+            await expect(
+                startCatchError(error, httpServer as never, context as never)
+            ).rejects.toThrow(error);
+            expect(processOff).toHaveBeenCalledWith("SIGINT", context.stopHandler);
+            expect(processOff).toHaveBeenCalledWith("SIGTERM", context.stopHandler);
+            expect(context.serverLogger.logger).toHaveBeenNthCalledWith(
+                1,
+                "error",
+                "server startup error"
+            );
+            expect(context.serverLogger.logger).toHaveBeenNthCalledWith(
+                2,
+                "error",
+                "listen failed"
+            );
+            expect(context.innerEventBus.emit).toHaveBeenCalledWith("server/start:error", {
+                error,
+            });
+            expect(context.webSocketRouter.close).toHaveBeenCalledOnce();
+            expect(httpServer.close).toHaveBeenCalledOnce();
+        } finally {
+            processOff.mockRestore();
+        }
     });
 
-    it("Error 以外はエラー本体なしでイベントを発火し、値を再送出する", () => {
+    it("rethrows non-Error values", async () => {
         const context = createContext();
 
-        expect(() => startCatchError("failure", null, context as never)).toThrow("failure");
+        await expect(startCatchError("failure", null, context as never)).rejects.toBe("failure");
         expect(context.innerEventBus.emit).toHaveBeenCalledWith("server/start:error", {});
-        expect(context.serverLogger.logger).toHaveBeenCalledTimes(1);
+        expect(context.serverLogger.logger).toHaveBeenCalledOnce();
     });
 
-    it("軽微なエラーでもサーバー未生成なら再送出する", () => {
+    it("does not create an unhandled rejection when startup error notification fails", async () => {
+        const context = createContext();
+        context.innerEventBus.emit.mockRejectedValueOnce(new Error("notification failed"));
+        const error = new Error("startup failed");
+
+        await expect(startCatchError(error, null, context as never)).rejects.toBe(error);
+    });
+
+    it("HTTP close 完了前には起動エラーを再送出しない", async () => {
+        const context = createContext();
+        let finishClose: (() => void) | undefined;
+        const httpServer = {
+            close: vi.fn((callback?: () => void) => {
+                finishClose = callback;
+            }),
+        };
+        const promise = startCatchError(
+            new Error("listen failed"),
+            httpServer as never,
+            context as never
+        );
+        let settled = false;
+        void promise.catch(() => {
+            settled = true;
+        });
+
+        await Promise.resolve();
+        expect(settled).toBe(false);
+        finishClose?.();
+        await expect(promise).rejects.toThrow("listen failed");
+    });
+
+    it("rethrows a low-severity error when no server exists", async () => {
         const error = new CustomError("summary failed", {
             errorName: "SUMMARY_ERROR",
         });
 
-        expect(() => startCatchError(error, null, createContext() as never)).toThrow(error);
+        await expect(startCatchError(error, null, createContext() as never)).rejects.toThrow(error);
     });
 });

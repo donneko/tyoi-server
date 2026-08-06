@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs/promises";
 import { readDirectory } from "./read-directory.js";
 
 export async function scanConfigFiles(passedPath: string): Promise<string[]> {
@@ -7,9 +8,13 @@ export async function scanConfigFiles(passedPath: string): Promise<string[]> {
     const current = await readDirectory(passedPath);
     const filteredCurrent = current.filter((file) => regex.test(file));
 
-    if (!current.includes("config")) return filteredCurrent.toSorted();
-
     const configPath = path.join(passedPath, "config");
+    try {
+        if (!(await fs.stat(configPath)).isDirectory()) return filteredCurrent.toSorted();
+    } catch {
+        return filteredCurrent.toSorted();
+    }
+
     const configFiles = await readDirectory(configPath, true);
     const filteredConfigFiles = configFiles
         .filter((file) => {

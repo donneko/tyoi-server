@@ -24,8 +24,14 @@ export async function isPortUsed(
         });
 
         server.once("listening", () => {
-            server.close();
-            resolve(false);
+            server.close((error) => {
+                if (error) {
+                    resolve(false);
+                    return;
+                }
+
+                resolve(false);
+            });
         });
 
         server.listen(port, host);

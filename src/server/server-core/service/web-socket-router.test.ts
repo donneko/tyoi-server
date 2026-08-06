@@ -1,15 +1,23 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const wsState = vi.hoisted(() => ({
+    closeCallback: undefined as ((error?: Error) => void) | undefined,
     client: {
         close: vi.fn(),
+        readyState: 1,
+        terminate: vi.fn(() => wsState.closeCallback?.()),
     },
     handleUpgrade: vi.fn(),
 }));
 
 vi.mock("ws", () => ({
+    WebSocket: { CLOSED: 3 },
     WebSocketServer: class {
-        clients = new Set();
+        clients = new Set([wsState.client]);
+
+        close(callback: (error?: Error) => void) {
+            wsState.closeCallback = callback;
+        }
 
         handleUpgrade(
             request: unknown,
@@ -28,7 +36,9 @@ import { WebSocketRouter } from "./web-socket-router.js";
 describe("WebSocketRouter", () => {
     beforeEach(() => {
         wsState.client.close.mockClear();
+        wsState.client.terminate.mockClear();
         wsState.handleUpgrade.mockClear();
+        wsState.closeCallback = undefined;
     });
 
     it("WebSocket ハンドラの例外を処理して接続を1011で閉じる", async () => {
@@ -80,5 +90,23 @@ describe("WebSocketRouter", () => {
 
         expect(socket.destroy).toHaveBeenCalledOnce();
         expect(wsState.handleUpgrade).not.toHaveBeenCalled();
+    });
+
+    it("強制終了タイマーでは ws パッケージの CLOSED 定数を使う", async () => {
+        vi.useFakeTimers();
+
+        try {
+            const router = new WebSocketRouter<string>();
+            const server = { on: vi.fn() };
+
+            router.start(server as never);
+            void router.close();
+
+            await vi.advanceTimersByTimeAsync(3_000);
+
+            expect(wsState.client.terminate).toHaveBeenCalledOnce();
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });
