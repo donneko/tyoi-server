@@ -2,7 +2,7 @@ import type { ChildProcess } from "node:child_process";
 import type { MainMessage } from "../types/process.type.js";
 import { processSend } from "../process-send.js";
 
-export function mainProcessSetup(child: ChildProcess) {
+export function mainProcessSetup(child: ChildProcess): () => void {
     let isShuttingDown = false;
 
     const shutdown = () => {
@@ -17,4 +17,9 @@ export function mainProcessSetup(child: ChildProcess) {
 
     process.once("SIGINT", shutdown);
     process.once("SIGTERM", shutdown);
+
+    return () => {
+        process.off("SIGINT", shutdown);
+        process.off("SIGTERM", shutdown);
+    };
 }

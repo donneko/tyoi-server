@@ -5,4 +5,4 @@ export type ServerStartCatchError = (
     error: unknown,
     httpServer: http.Server | null,
     context: ServerStartCatchErrorContext
-) => http.Server;
+) => Promise<http.Server>;

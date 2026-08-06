@@ -26,18 +26,28 @@ export function serverRuntime(
 
     const child = deps.fork(new URL("../server-process/server-process.js", import.meta.url));
 
-    deps.mainProcessSetup(child);
+    const cleanupSignalHandlers = deps.mainProcessSetup(child);
 
     return new Promise<void>((resolve, reject) => {
+        let settled = false;
         let hasStarted = false;
         let hasStopped = false;
 
-        child.once("error", reject);
+        const settle = (callback: () => void) => {
+            if (settled) return;
+            settled = true;
+            cleanupSignalHandlers?.();
+            callback();
+        };
+
+        child.once("error", (error) => settle(() => reject(error)));
         child.once("exit", (code, signal) => {
             if (hasStopped) return;
 
             const phase = hasStarted ? "after startup" : "before startup";
-            reject(new Error(`Server process exited ${phase} (code=${code}, signal=${signal})`));
+            settle(() =>
+                reject(new Error(`Server process exited ${phase} (code=${code}, signal=${signal})`))
+            );
         });
         child.on("message", (message: unknown) => {
             if (!isProcessMessage<ServerMessage>(message, SERVER_MESSAGE_TYPES)) return;
@@ -47,14 +57,14 @@ export function serverRuntime(
                 return;
             }
             if (message.type === "error") {
-                reject(new Error(message.message));
+                settle(() => reject(new Error(message.message)));
                 child.disconnect();
                 child.kill();
                 return;
             }
             if (message.type === "stopped") {
                 hasStopped = true;
-                resolve();
+                settle(resolve);
             }
         });
 

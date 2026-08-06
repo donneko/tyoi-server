@@ -2,11 +2,11 @@ import type { ServerStartCatchErrorContext } from "../../../types/context/start-
 import { CustomError } from "../../../error/custom-error.js";
 import type http from "node:http";
 
-export function startCatchError(
+export async function startCatchError(
     error: unknown,
     httpServer: http.Server | null,
     context: ServerStartCatchErrorContext
-): http.Server {
+): Promise<http.Server> {
     const serverLogger = context.serverLogger;
     const messageManager = context.messageManager;
     const innerEventBus = context.innerEventBus;
@@ -30,6 +30,10 @@ export function startCatchError(
         return httpServer;
     }
 
-    httpServer?.close();
+    try {
+        await context.webSocketRouter.close();
+    } finally {
+        httpServer?.close();
+    }
     throw error;
 }
