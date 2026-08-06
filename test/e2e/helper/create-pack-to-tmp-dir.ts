@@ -12,6 +12,10 @@ export function createPackToTmpDir(tmpDir: string): string {
         cwd: process.cwd(),
         encoding: "utf8",
         shell: process.platform === "win32",
+        env: {
+            ...process.env,
+            npm_config_cache: path.join(tmpDir, ".npm-cache"),
+        },
     });
 
     if (result.status !== 0) {
