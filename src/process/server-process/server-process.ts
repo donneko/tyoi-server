@@ -1,11 +1,11 @@
 import type { Server } from "../../server/index.js";
-import type { MainMessage, ServerMessage } from "../types/process.type.js";
+import type { MainMessage } from "../types/process.type.js";
 import { isProcessMessage } from "../is-process-message.js";
-import { processSend } from "../process-send.js";
 import serverBootLogic from "./logic/boot.js";
 import serverStartLogic from "./logic/start.js";
 import serverShutdownLogic from "./logic/shutdown.js";
 import { isServer } from "./is-server.js";
+import { reportServerError } from "./report-error.js";
 
 export function serverBoot() {
     let server: Server | undefined;
@@ -37,9 +37,7 @@ export function serverBoot() {
                 }
             }
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
-            processSend<ServerMessage>(process, { type: "error", message });
-            process.disconnect?.();
+            reportServerError(error);
         } finally {
             isWork = false;
         }
