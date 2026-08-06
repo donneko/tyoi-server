@@ -29,7 +29,7 @@ async function checkStatic() {
     const port = server.getPort();
 
     const response = await fetch(`http://localhost:${port}/`);
-    if (!(response.ok && [202].includes(response.status)))
+    if (!(response.ok && [200].includes(response.status)))
         throw new Error(`response.ok:${response.ok},response.status:${response.status}`);
     await server.stop();
 }

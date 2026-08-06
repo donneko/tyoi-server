@@ -6,7 +6,7 @@ const server = new Server({
     port: 0,
 });
 
-server.onWebSocket("/ws/a", ({ ws }) => {
+server.onWebSocket("/ws", ({ ws }) => {
     ws.send("connected");
 });
 
