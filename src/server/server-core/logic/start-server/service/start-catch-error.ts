@@ -3,6 +3,18 @@ import { CustomError } from "../../../error/custom-error.js";
 import type http from "node:http";
 import { offSignalStop } from "../../stop-server/service/off-signal-stop.js";
 
+async function closeHttpServer(httpServer: http.Server | null): Promise<void> {
+    if (!httpServer) return;
+
+    await new Promise<void>((resolve) => {
+        try {
+            httpServer.close(() => resolve());
+        } catch {
+            resolve();
+        }
+    });
+}
+
 export async function startCatchError(
     error: unknown,
     httpServer: http.Server | null,
@@ -35,7 +47,7 @@ export async function startCatchError(
     try {
         await context.webSocketRouter.close();
     } finally {
-        httpServer?.close();
+        await closeHttpServer(httpServer);
     }
     throw error;
 }

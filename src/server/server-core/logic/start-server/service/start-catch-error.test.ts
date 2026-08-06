@@ -19,7 +19,9 @@ describe("startCatchError", () => {
         "keeps a started server for %s",
         async (errorName) => {
             const context = createContext();
-            const httpServer = { close: vi.fn() };
+            const httpServer = {
+                close: vi.fn((callback?: () => void) => callback?.()),
+            };
             const error = new CustomError("optional startup action failed", { errorName });
 
             await expect(
@@ -32,7 +34,9 @@ describe("startCatchError", () => {
 
     it("cleans up WebSocket and HTTP resources for a normal error", async () => {
         const context = createContext();
-        const httpServer = { close: vi.fn() };
+        const httpServer = {
+            close: vi.fn((callback?: () => void) => callback?.()),
+        };
         const error = new Error("listen failed");
         const processOff = vi.spyOn(process, "off");
 
@@ -68,6 +72,30 @@ describe("startCatchError", () => {
         await expect(startCatchError("failure", null, context as never)).rejects.toBe("failure");
         expect(context.innerEventBus.emit).toHaveBeenCalledWith("server/start:error", {});
         expect(context.serverLogger.logger).toHaveBeenCalledOnce();
+    });
+
+    it("HTTP close 完了前には起動エラーを再送出しない", async () => {
+        const context = createContext();
+        let finishClose: (() => void) | undefined;
+        const httpServer = {
+            close: vi.fn((callback?: () => void) => {
+                finishClose = callback;
+            }),
+        };
+        const promise = startCatchError(
+            new Error("listen failed"),
+            httpServer as never,
+            context as never
+        );
+        let settled = false;
+        void promise.catch(() => {
+            settled = true;
+        });
+
+        await Promise.resolve();
+        expect(settled).toBe(false);
+        finishClose?.();
+        await expect(promise).rejects.toThrow("listen failed");
     });
 
     it("rethrows a low-severity error when no server exists", async () => {
