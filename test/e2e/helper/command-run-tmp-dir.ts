@@ -39,7 +39,8 @@ export async function runCommand(
 
     return new Promise((resolve) => {
         let resolved = false;
-        let started = false;
+        let ready = false;
+        let expectedTermination = false;
 
         const resolveOnce = () => {
             if (resolved) return;
@@ -60,12 +61,17 @@ export async function runCommand(
                     // The process tree may already have been terminated by taskkill.
                 }
             } else {
-                process.kill(pid, "SIGTERM");
+                try {
+                    process.kill(-pid, "SIGTERM");
+                } catch {
+                    // The process group may already have been terminated.
+                }
             }
         };
 
         const child = spawn(command, args, {
             cwd,
+            detached: process.platform !== "win32",
             stdio: ["pipe", "pipe", "pipe"],
             shell: process.platform === "win32",
             env: {
@@ -75,16 +81,15 @@ export async function runCommand(
         });
 
         const timeoutId = setTimeout(() => {
-            if (started) return;
-
-            if (useConfig.expectRunning) {
-                started = true;
-                result.status = 0;
-            } else if (useConfig.waitForOutput) {
+            if (!ready) {
                 result.error = new Error(
-                    "The process did not reach the expected output before timeout"
+                    useConfig.expectRunning
+                        ? "The process did not become ready before timeout"
+                        : "The process did not exit before timeout"
                 );
             }
+
+            expectedTermination = true;
             killProcessTree(child.pid);
         }, useConfig.timeout);
 
@@ -94,9 +99,10 @@ export async function runCommand(
         child.stdout.on("data", (data: string) => {
             result.stdout += data;
 
-            if (useConfig.waitForOutput?.test(result.stdout) && !started) {
-                started = true;
+            if (useConfig.waitForOutput?.test(result.stdout) && !ready) {
+                ready = true;
                 result.status = 0;
+                expectedTermination = true;
                 killProcessTree(child.pid);
             }
         });
@@ -104,23 +110,29 @@ export async function runCommand(
         child.stderr.on("data", (data: string) => {
             result.stderr += data;
 
-            if (useConfig.waitForOutput?.test(result.stderr) && !started) {
-                started = true;
+            if (useConfig.waitForOutput?.test(result.stderr) && !ready) {
+                ready = true;
                 result.status = 0;
+                expectedTermination = true;
                 killProcessTree(child.pid);
             }
         });
 
         child.on("error", (error) => {
+            clearTimeout(timeoutId);
             result.error = error;
             resolveOnce();
         });
 
         child.on("close", (code, signal) => {
             clearTimeout(timeoutId);
-            if (!started) {
+            if (!expectedTermination) {
                 result.status = code;
                 result.signal = signal;
+
+                if ((useConfig.expectRunning || useConfig.waitForOutput) && !ready) {
+                    result.error ??= new Error("The process exited before becoming ready");
+                }
             }
             resolveOnce();
         });

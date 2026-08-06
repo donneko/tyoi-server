@@ -15,7 +15,7 @@ describe("cli e2e", () => {
     const npmCmd = getNpmCommand();
     const serverCommandConfig = {
         timeout: 5_000,
-        expectRunning: true,
+        waitForOutput: /http:\/\/localhost:\d+/,
     };
 
     beforeEach(async () => {

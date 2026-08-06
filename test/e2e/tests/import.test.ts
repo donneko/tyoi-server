@@ -16,7 +16,6 @@ describe("import e2e", () => {
     const nodeCommand = "node";
     const serverCommandConfig = {
         timeout: 5_000,
-        expectRunning: true,
     };
 
     beforeEach(async () => {

@@ -17,11 +17,21 @@ const base = `ws://localhost:${port}`;
 await testWs(`${base}/ws`);
 
 async function testWs(url) {
-    const socket = new WebSocket(url);
+    return new Promise((resolve, reject) => {
+        const socket = new WebSocket(url);
+        const timeout = setTimeout(() => {
+            socket.terminate();
+            reject(new Error("WebSocket did not receive the connected message"));
+        }, 3_000);
 
-    socket.on("message", (data) => {
-        if (data.toString() === "connected") {
-            server.stop();
-        }
+        socket.on("message", async (data) => {
+            if (data.toString() !== "connected") return;
+
+            clearTimeout(timeout);
+            await server.stop();
+            resolve();
+        });
+
+        socket.on("error", reject);
     });
 }
