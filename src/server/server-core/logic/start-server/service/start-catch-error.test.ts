@@ -10,35 +10,56 @@ function createContext() {
         },
         innerEventBus: { emit: vi.fn() },
         webSocketRouter: { close: vi.fn(async () => undefined) },
+        stopHandler: vi.fn(),
     };
 }
 
 describe("startCatchError", () => {
-    it.each(["SUMMARY_ERROR", "BROWSER_OPEN_ERROR"])("keeps a started server for %s", async (errorName) => {
-        const context = createContext();
-        const httpServer = { close: vi.fn() };
-        const error = new CustomError("optional startup action failed", { errorName });
+    it.each(["SUMMARY_ERROR", "BROWSER_OPEN_ERROR"])(
+        "keeps a started server for %s",
+        async (errorName) => {
+            const context = createContext();
+            const httpServer = { close: vi.fn() };
+            const error = new CustomError("optional startup action failed", { errorName });
 
-        await expect(startCatchError(error, httpServer as never, context as never)).resolves.toBe(
-            httpServer
-        );
-        expect(httpServer.close).not.toHaveBeenCalled();
-        expect(context.webSocketRouter.close).not.toHaveBeenCalled();
-    });
+            await expect(
+                startCatchError(error, httpServer as never, context as never)
+            ).resolves.toBe(httpServer);
+            expect(httpServer.close).not.toHaveBeenCalled();
+            expect(context.webSocketRouter.close).not.toHaveBeenCalled();
+        }
+    );
 
     it("cleans up WebSocket and HTTP resources for a normal error", async () => {
         const context = createContext();
         const httpServer = { close: vi.fn() };
         const error = new Error("listen failed");
+        const processOff = vi.spyOn(process, "off");
 
-        await expect(startCatchError(error, httpServer as never, context as never)).rejects.toThrow(
-            error
-        );
-        expect(context.serverLogger.logger).toHaveBeenNthCalledWith(1, "error", "server startup error");
-        expect(context.serverLogger.logger).toHaveBeenNthCalledWith(2, "error", "listen failed");
-        expect(context.innerEventBus.emit).toHaveBeenCalledWith("server/start:error", { error });
-        expect(context.webSocketRouter.close).toHaveBeenCalledOnce();
-        expect(httpServer.close).toHaveBeenCalledOnce();
+        try {
+            await expect(
+                startCatchError(error, httpServer as never, context as never)
+            ).rejects.toThrow(error);
+            expect(processOff).toHaveBeenCalledWith("SIGINT", context.stopHandler);
+            expect(processOff).toHaveBeenCalledWith("SIGTERM", context.stopHandler);
+            expect(context.serverLogger.logger).toHaveBeenNthCalledWith(
+                1,
+                "error",
+                "server startup error"
+            );
+            expect(context.serverLogger.logger).toHaveBeenNthCalledWith(
+                2,
+                "error",
+                "listen failed"
+            );
+            expect(context.innerEventBus.emit).toHaveBeenCalledWith("server/start:error", {
+                error,
+            });
+            expect(context.webSocketRouter.close).toHaveBeenCalledOnce();
+            expect(httpServer.close).toHaveBeenCalledOnce();
+        } finally {
+            processOff.mockRestore();
+        }
     });
 
     it("rethrows non-Error values", async () => {

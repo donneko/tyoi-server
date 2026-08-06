@@ -1,6 +1,7 @@
 import type { ServerStartCatchErrorContext } from "../../../types/context/start-server/start-server.type.js";
 import { CustomError } from "../../../error/custom-error.js";
 import type http from "node:http";
+import { offSignalStop } from "../../stop-server/service/off-signal-stop.js";
 
 export async function startCatchError(
     error: unknown,
@@ -30,6 +31,7 @@ export async function startCatchError(
         return httpServer;
     }
 
+    offSignalStop(context);
     try {
         await context.webSocketRouter.close();
     } finally {

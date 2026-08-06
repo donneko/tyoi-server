@@ -28,5 +28,5 @@ export type UpdatePortContext = Pick<ServerContext, "serverConfig">;
 
 export type ServerStartCatchErrorContext = Pick<
     ServerContext,
-    "serverLogger" | "messageManager" | "innerEventBus" | "webSocketRouter"
+    "serverLogger" | "messageManager" | "innerEventBus" | "webSocketRouter" | "stopHandler"
 >;
