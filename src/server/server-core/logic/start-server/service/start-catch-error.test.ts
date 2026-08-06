@@ -74,6 +74,14 @@ describe("startCatchError", () => {
         expect(context.serverLogger.logger).toHaveBeenCalledOnce();
     });
 
+    it("does not create an unhandled rejection when startup error notification fails", async () => {
+        const context = createContext();
+        context.innerEventBus.emit.mockRejectedValueOnce(new Error("notification failed"));
+        const error = new Error("startup failed");
+
+        await expect(startCatchError(error, null, context as never)).rejects.toBe(error);
+    });
+
     it("HTTP close 完了前には起動エラーを再送出しない", async () => {
         const context = createContext();
         let finishClose: (() => void) | undefined;
