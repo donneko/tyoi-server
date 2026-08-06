@@ -24,14 +24,16 @@ async function testWs(url) {
             reject(new Error("WebSocket did not receive the connected message"));
         }, 3_000);
 
-        socket.on("message", async (data) => {
+        socket.on("message", (data) => {
             if (data.toString() !== "connected") return;
 
             clearTimeout(timeout);
-            await server.stop();
-            resolve();
+            server.stop().then(resolve, reject);
         });
 
-        socket.on("error", reject);
+        socket.on("error", (error) => {
+            clearTimeout(timeout);
+            reject(error);
+        });
     });
 }

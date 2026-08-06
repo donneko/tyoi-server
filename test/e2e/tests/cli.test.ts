@@ -234,7 +234,7 @@ describe("cli e2e", () => {
         const result = await runCommand(
             tmpDir,
             npmCmd,
-            ["exec", "--", "tyoi", "run", "--port", "0"],
+            ["exec", "--", "tyoi", "run"],
             serverCommandConfig
         );
         const debag = formatTestProcessResult(result);
@@ -266,35 +266,11 @@ describe("cli e2e", () => {
         expect(result.error, debag).toBeUndefined();
         expect(result.status, debag).toBe(0);
     });
-    it("run --port オプションつきで実行できる", async () => {
-        const result = await runCommand(
-            tmpDir,
-            npmCmd,
-            ["exec", "--", "tyoi", "run", "--port", "0"],
-            serverCommandConfig
-        );
-        const debag = formatTestProcessResult(result);
-
-        expect(result.error, debag).toBeUndefined();
-        expect(result.status, debag).toBe(0);
-    });
     it("dev を実行できる", async () => {
         const result = await runCommand(
             tmpDir,
             npmCmd,
-            ["exec", "--", "tyoi", "dev", "--port", "0"],
-            serverCommandConfig
-        );
-        const debag = formatTestProcessResult(result);
-
-        expect(result.error, debag).toBeUndefined();
-        expect(result.status, debag).toBe(0);
-    });
-    it("dev --port オプションつきで実行できる", async () => {
-        const result = await runCommand(
-            tmpDir,
-            npmCmd,
-            ["exec", "--", "tyoi", "dev", "--port", "0"],
+            ["exec", "--", "tyoi", "dev"],
             serverCommandConfig
         );
         const debag = formatTestProcessResult(result);

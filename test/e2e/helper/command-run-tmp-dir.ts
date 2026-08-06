@@ -11,7 +11,6 @@ export interface TestProcessReturn {
 export interface TestProcessConfig {
     timeout: number;
     waitForOutput?: RegExp;
-    expectRunning?: boolean;
 }
 
 const defaultTestProcessConfig: TestProcessConfig = {
@@ -83,7 +82,7 @@ export async function runCommand(
         const timeoutId = setTimeout(() => {
             if (!ready) {
                 result.error = new Error(
-                    useConfig.expectRunning
+                    useConfig.waitForOutput
                         ? "The process did not become ready before timeout"
                         : "The process did not exit before timeout"
                 );
@@ -130,7 +129,7 @@ export async function runCommand(
                 result.status = code;
                 result.signal = signal;
 
-                if ((useConfig.expectRunning || useConfig.waitForOutput) && !ready) {
+                if (useConfig.waitForOutput && !ready) {
                     result.error ??= new Error("The process exited before becoming ready");
                 }
             }
