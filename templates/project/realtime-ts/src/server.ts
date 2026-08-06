@@ -1,6 +1,7 @@
 import { tyoi } from "@donneko/tyoi-server";
 import { WebSocket } from "ws";
 import { parseClientMessage } from "./client-message.js";
+import { getServerPort } from "./server-port.js";
 
 type ServerMessage = {
     type: "system" | "message" | "error";
@@ -28,7 +29,7 @@ function broadcast(type: ServerMessage["type"], text: string): void {
 const app = tyoi({
     baseDirname: import.meta.dirname,
     publicDirname: "../public/main",
-    port: Number(process.env.PORT ?? 3000),
+    port: getServerPort(process.env.PORT),
     autoPort: true,
 });
 
