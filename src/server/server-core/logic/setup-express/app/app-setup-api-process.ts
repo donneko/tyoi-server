@@ -14,6 +14,6 @@ export async function setupApiProcess(
     );
 
     context.expressServer.use(apiPrefix, (rep, res) => {
-        deps.apiProcess(rep, res, context);
+        return deps.apiProcess(rep, res, context);
     });
 }
