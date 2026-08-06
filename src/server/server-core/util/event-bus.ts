@@ -82,7 +82,11 @@ export class EventBus<EventBusMap extends Record<string, unknown>> {
         if (!list) return;
         try {
             for (const fn of [...list]) {
-                task.push((fn as EventBusHandler<EventBusMap[Key]>)(arg));
+                try {
+                    task.push(Promise.resolve((fn as EventBusHandler<EventBusMap[Key]>)(arg)));
+                } catch (error) {
+                    task.push(Promise.reject(error));
+                }
             }
             await Promise.all(task);
         } catch (error) {
