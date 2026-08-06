@@ -58,8 +58,16 @@ export function serverRuntime(
             }
             if (message.type === "error") {
                 settle(() => reject(new Error(message.message)));
-                child.disconnect();
-                child.kill();
+                try {
+                    child.disconnect();
+                } catch {
+                    // The child may already have disconnected while reporting the error.
+                }
+                try {
+                    child.kill();
+                } catch {
+                    // The child may already have exited while reporting the error.
+                }
                 return;
             }
             if (message.type === "stopped") {

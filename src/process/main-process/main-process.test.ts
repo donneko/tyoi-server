@@ -100,4 +100,26 @@ describe("serverRuntime", () => {
         await expect(promise).rejects.toBe(error);
         expect(cleanup).toHaveBeenCalledOnce();
     });
+
+    it("エラー通知時の disconnect 失敗でも子プロセスを kill する", async () => {
+        const child = new FakeChildProcess();
+        const error = new Error("server failed");
+        child.disconnect.mockImplementationOnce(() => {
+            throw new Error("already disconnected");
+        });
+        const promise = serverRuntime(
+            "config.js",
+            { port: 3000 },
+            {
+                fork: vi.fn(() => child) as never,
+                mainProcessSetup: vi.fn(() => vi.fn()),
+                processSend: vi.fn(),
+            }
+        );
+
+        child.emit("message", { type: "error", message: error.message });
+
+        await expect(promise).rejects.toThrow(error.message);
+        expect(child.kill).toHaveBeenCalledOnce();
+    });
 });
