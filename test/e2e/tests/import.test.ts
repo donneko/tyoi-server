@@ -6,7 +6,6 @@ import { installPackage } from "../helper/install-package.js";
 import { removeTmpDir } from "../helper/remove-tmp-dir.js";
 import { copyTmpDir } from "../helper/copy-tmp-dir.js";
 import { formatTestProcessResult } from "../helper/format-test-process-result.js";
-import { getNodeCommand } from "../helper/get-node-command.js";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -14,7 +13,7 @@ vi.setConfig({ testTimeout: 20_000, hookTimeout: 30_000 });
 // e2e test です。実行時間が長いため、一度のテストで同じジャンルをなるべく結果が変わらないようなものを実行します。
 describe("import e2e", () => {
     let tmpDir = "";
-    const nodeCommand = getNodeCommand();
+    const nodeCommand = "node";
     const serverCommandConfig = {
         timeout: 5_000,
         expectRunning: true,
