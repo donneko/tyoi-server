@@ -1,5 +1,5 @@
 import { ApiRegistry, type ApiRegistryHandler } from "../util/api-registry.js";
-import { WebSocketServer } from "ws";
+import { WebSocket, WebSocketServer } from "ws";
 import type { Server } from "node:http";
 import type { Duplex } from "node:stream";
 import type { WsHandler } from "../types/server.type.js";
