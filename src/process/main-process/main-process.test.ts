@@ -68,6 +68,14 @@ describe("serverRuntime", () => {
         await expect(promise).rejects.toThrow(`Server process exited ${phase}`);
     });
 
+    it("stopped 通知前の IPC 切断で reject する", async () => {
+        const { child, promise } = createRuntime();
+
+        child.emit("disconnect");
+
+        await expect(promise).rejects.toThrow("Server process disconnected unexpectedly");
+    });
+
     it("boot と start メッセージを順番に送る", () => {
         const { processSend, mainProcessSetup } = createRuntime();
 

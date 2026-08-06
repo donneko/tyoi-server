@@ -49,6 +49,11 @@ export function serverRuntime(
                 reject(new Error(`Server process exited ${phase} (code=${code}, signal=${signal})`))
             );
         });
+        child.once("disconnect", () => {
+            if (hasStopped) return;
+
+            settle(() => reject(new Error("Server process disconnected unexpectedly")));
+        });
         child.on("message", (message: unknown) => {
             if (!isProcessMessage<ServerMessage>(message, SERVER_MESSAGE_TYPES)) return;
 
