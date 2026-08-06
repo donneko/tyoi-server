@@ -20,9 +20,16 @@ export async function findAvailablePort(
     const serverLogger = context.serverLogger;
     const messageManager = context.messageManager;
     let port = startPort;
+    const MAX_PORT = 65535;
 
     // ポートが使用されていたら、別のポートへ
     while (await deps.isPortUsed(port, host)) {
+        if (port >= MAX_PORT) {
+            throw new CustomError(messageManager.message("server.port.rejected", { port }), {
+                errorName: "PORT_NOT_PERMISSION",
+            });
+        }
+
         if (isAutoPort) {
             port++;
             continue;
