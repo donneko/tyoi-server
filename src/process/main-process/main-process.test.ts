@@ -80,4 +80,24 @@ describe("serverRuntime", () => {
             type: "start",
         });
     });
+
+    it("初期 IPC 送信に失敗した場合もシグナル cleanup を実行する", async () => {
+        const child = new FakeChildProcess();
+        const error = new Error("IPC send failed");
+        const cleanup = vi.fn();
+        const promise = serverRuntime(
+            "config.js",
+            { port: 3000 },
+            {
+                fork: vi.fn(() => child) as never,
+                mainProcessSetup: vi.fn(() => cleanup),
+                processSend: vi.fn(() => {
+                    throw error;
+                }),
+            }
+        );
+
+        await expect(promise).rejects.toBe(error);
+        expect(cleanup).toHaveBeenCalledOnce();
+    });
 });

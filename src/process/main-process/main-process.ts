@@ -68,12 +68,16 @@ export function serverRuntime(
             }
         });
 
-        deps.processSend<MainMessage>(child, {
-            type: "boot",
-            data: { path, option },
-        });
-        deps.processSend<MainMessage>(child, {
-            type: "start",
-        });
+        try {
+            deps.processSend<MainMessage>(child, {
+                type: "boot",
+                data: { path, option },
+            });
+            deps.processSend<MainMessage>(child, {
+                type: "start",
+            });
+        } catch (error) {
+            settle(() => reject(error));
+        }
     });
 }
