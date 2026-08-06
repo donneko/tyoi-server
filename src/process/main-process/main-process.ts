@@ -91,6 +91,16 @@ export function serverRuntime(
             });
         } catch (error) {
             settle(() => reject(error));
+            try {
+                child.disconnect();
+            } catch {
+                // The child may already have disconnected while reporting the error.
+            }
+            try {
+                child.kill();
+            } catch {
+                // The child may already have exited while reporting the error.
+            }
         }
     });
 }

@@ -107,6 +107,8 @@ describe("serverRuntime", () => {
 
         await expect(promise).rejects.toBe(error);
         expect(cleanup).toHaveBeenCalledOnce();
+        expect(child.disconnect).toHaveBeenCalledOnce();
+        expect(child.kill).toHaveBeenCalledOnce();
     });
 
     it("エラー通知時の disconnect 失敗でも子プロセスを kill する", async () => {
