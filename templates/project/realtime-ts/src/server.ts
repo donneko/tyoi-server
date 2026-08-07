@@ -26,8 +26,8 @@ function broadcast(type: ServerMessage["type"], text: string): void {
 }
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port: Number(process.env.PORT ?? 3000),
     autoPort: true,
 });
@@ -60,4 +60,4 @@ app.ws("/ws", ({ ws }) => {
     ws.once("error", disconnect);
 });
 
-await app.start({ openBrowser: "local" });
+await app.start({ browser: "local" });

@@ -1,11 +1,11 @@
-import { ApiRegistry, type ApiRegistryHandler } from "../util/api-registry.js";
+import { HandlerRegistry, type Handler } from "../util/api-registry.js";
 import { WebSocketServer } from "ws";
 import type { Server } from "node:http";
 import type { Duplex } from "node:stream";
 import type { WsHandler } from "../types/server.type.js";
 
 export class WebSocketRouter<typeMAP extends string> {
-    private webSocketRegistry = new ApiRegistry<Record<typeMAP, WsHandler>>();
+    private webSocketRegistry = new HandlerRegistry<Record<typeMAP, WsHandler>>();
     private webSocket: WebSocketServer | null = null;
     start(server: Server) {
         const ws = new WebSocketServer({
@@ -71,11 +71,11 @@ export class WebSocketRouter<typeMAP extends string> {
     }
 
     // WebSocket登録
-    on<Key extends typeMAP>(type: Key, fn: ApiRegistryHandler<WsHandler>) {
+    on<Key extends typeMAP>(type: Key, fn: Handler<WsHandler>) {
         return this.webSocketRegistry.on(type, fn);
     }
     // WebSocket一度のみ起動
-    once<Key extends typeMAP>(type: Key, fn: ApiRegistryHandler<WsHandler>) {
+    once<Key extends typeMAP>(type: Key, fn: Handler<WsHandler>) {
         return this.webSocketRegistry.once(type, fn);
     }
     // WebSocket消去

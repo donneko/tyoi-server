@@ -1,12 +1,12 @@
 import { Server } from "../../../../src/index.js";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
+    root: import.meta.dirname,
     port: 0,
-    apiPrefix: "/api",
+    api: "/api",
 });
 
-server.onAPI("GET:/a", () => {
+server.onApi("GET:/a", () => {
     return "hello";
 });
 

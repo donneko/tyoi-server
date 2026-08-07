@@ -21,18 +21,18 @@ import morgan from "morgan";
 export default defineConfig({
     port: 3000,
     autoPort: true,
-    publicDirname: "./public/main",
-    apiPrefix: "/api",
-    exposeLan: false,
-    showQrCode: false,
-    openBrowser: true,
+    public: "./public/main",
+    api: "/api",
+    lan: false,
+    qr: false,
+    browser: true,
     middlewares: [
         morgan("dev")
     ]
 });
 ```
 
-CLI の設定ファイルから起動する場合、`publicDirname` はプロジェクトルートから見た相対パスとして扱われます。
+CLI の設定ファイルから起動する場合、`public` はプロジェクトルートから見た相対パスとして扱われます。
 
 ## Config File Lookup
 
@@ -63,34 +63,34 @@ my-app/
 | --- | --- | --- | --- |
 | `port` | `number` | `3000` | 起動するポート番号 |
 | `autoPort` | `boolean` | `false` | 指定ポートが使用中のときに別ポートを探す |
-| `publicDirname` | `string` | `"../public/main"` | 静的ファイルとして配信するディレクトリ |
-| `apiPrefix` | `string` | `"/api"` | API のベースパス |
+| `public` | `string` | `"../public/main"` | 静的ファイルとして配信するディレクトリ |
+| `api` | `string` | `"/api"` | API のベースパス |
 | `middlewares` | `express.RequestHandler[]` | `[]` | 追加する Express middleware |
-| `openBrowser` | `boolean \| "local" \| "network"` | `false` | 起動時にブラウザを開く |
-| `exposeLan` | `boolean` | `false` | LAN 内の他の端末からアクセスできるようにする |
-| `showQrCode` | `boolean` | `false` | Network URL の QR Code を表示する |
-| `signalShutdownHandling` | `boolean` | `true` | `SIGINT` / `SIGTERM` でサーバーを停止する |
+| `browser` | `boolean \| "local" \| "lan"` | `false` | 起動時にブラウザを開く |
+| `lan` | `boolean` | `false` | LAN 内の他の端末からアクセスできるようにする |
+| `qr` | `boolean` | `false` | Network URL の QR Code を表示する |
+| `signalClose` | `boolean` | `true` | `SIGINT` / `SIGTERM` でサーバーを停止する |
 
 ## Browser Open
 
 ```js
 export default defineConfig({
-    openBrowser: true
+    browser: true
 });
 ```
 
 - `true`: Local URL を開く
 - `"local"`: Local URL を開く
-- `"network"`: `exposeLan: true` のとき Network URL を開く
+- `"lan"`: `lan: true` のとき Network URL を開く
 - `false`: ブラウザを開かない
 
 ## LAN And QR Code
 
 ```js
 export default defineConfig({
-    exposeLan: true,
-    showQrCode: true,
-    openBrowser: "network"
+    lan: true,
+    qr: true,
+    browser: "lan"
 });
 ```
 
@@ -105,8 +105,8 @@ LAN 公開時は、同じ Wi-Fi やネットワークに接続している端末
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port: 3000,
     autoPort: true
 });
@@ -114,13 +114,13 @@ const app = tyoi({
 await app.start();
 ```
 
-`baseDirname` は `tyoi()` や `new Server()` で直接作る場合に必要です。CLI から起動する場合は自動で設定されます。
+`root` は `tyoi()` や `new Server()` で直接作る場合に必要です。CLI から起動する場合は自動で設定されます。
 
 起動時だけ一部の設定を上書きする場合は `start()` に渡せます。
 
 ```ts
 await app.start({
     port: 3001,
-    openBrowser: "local"
+    browser: "local"
 });
 ```

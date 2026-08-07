@@ -14,7 +14,7 @@ export function serverSummary(
         dependencies
     );
 
-    const { host, port, publicPath, publicFullPath, apiPrefix, showQrCode } = args;
+    const { host, port, publicPath, publicFullPath, api, qr } = args;
     const { networkUrl, isLAN } = deps.createNetworkData(port, host);
 
     const serverLogger = context.serverLogger;
@@ -41,14 +41,11 @@ export function serverSummary(
             "createInfo",
             messageManager.message("server.summary.public", { publicPath })
         ),
-        serverLogger.logger(
-            "createInfo",
-            messageManager.message("server.summary.api", { apiPrefix })
-        ),
+        serverLogger.logger("createInfo", messageManager.message("server.summary.api", { api })),
     ]);
 
     // QRcode生成
-    if (showQrCode && isLAN) {
+    if (qr && isLAN) {
         serverLogger.logger("window", messageManager.message("server.summary.qrCodeTitle"), [
             serverLogger.logger(
                 "createInfo",

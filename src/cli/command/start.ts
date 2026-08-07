@@ -32,7 +32,7 @@ export default async function runStartServer(data: CmdMetaData) {
     const configOption = {
         ...{ language: data.meta.config.language },
         ...data.meta.option,
-        ...{ baseDirname: file ? cwd : dirname },
+        ...{ root: file ? cwd : dirname },
     };
 
     await serverRuntime(useConfigPath, configOption);

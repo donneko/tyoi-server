@@ -4,8 +4,8 @@ import { defaultServerOpenBrowserDependencies } from "../dependencies/server-pos
 import { createDependencies } from "../../../dependencies/create-dependencies.js";
 import type { ServerOpenBrowserArgs } from "../../../types/server.type.js";
 
-export async function openBrowser(
-    openBrowserData: ServerOpenBrowserArgs,
+export async function browser(
+    browserData: ServerOpenBrowserArgs,
     context: ServerSummaryContext,
     dependencies: Partial<ServerOpenBrowserDependencies> = {}
 ): Promise<void> {
@@ -14,7 +14,7 @@ export async function openBrowser(
         dependencies
     );
 
-    const { host, port, target } = openBrowserData;
+    const { host, port, target } = browserData;
 
     if (!target) return;
 
@@ -23,10 +23,10 @@ export async function openBrowser(
 
     const { isLAN, networkUrl } = deps.createNetworkData(port, host);
 
-    if (!isLAN && target === "network")
+    if (!isLAN && target === "lan")
         serverLogger.logger("warn", messageManager.message("server.network.unavailable"));
 
-    const targetUrl = isLAN && target === "network" ? networkUrl : `http://localhost:${port}`;
+    const targetUrl = isLAN && target === "lan" ? networkUrl : `http://localhost:${port}`;
 
     await deps.open(targetUrl);
 }

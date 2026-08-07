@@ -1,7 +1,7 @@
-export type ApiRegistryHandler<Type, Result = unknown> = (arg: Type) => Result | Promise<Result>;
+export type Handler<Type, Result = unknown> = (arg: Type) => Result | Promise<Result>;
 
-export class ApiRegistry<ApiRegistryMap extends Record<string, unknown>> {
-    #EVENT_DATA_STORE = new Map<keyof ApiRegistryMap, unknown>();
+export class HandlerRegistry<HandlerRegistryMap extends Record<string, unknown>> {
+    #EVENT_DATA_STORE = new Map<keyof HandlerRegistryMap, unknown>();
 
     /**
      * ハンドラを登録する関数
@@ -12,7 +12,7 @@ export class ApiRegistry<ApiRegistryMap extends Record<string, unknown>> {
      * const unsubscribe = registry.on("foo", handler);
      * unsubscribe(); // handler を解除
      */
-    on<KEY extends keyof ApiRegistryMap>(type: KEY, fn: ApiRegistryHandler<ApiRegistryMap[KEY]>) {
+    on<KEY extends keyof HandlerRegistryMap>(type: KEY, fn: Handler<HandlerRegistryMap[KEY]>) {
         if (this.#EVENT_DATA_STORE.has(type)) {
             console.warn(`[EventBus on warn] すでに登録された関数が上書きされました。`);
         }
@@ -29,8 +29,8 @@ export class ApiRegistry<ApiRegistryMap extends Record<string, unknown>> {
      * @example
      * registry.once("foo", handler);
      */
-    once<Key extends keyof ApiRegistryMap>(type: Key, fn: ApiRegistryHandler<ApiRegistryMap[Key]>) {
-        const func: ApiRegistryHandler<ApiRegistryMap[Key]> = (arg) => {
+    once<Key extends keyof HandlerRegistryMap>(type: Key, fn: Handler<HandlerRegistryMap[Key]>) {
+        const func: Handler<HandlerRegistryMap[Key]> = (arg) => {
             this.off(type);
             return fn(arg);
         };
@@ -44,8 +44,8 @@ export class ApiRegistry<ApiRegistryMap extends Record<string, unknown>> {
      * @example
      * console.log(registry.has("foo"));
      */
-    has(type: string): type is Extract<keyof ApiRegistryMap, string> {
-        return this.#EVENT_DATA_STORE.has(type as Extract<keyof ApiRegistryMap, string>);
+    has(type: string): type is Extract<keyof HandlerRegistryMap, string> {
+        return this.#EVENT_DATA_STORE.has(type as Extract<keyof HandlerRegistryMap, string>);
     }
 
     /**
@@ -54,7 +54,7 @@ export class ApiRegistry<ApiRegistryMap extends Record<string, unknown>> {
      * @example
      * registry.off("foo",handler);
      */
-    off<Key extends keyof ApiRegistryMap>(type: Key) {
+    off<Key extends keyof HandlerRegistryMap>(type: Key) {
         this.#EVENT_DATA_STORE.delete(type);
     }
 
@@ -65,16 +65,16 @@ export class ApiRegistry<ApiRegistryMap extends Record<string, unknown>> {
      * @example
      * registry.emit("foo",arg);
      */
-    async emit<Key extends keyof ApiRegistryMap>(
+    async emit<Key extends keyof HandlerRegistryMap>(
         type: Key,
-        arg: ApiRegistryMap[Key]
+        arg: HandlerRegistryMap[Key]
     ): Promise<unknown> {
         const fn = this.#EVENT_DATA_STORE.get(type);
 
         if (!fn) return;
 
         try {
-            return await (fn as ApiRegistryHandler<ApiRegistryMap[Key]>)(arg);
+            return await (fn as Handler<HandlerRegistryMap[Key]>)(arg);
         } catch (error) {
             console.error(`[EventBus emit error] ${String(type)}`, error);
             throw error;

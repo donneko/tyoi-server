@@ -2,8 +2,8 @@ import { tyoi } from "@donneko/tyoi-server";
 import morgan from "morgan";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port: 3000,
     autoPort: true,
     middlewares: [morgan("dev")],
@@ -22,4 +22,4 @@ app.ws("/ws", ({ ws }) => {
     ws.on("message", (message) => ws.send(`echo: ${message.toString()}`));
 });
 
-await app.start({ openBrowser: "local" });
+await app.start({ browser: "local" });

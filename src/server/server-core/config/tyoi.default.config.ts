@@ -4,17 +4,17 @@ export default defineDefaultConfig({
     port: 3000,
     autoPort: false,
 
-    publicDirname: "../public/main",
-    apiPrefix: "/api",
+    public: "../public/main",
+    api: "/api",
 
     middlewares: [],
 
-    exposeLan: false,
-    showQrCode: false,
+    lan: false,
+    qr: false,
 
-    openBrowser: false,
+    browser: false,
 
-    signalShutdownHandling: true,
+    signalClose: true,
 
     language: "ja-JP",
 });

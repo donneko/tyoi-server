@@ -1,21 +1,21 @@
 import { Server } from "@donneko/tyoi-server";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
+    root: import.meta.dirname,
     port: 0,
-    apiPrefix: "/api",
+    api: "/api",
 });
 
-server.onAPI("GET:/get/test", () => {
+server.onApi("GET:/get/test", () => {
     return "hello";
 });
-server.onAPI("POST:/post/test", (data) => {
+server.onApi("POST:/post/test", (data) => {
     if (typeof data.body === "object" && data.body && "post" in data.body) return data.body.post;
 });
-server.onAPI("GET:/get/error", () => {
+server.onApi("GET:/get/error", () => {
     throw new Error();
 });
-server.onAPI("POST:/post/error", () => {
+server.onApi("POST:/post/error", () => {
     throw new Error();
 });
 

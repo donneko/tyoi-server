@@ -4,8 +4,8 @@ import { defaultSetupPublicPathDependencies } from "../dependencies/setup-server
 import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export function setupPublicPath(
-    baseDirname: string,
-    publicDirname: string,
+    root: string,
+    publicDirectory: string,
     context: SetupPublicPathContext,
     dependencies: Partial<SetupPublicPathDependencies> = {}
 ) {
@@ -14,6 +14,6 @@ export function setupPublicPath(
         dependencies
     );
 
-    const publicDirectoryPath = deps.pathNormalization(baseDirname, publicDirname);
+    const publicDirectoryPath = deps.pathNormalization(root, publicDirectory);
     context.serverRegister.updateConfig({ publicDirectoryPath });
 }

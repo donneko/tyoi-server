@@ -1,16 +1,16 @@
 import { Server } from "../../../../src/index.js";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
-    showQrCode: true,
+    root: import.meta.dirname,
+    qr: true,
 });
 
 await server.start({
-    showQrCode: false,
+    qr: false,
 });
 
-const showQrCode = server.getConfig("showQrCode");
+const qr = server.getConfig("qr");
 
-if (showQrCode) throw new Error();
+if (qr) throw new Error();
 
 await server.stop();

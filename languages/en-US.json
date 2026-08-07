@@ -30,7 +30,6 @@
     "http.api.internalError": "Internal server error",
     "cli.help.title": "Display help",
     "cli.help.introduction": "The commands currently available are as follows.\nUpdated: [2026/06/07]",
-    "cli.help.dev": "dev    : Starts a server for verification using development settings.",
     "cli.help.help": "help   : Displays a list of available commands.",
     "cli.help.init": "init   : Creates a server in the current directory",
     "cli.help.run": "run    : Starts the server in the current directory",

@@ -1,8 +1,8 @@
 import { expect, describe, test, vi } from "vitest";
-import { ApiRegistry } from "./api-registry.js";
+import { HandlerRegistry } from "./api-registry.js";
 
-describe("ApiRegistry", () => {
-    const apiRegistry = new ApiRegistry();
+describe("HandlerRegistry", () => {
+    const apiRegistry = new HandlerRegistry();
     const onceCallback = vi.fn();
     const onCallback = vi.fn();
 

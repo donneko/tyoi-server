@@ -11,8 +11,8 @@ CLI テンプレートから始める場合は、まず README の Quick Start �
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port: 3000
 });
 
@@ -23,7 +23,7 @@ app.get("/hello", () => {
 });
 
 await app.start({
-    openBrowser: "local"
+    browser: "local"
 });
 ```
 
@@ -42,12 +42,12 @@ await app.start({
 
 ## Static Files
 
-`publicDirname` は `baseDirname` から見た相対パスです。
+`public` は `root` から見た相対パスです。
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port: 3000
 });
 ```
@@ -62,8 +62,8 @@ const app = tyoi({
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main"
+    root: import.meta.dirname,
+    public: "../public/main"
 });
 
 app.get("/status", (data) => {
@@ -100,16 +100,16 @@ type RequestData = {
 一度だけ実行する API、登録解除、手動実行などが必要な場合は、`app.server` から内部の `Server` を使えます。
 
 ```ts
-app.server.onceAPI("GET:/once", () => {
+app.server.onceApi("GET:/once", () => {
     return {
         message: "called once"
     };
 });
 
-app.server.offAPI("GET:/status");
-app.server.hasAPI("POST:/message");
+app.server.offApi("GET:/status");
+app.server.hasApi("POST:/message");
 
-const result = await app.server.emitAPI("POST:/message", {
+const result = await app.server.emitApi("POST:/message", {
     query: {},
     body: {
         message: "manual call"
@@ -124,8 +124,8 @@ const result = await app.server.emitAPI("POST:/message", {
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main"
+    root: import.meta.dirname,
+    public: "../public/main"
 });
 
 app.ws("/ws", ({ ws }) => {
@@ -139,7 +139,7 @@ app.ws("/ws", ({ ws }) => {
 await app.start();
 ```
 
-WebSocket のパスには `apiPrefix` は付きません。上の例は `ws://localhost:3000/ws` で接続します。
+WebSocket のパスには `api` は付きません。上の例は `ws://localhost:3000/ws` で接続します。
 
 関連メソッド:
 
@@ -165,8 +165,8 @@ import morgan from "morgan";
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     middlewares: [
         morgan("dev")
     ]
@@ -175,13 +175,13 @@ const app = tyoi({
 
 ## LAN Access
 
-`exposeLan: true` を指定すると、サーバーは `0.0.0.0` で起動します。
+`lan: true` を指定すると、サーバーは `0.0.0.0` で起動します。
 
 ```ts
 await app.start({
-    exposeLan: true,
-    showQrCode: true,
-    openBrowser: "network"
+    lan: true,
+    qr: true,
+    browser: "lan"
 });
 ```
 
@@ -196,14 +196,14 @@ const onLog = (data) => {
     console.log(data?.type, data?.message);
 };
 
-app.server.onEvent("server/*:log", onLog);
+app.server.onEvent("server/log:*", onLog);
 
-app.server.onceEvent("server/*:log", (data) => {
+app.server.onceEvent("server/log:*", (data) => {
     console.log("first log", data?.message);
 });
 
-app.server.hasEvent("server/*:log");
-app.server.offEvent("server/*:log", onLog);
+app.server.hasEvent("server/log:*");
+app.server.offEvent("server/log:*", onLog);
 ```
 
 `offEvent()` には、登録時に渡した同じ関数参照を渡してください。
@@ -215,7 +215,7 @@ const httpServer = await app.start();
 
 console.log(app.server.isRunning());
 console.log(app.server.getPort());
-console.log(app.server.getConfig("apiPrefix"));
+console.log(app.server.getConfig("api"));
 console.log(app.server.getHttpServer() === httpServer);
 
 await app.close();
@@ -237,7 +237,7 @@ await app.close();
 
 ## Direct Server
 
-型付きの API キー、`onceAPI()`、`offAPI()`、`emitAPI()` などを最初から直接扱いたい場合は、`Server` を使えます。
+型付きの API キー、`onceApi()`、`offApi()`、`emitApi()` などを最初から直接扱いたい場合は、`Server` を使えます。
 
 ```ts
 import { Server } from "@donneko/tyoi-server";
@@ -249,19 +249,19 @@ type API =
 type WS = "/ws";
 
 const server = new Server<API, WS>({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port: 3000
 });
 
-server.onAPI("GET:/status", (data) => {
+server.onApi("GET:/status", (data) => {
     return {
         ok: true,
         query: data.query
     };
 });
 
-server.onAPI("POST:/message", (data) => {
+server.onApi("POST:/message", (data) => {
     return {
         received: data.body
     };

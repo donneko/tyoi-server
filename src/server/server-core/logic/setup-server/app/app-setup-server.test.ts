@@ -5,9 +5,9 @@ describe("setupServer", () => {
     it("作成した設定を使って公開パスをセットアップする", () => {
         const context = {};
         const serverConfig = {
-            baseDirname: "/project",
-            publicDirname: "public",
-            signalShutdownHandling: true,
+            root: "/project",
+            public: "public",
+            signalClose: true,
         };
         const createServerConfig = vi.fn(() => serverConfig);
         const setupLanguages = vi.fn();

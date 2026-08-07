@@ -1,12 +1,12 @@
 import type http from "node:http";
-import type { ServerStartOptions } from "../../../types/server.type.js";
+import type { StartOptions } from "../../../types/server.type.js";
 import type { ServerStartDependencies } from "../../../types/dependencies/start-server/server-start.type.js";
 import type { ServerStartContext } from "../../../types/context/start-server/start-server.type.js";
 import { defaultServerStartDependencies } from "../dependencies/server-start.js";
 import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export async function startServer(
-    options: ServerStartOptions = {},
+    options: StartOptions = {},
     context: ServerStartContext,
     dependencies: Partial<ServerStartDependencies> = {}
 ): Promise<http.Server> {
@@ -22,7 +22,7 @@ export async function startServer(
         // サーバー起動処理
         httpServer = await deps.createHttpServer(serverConfig.port, serverConfig.host, context);
 
-        deps.setupSignalStop(serverConfig.signalShutdownHandling, context);
+        deps.setupSignalStop(serverConfig.signalClose, context);
 
         // config の port 実際の httpServer のに書き換える。
         deps.updatePort(serverConfig, httpServer, context);

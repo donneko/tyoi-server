@@ -8,7 +8,7 @@ const messages = new Map([
     ["server.summary.network", "network:{networkUrl}"],
     ["server.summary.publicFull", "full:{publicFullPath}"],
     ["server.summary.public", "public:{publicPath}"],
-    ["server.summary.api", "prefix:{apiPrefix}"],
+    ["server.summary.api", "prefix:{api}"],
     ["server.summary.networkQrCode", "scan"],
     ["server.summary.title", "summary"],
     ["server.summary.qrCodeTitle", "qr"],
@@ -42,8 +42,8 @@ describe("serverSummary", () => {
                 port: 3000,
                 publicPath: "public",
                 publicFullPath: "/project/public",
-                apiPrefix: "/api",
-                showQrCode: true,
+                api: "/api",
+                qr: true,
             },
             context as never,
             {
@@ -79,8 +79,8 @@ describe("serverSummary", () => {
                 port: 4000,
                 publicPath: "public",
                 publicFullPath: "/project/public",
-                apiPrefix: "/api",
-                showQrCode: true,
+                api: "/api",
+                qr: true,
             },
             context as never,
             {
@@ -104,7 +104,7 @@ describe("serverSummary", () => {
         ]);
     });
 
-    it("showQrCode が false なら LAN 公開でも QR コードを生成しない", () => {
+    it("qr が false なら LAN 公開でも QR コードを生成しない", () => {
         const { context } = createContext();
         const qrcodeGenerate = vi.fn();
 
@@ -114,8 +114,8 @@ describe("serverSummary", () => {
                 port: 4000,
                 publicPath: "public",
                 publicFullPath: "/project/public",
-                apiPrefix: "/api",
-                showQrCode: false,
+                api: "/api",
+                qr: false,
             },
             context as never,
             {
@@ -140,8 +140,8 @@ describe("serverSummary", () => {
                     port: 4000,
                     publicPath: "public",
                     publicFullPath: "/project/public",
-                    apiPrefix: "/api",
-                    showQrCode: true,
+                    api: "/api",
+                    qr: true,
                 },
                 context as never,
                 {

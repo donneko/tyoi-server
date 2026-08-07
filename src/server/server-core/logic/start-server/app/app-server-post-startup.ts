@@ -27,7 +27,7 @@ export async function serverPostStartup(
 
     try {
         // ブラウザオープン
-        await deps.serverOpenBrowser({ ...config, target: config.openBrowser }, context);
+        await deps.serverOpenBrowser({ ...config, target: config.browser }, context);
     } catch (cause) {
         throw new CustomError(context.messageManager.message("server.browser.failed"), {
             cause,

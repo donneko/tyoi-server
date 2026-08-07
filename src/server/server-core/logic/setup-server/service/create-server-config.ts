@@ -4,15 +4,15 @@ import type { ServerCreateServerConfigReturn } from "../../../types/server.type.
 export function createServerConfig(
     context: CreateServerConfigContext
 ): ServerCreateServerConfigReturn {
-    const baseDirname = context.serverConfig.getConfig("baseDirname");
-    const publicDirname = context.serverConfig.getConfig("publicDirname");
-    const signalShutdownHandling = context.serverConfig.getConfig("signalShutdownHandling");
+    const root = context.serverConfig.getConfig("root");
+    const publicDirectory = context.serverConfig.getConfig("public");
+    const signalClose = context.serverConfig.getConfig("signalClose");
 
-    if (!baseDirname) throw new Error("baseDirname is required");
+    if (!root) throw new Error("root is required");
 
     return {
-        baseDirname,
-        publicDirname,
-        signalShutdownHandling,
+        root,
+        public: publicDirectory,
+        signalClose,
     };
 }

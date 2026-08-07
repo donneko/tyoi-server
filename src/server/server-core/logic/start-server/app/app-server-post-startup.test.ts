@@ -4,14 +4,14 @@ import { serverPostStartup } from "./app-server-post-startup.js";
 
 const config: ServerStartUseConfig = {
     port: 3000,
-    exposeLan: false,
-    showQrCode: false,
+    lan: false,
+    qr: false,
     publicPath: "public",
     publicFullPath: "/project/public",
-    openBrowser: "local",
-    apiPrefix: "/api",
+    browser: "local",
+    api: "/api",
     host: "127.0.0.1",
-    signalShutdownHandling: true,
+    signalClose: true,
 };
 
 const messageManager = {

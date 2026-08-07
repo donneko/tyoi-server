@@ -5,7 +5,7 @@ import type {
     ServerCreateNetworkDataDependencies,
     ServerGetLanIpDependencies,
 } from "../../../types/dependencies/start-server/server-post-startup.type.js";
-import { openBrowser } from "../service/open-browser.js";
+import { browser } from "../service/open-browser.js";
 import { serverSummary } from "../service/server-summary.js";
 import { createNetworkData } from "../service/create-network-data.js";
 import { getLanIp } from "../util/get-lan-ip.js";
@@ -16,7 +16,7 @@ import open from "open";
 export function defaultServerPostStartupDependencies(): ServerPostStartupDependencies {
     return {
         serverSummary: serverSummary,
-        serverOpenBrowser: openBrowser,
+        serverOpenBrowser: browser,
     };
 }
 export function defaultServerOpenBrowserDependencies(): ServerOpenBrowserDependencies {
