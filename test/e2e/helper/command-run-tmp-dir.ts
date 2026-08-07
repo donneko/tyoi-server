@@ -1,5 +1,6 @@
 import { spawn, spawnSync } from "node:child_process";
 import path from "node:path";
+import { getNpmCommand } from "./get-npm-command.js";
 
 export interface TestProcessReturn {
     status: number | null;
@@ -68,7 +69,9 @@ export async function runCommand(
             }
         };
 
-        const child = spawn(command, args, {
+        const commandArgs =
+            command === getNpmCommand() ? [...args, "--cache", path.join(cwd, ".npm-cache")] : args;
+        const child = spawn(command, commandArgs, {
             cwd,
             detached: process.platform !== "win32",
             stdio: ["pipe", "pipe", "pipe"],
