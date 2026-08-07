@@ -18,7 +18,7 @@
     "server.summary.network": "Network: {networkUrl}",
     "server.summary.publicFull": "Public full: {publicFullPath}",
     "server.summary.public": "Public: {publicPath}",
-    "server.summary.api": "API: {apiPrefix}",
+    "server.summary.api": "API: {api}",
     "server.summary.networkQrCode": "Network URL QR code",
     "server.summary.title": "Summary",
     "server.summary.qrCodeTitle": "QR code",

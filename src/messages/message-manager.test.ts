@@ -14,4 +14,13 @@ describe("MessageManager", () => {
             "Message variable not found: port"
         );
     });
+
+    it.each(["en-US", "ja-JP"] as const)(
+        "uses the v1 api variable in the %s server summary",
+        (language) => {
+            const messageManager = new MessageManager(language, path.resolve("languages"));
+
+            expect(messageManager.message("server.summary.api", { api: "/api" })).toBe("API: /api");
+        }
+    );
 });
