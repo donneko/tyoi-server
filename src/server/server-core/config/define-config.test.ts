@@ -45,4 +45,12 @@ describe("defineConfig", () => {
             signalClose: true,
         });
     });
+
+    it("rejects removed v0 config names", () => {
+        expect(() =>
+            defineConfig({
+                publicDirname: "./public",
+            } as never)
+        ).toThrow();
+    });
 });
