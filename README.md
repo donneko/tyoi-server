@@ -59,8 +59,8 @@ npm run dev
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port: 3000
 });
 
@@ -118,7 +118,6 @@ tyoi --version
 - `tyoi config`: 今いるフォルダに `tyoi.config.js` を追加
 - `tyoi info`: `tyoi run` で使われる設定を表示
 - `tyoi run`: 現在のプロジェクトの設定でサーバーを起動
-- `tyoi dev`: このパッケージの開発確認用サーバーを起動
 - `tyoi help`: コマンド一覧を表示
 
 ## Docs
@@ -128,6 +127,7 @@ tyoi --version
 - [Usage](./docs/usage.md): `tyoi()` の基本、API、WebSocket、middleware、イベント、`Server` 直接利用
 - [Config](./docs/config.md): `tyoi.config.js` と設定項目
 - [CLI](./docs/cli.md): CLI コマンドとオプション
+- [Migration](./docs/migration-v1.md): v0.0.8 から v1.0.0 への移行
 
 機能ごとの使い方とコード例は [Usage](./docs/usage.md) で確認できます。
 

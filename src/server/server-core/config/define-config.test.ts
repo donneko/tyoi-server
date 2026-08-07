@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, expectTypeOf, it, vi } from "vitest";
 import { defineConfig } from "./define-config.js";
 
 describe("defineConfig", () => {
@@ -22,5 +22,49 @@ describe("defineConfig", () => {
         const middleware = vi.fn();
 
         expect(defineConfig({ middlewares: [middleware] }).middlewares).toEqual([middleware]);
+    });
+
+    it("v1 config names are accepted", () => {
+        const config = defineConfig({
+            root: "./",
+            public: "./public",
+            api: "/api",
+            lan: false,
+            qr: false,
+            browser: false,
+            signalClose: true,
+        });
+
+        expect(config).toMatchObject({
+            root: "./",
+            public: "./public",
+            api: "/api",
+            lan: false,
+            qr: false,
+            browser: false,
+            signalClose: true,
+        });
+    });
+
+    it("preserves literal config values", () => {
+        const config = defineConfig({
+            browser: "lan",
+            port: 3000,
+        });
+
+        expectTypeOf(config.browser).toEqualTypeOf<"lan">();
+        expectTypeOf(config.port).toEqualTypeOf<3000>();
+    });
+
+    it("rejects removed v0 config names", () => {
+        if (process.env.TYPECHECK_ONLY === "true") {
+            // @ts-expect-error Removed config names are rejected by the config type.
+            defineConfig({ publicDirname: "./public" });
+        }
+        expect(() =>
+            defineConfig({
+                publicDirname: "./public",
+            } as never)
+        ).toThrow();
     });
 });

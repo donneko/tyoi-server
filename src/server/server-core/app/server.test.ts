@@ -18,8 +18,8 @@ describe("Server.stop", () => {
 
     it("停止失敗後も listen 中の HTTP サーバー参照を維持する", async () => {
         const server = new Server({
-            baseDirname: process.cwd(),
-            publicDirname: "public/main",
+            root: process.cwd(),
+            public: "public/main",
         });
         const httpServer = { listening: true } as http.Server;
         const error = new Error("shutdown failed");
@@ -38,8 +38,8 @@ describe("Server.stop", () => {
 
     it("停止失敗時でも HTTP サーバーが停止済みなら参照を破棄する", async () => {
         const server = new Server({
-            baseDirname: process.cwd(),
-            publicDirname: "public/main",
+            root: process.cwd(),
+            public: "public/main",
         });
         const httpServer = { listening: false } as http.Server;
         (

@@ -6,7 +6,7 @@ describe("setupExpress", () => {
         const context = {};
         const expressConfig = {
             middlewares: [vi.fn()],
-            apiPrefix: "/api",
+            api: "/api",
             publicDirectoryPath: "/project/public",
         };
         const dependencies = {

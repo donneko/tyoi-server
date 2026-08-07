@@ -7,8 +7,8 @@ const configuredPort = Number(process.env.PORT ?? 3000);
 const port = Number.isInteger(configuredPort) && configuredPort > 0 ? configuredPort : 3000;
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     port,
     autoPort: true,
 });

@@ -8,15 +8,20 @@ type PackResult = {
 };
 
 export function createPackToTmpDir(tmpDir: string): string {
-    const result = spawnSync(getNpmCommand(), ["pack", "--json", "--pack-destination", tmpDir], {
-        cwd: process.cwd(),
-        encoding: "utf8",
-        shell: process.platform === "win32",
-        env: {
-            ...process.env,
-            npm_config_cache: path.join(tmpDir, ".npm-cache"),
-        },
-    });
+    const npmCacheDir = path.join(tmpDir, ".npm-cache");
+    const result = spawnSync(
+        getNpmCommand(),
+        ["pack", "--json", "--pack-destination", tmpDir, "--cache", npmCacheDir],
+        {
+            cwd: process.cwd(),
+            encoding: "utf8",
+            shell: process.platform === "win32",
+            env: {
+                ...process.env,
+                npm_config_cache: npmCacheDir,
+            },
+        }
+    );
 
     if (result.status !== 0) {
         throw new Error(

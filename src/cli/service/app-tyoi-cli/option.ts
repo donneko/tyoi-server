@@ -6,6 +6,7 @@ export function getOption(argv: string[]) {
         alias: {
             p: "port",
             o: "open",
+            t: "template",
             v: "version",
             h: "help",
         },
@@ -15,8 +16,8 @@ export function getOption(argv: string[]) {
         string: ["template"],
     });
 
-    const { open: openBrowser, ...tmp } = args;
-    const updateArgs = args.open ? { openBrowser, ...tmp } : args;
+    const { open: browser, ...tmp } = args;
+    const updateArgs = args.open ? { browser, ...tmp } : args;
 
     return updateArgs;
 }

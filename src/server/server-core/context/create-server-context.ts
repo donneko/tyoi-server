@@ -1,7 +1,7 @@
 import { ServerContext } from "../types/context/integration/server.type.js";
 import { EventBus } from "../util/event-bus.js";
 import { ConfigManager } from "../service/config-manager.js";
-import { ApiRegistry } from "../util/api-registry.js";
+import { HandlerRegistry } from "../util/api-registry.js";
 import { ServerLogger } from "../service/server-logger.js";
 import { RegisterManager } from "../service/register-manager.js";
 import { WebSocketRouter } from "../service/web-socket-router.js";
@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 export function createServerContext<
     RequestNameList extends string = string,
     WebSocketNameList extends string = string,
->(stop: () => Promise<void>): ServerContext {
+>(stop: () => Promise<void>): ServerContext<WebSocketNameList, RequestNameList> {
     const outEventBus = new EventBus<OutEventBusMap>();
     const innerEventBus = new EventBus<InnerEventBusMap>();
     const languagesPath = fileURLToPath(new URL("../../../../languages", import.meta.url));
@@ -28,7 +28,7 @@ export function createServerContext<
         innerEventBus,
         outEventBus,
         expressServer: express(),
-        serverAPIs: new ApiRegistry<RequestEventMap<RequestNameList>>(),
+        apiRegistry: new HandlerRegistry<RequestEventMap<RequestNameList>>(),
         stopHandler: async () => {
             await stop();
         },

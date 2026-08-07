@@ -1,12 +1,12 @@
 import { Server } from "../../../../src/index.js";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
+    root: import.meta.dirname,
     port: 0,
-    apiPrefix: "/api",
+    api: "/api",
 });
 
-server.onAPI("POST:/post/a", (data) => {
+server.onApi("POST:/post/a", (data) => {
     if (typeof data.body === "object" && data.body && "post" in data.body) return data.body.post;
 });
 

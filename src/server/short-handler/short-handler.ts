@@ -1,9 +1,9 @@
 import { Server } from "../server-core/index.js";
 import type http from "node:http";
 import type {
-    ServerStartOptions,
+    StartOptions,
     ServerOptions,
-    ApiRegistryHandler,
+    Handler,
     WsHandler,
     RequestData,
 } from "../server-core/index.js";
@@ -25,26 +25,26 @@ export class ShortHandler {
     }
 
     /** GET API ハンドラを登録します。 */
-    get(pass: string, fn: ApiRegistryHandler<RequestData>): this {
-        this.tyoiServer.onAPI(`GET:${pass}`, fn);
+    get(pass: string, fn: Handler<RequestData>): this {
+        this.tyoiServer.onApi(`GET:${pass}`, fn);
         return this;
     }
     /** POST API ハンドラを登録します。 */
-    post(pass: string, fn: ApiRegistryHandler<RequestData>): this {
-        this.tyoiServer.onAPI(`POST:${pass}`, fn);
+    post(pass: string, fn: Handler<RequestData>): this {
+        this.tyoiServer.onApi(`POST:${pass}`, fn);
         return this;
     }
     /** WebSocket ハンドラを登録します。 */
-    ws(pass: string, fn: ApiRegistryHandler<WsHandler>): this {
+    ws(pass: string, fn: Handler<WsHandler>): this {
         this.tyoiServer.onWebSocket(`${pass}`, fn);
         return this;
     }
     /** `start()` の別名です。 */
-    async listen(options?: ServerStartOptions): Promise<http.Server | undefined> {
+    async listen(options?: StartOptions): Promise<http.Server | undefined> {
         return this.start(options);
     }
     /** サーバーを起動します。 */
-    async start(options?: ServerStartOptions): Promise<http.Server | undefined> {
+    async start(options?: StartOptions): Promise<http.Server | undefined> {
         return this.tyoiServer.start(options);
     }
     /** `close()` の別名です。 */
@@ -60,14 +60,14 @@ export class ShortHandler {
 /**
  * API と WebSocket の登録を簡潔に行うサーバーを作成します。
  *
- * @param options サーバー設定。`baseDirname` は必須です。
+ * @param options サーバー設定。`root` は必須です。
  * @returns API 登録・起動・停止を行う簡易 API。
  *
  * @example
  * ```ts
  * const app = tyoi({
- *   baseDirname: import.meta.dirname,
- *   publicDirname: "../public/main",
+ *   root: import.meta.dirname,
+ *   public: "../public/main",
  * });
  *
  * app.get("/health", () => ({ ok: true }));

@@ -25,7 +25,7 @@ async function getConfig(
     const config = {
         ...useConfig,
         ...optionArgs,
-        ...{ baseDirname: file ? processCwd : mainDirname },
+        ...{ root: file ? processCwd : mainDirname },
     };
 
     return config;

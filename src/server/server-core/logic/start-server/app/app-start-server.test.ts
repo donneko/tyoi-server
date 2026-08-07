@@ -4,14 +4,14 @@ import { startServer } from "./app-start-server.js";
 
 const config: ServerStartUseConfig = {
     port: 3000,
-    exposeLan: false,
-    showQrCode: false,
+    lan: false,
+    qr: false,
     publicPath: "public",
     publicFullPath: "/project/public",
-    openBrowser: false,
-    apiPrefix: "/api",
+    browser: false,
+    api: "/api",
     host: "127.0.0.1",
-    signalShutdownHandling: true,
+    signalClose: true,
 };
 
 function createDependencies() {

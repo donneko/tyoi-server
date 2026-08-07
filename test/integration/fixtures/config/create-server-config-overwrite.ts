@@ -1,12 +1,12 @@
 import { Server } from "../../../../src/index.js";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
-    apiPrefix: "hogehoge",
+    root: import.meta.dirname,
+    api: "hogehoge",
 });
 
-const apiPrefix = server.getConfig("apiPrefix");
+const api = server.getConfig("api");
 
-if (apiPrefix !== "hogehoge") throw new Error();
+if (api !== "hogehoge") throw new Error();
 
 await server.stop();

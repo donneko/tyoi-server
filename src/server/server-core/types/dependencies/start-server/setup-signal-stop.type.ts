@@ -1,7 +1,7 @@
 import type { SetupSignalStopContext } from "../../context/start-server/start-server.type.js";
 
 export type SetupSignalStop = (
-    signalShutdownHandling: boolean,
+    signalClose: boolean,
     context: SetupSignalStopContext,
     dependencies?: Partial<SetupSignalStopDependencies>
 ) => void;

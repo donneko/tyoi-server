@@ -2,13 +2,13 @@ import type {
     CreateServerConfigContext,
     FindAvailablePortContext,
 } from "../../context/start-server/start-server.type.js";
-import type { ServerStartOptions } from "../../../types/server.type.js";
+import type { StartOptions } from "../../../types/server.type.js";
 import type { ServerStartUseConfig } from "../../../types/server.type.js";
 import type { ServerStartFindPortArgs } from "../../../types/server.type.js";
 import type net from "node:net";
 
 export type CreateServerConfig = (
-    options: ServerStartOptions,
+    options: StartOptions,
     context: CreateServerConfigContext,
     dependencies?: Partial<CreateServerConfigDependencies>
 ) => Promise<ServerStartUseConfig>;

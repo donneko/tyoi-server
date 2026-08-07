@@ -5,13 +5,13 @@ export default defineConfig({
     port: 3000,
     autoPort: true,
 
-    publicDirname: "./public/main",
-    apiPrefix: "/api",
+    public: "./public/main",
+    api: "/api",
 
-    exposeLan: false,
-    showQrCode: false,
+    lan: false,
+    qr: false,
 
-    openBrowser: false,
+    browser: false,
 
     middlewares: [morgan("dev")],
 });

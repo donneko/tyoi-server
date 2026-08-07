@@ -24,8 +24,8 @@ export class ServerLogger {
         ) => ReturnType<Logger[K]>;
 
         const data = fn.call(logger, ...args);
-        void this.#innerEventBus.emit("server/*:log", data).catch(() => undefined);
-        void this.#outEventBus.emit("server/*:log", data).catch(() => undefined);
+        void this.#innerEventBus.emit("server/log:*", data).catch(() => undefined);
+        void this.#outEventBus.emit("server/log:*", data).catch(() => undefined);
         return data;
     }
 }

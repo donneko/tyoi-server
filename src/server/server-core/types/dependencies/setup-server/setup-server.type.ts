@@ -16,8 +16,8 @@ export type CreateServerConfig = (
 ) => ServerCreateServerConfigReturn;
 
 export type SetupPublicPath = (
-    baseDirname: string,
-    publicDirname: string,
+    root: string,
+    publicDirectory: string,
     context: SetupPublicPathContext,
     dependencies?: Partial<SetupPublicPathDependencies>
 ) => void;
@@ -26,6 +26,6 @@ export type SetupPublicPathDependencies = {
     pathNormalization: PathNormalization;
 };
 
-export type PathNormalization = (baseDirname: string, publicDirname: string) => string;
+export type PathNormalization = (root: string, publicDirectory: string) => string;
 
 export type SetupLanguages = (context: SetupLanguagesContext) => void;

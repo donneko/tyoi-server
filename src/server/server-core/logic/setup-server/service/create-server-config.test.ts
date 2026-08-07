@@ -4,9 +4,9 @@ import { createServerConfig } from "./create-server-config.js";
 describe("createServerConfig", () => {
     it("設定マネージャーからセットアップ用設定を作る", () => {
         const config = {
-            baseDirname: "/project",
-            publicDirname: "public",
-            signalShutdownHandling: true,
+            root: "/project",
+            public: "public",
+            signalClose: true,
         };
         const getConfig = vi.fn((key: keyof typeof config) => config[key]);
 
@@ -17,11 +17,11 @@ describe("createServerConfig", () => {
         ).toEqual(config);
     });
 
-    it.each(["", undefined])("baseDirname が %j の場合はエラーにする", (baseDirname) => {
+    it.each(["", undefined])("root が %j の場合はエラーにする", (root) => {
         const config = {
-            baseDirname,
-            publicDirname: "public",
-            signalShutdownHandling: true,
+            root,
+            public: "public",
+            signalClose: true,
         };
 
         expect(() =>
@@ -30,6 +30,6 @@ describe("createServerConfig", () => {
                     getConfig: vi.fn((key: keyof typeof config) => config[key]),
                 } as never,
             })
-        ).toThrow("baseDirname is required");
+        ).toThrow("root is required");
     });
 });

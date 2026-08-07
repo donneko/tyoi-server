@@ -22,7 +22,7 @@ export function setupExpress(
     deps.setupDefaultMiddleware(context);
 
     // API
-    deps.setupApiProcess(expressConfig.apiPrefix, context);
+    deps.setupApiProcess(expressConfig.api, context);
 
     // 静的ファイル配信
     deps.setupStaticFile(expressConfig.publicDirectoryPath, context);

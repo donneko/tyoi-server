@@ -4,7 +4,7 @@ import { defaultSetupSignalStopDependencies } from "../dependencies/setup-signal
 import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export function setupSignalStop(
-    signalShutdownHandling: boolean,
+    signalClose: boolean,
     context: SetupSignalStopContext,
     dependencies: Partial<SetupSignalStopDependencies> = {}
 ) {
@@ -13,7 +13,7 @@ export function setupSignalStop(
         dependencies
     );
 
-    if (signalShutdownHandling) {
+    if (signalClose) {
         deps.processOn("SIGINT", context.stopHandler);
         deps.processOn("SIGTERM", context.stopHandler);
     }

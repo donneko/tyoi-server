@@ -9,7 +9,6 @@ export default function serverHelp(data: CmdMetaData) {
     logger.window(messageManager.message("cli.help.title"), [
         logger.createInfo(messageManager.message("cli.help.introduction")),
         logger.createBar(),
-        logger.createMessage(messageManager.message("cli.help.dev")),
         logger.createMessage(messageManager.message("cli.help.help")),
         logger.createMessage(messageManager.message("cli.help.init")),
         logger.createMessage(messageManager.message("cli.help.run")),

@@ -25,7 +25,7 @@ export type ServerPostStartupDependencies = {
 };
 
 export type ServerOpenBrowser = (
-    openBrowserData: ServerOpenBrowserArgs,
+    browserData: ServerOpenBrowserArgs,
     context: ServerOpenBrowserContext,
     dependencies?: Partial<ServerOpenBrowserDependencies>
 ) => Promise<void>;

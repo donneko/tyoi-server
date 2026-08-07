@@ -5,14 +5,14 @@ import { updatePort } from "./update-port.js";
 function createConfig(): ServerStartUseConfig {
     return {
         port: 3000,
-        exposeLan: false,
-        showQrCode: false,
+        lan: false,
+        qr: false,
         publicPath: "public",
         publicFullPath: "/project/public",
-        openBrowser: false,
-        apiPrefix: "/api",
+        browser: false,
+        api: "/api",
         host: "127.0.0.1",
-        signalShutdownHandling: true,
+        signalClose: true,
     };
 }
 

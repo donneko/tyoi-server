@@ -1,8 +1,8 @@
 import { Server } from "../../../../src/index.js";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
-    publicDirname: "./test-data",
+    root: import.meta.dirname,
+    public: "./test-data",
     port: 0,
 });
 

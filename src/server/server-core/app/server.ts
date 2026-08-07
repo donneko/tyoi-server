@@ -1,5 +1,5 @@
 import type http from "node:http";
-import type { ServerStartOptions, ServerOptions } from "../types/server.type.js";
+import type { StartOptions, ServerOptions } from "../types/server.type.js";
 import { createServerContext } from "../context/create-server-context.js";
 import { isServerStop, stopServer } from "../logic/stop-server/index.js";
 import { setupExpress } from "../logic/setup-express/index.js";
@@ -26,7 +26,7 @@ export class Server<
     /**
      * サーバーを作成し、ルーティングと静的ファイル配信を初期化します。
      *
-     * `baseDirname` は必須です。起動は `start()` で明示的に行います。
+     * `root` は必須です。起動は `start()` で明示的に行います。
      *
      * @param options サーバー設定。
      * @example
@@ -35,28 +35,26 @@ export class Server<
      *  type RequestNameList = "GET:/test" | "GET:/test/a" | "GET:/a";
      *
      *  const server = new Server<RequestNameList>({
-     *      baseDirname: import.meta.dirname,
-     *      publicDirname:"../public/main",
-     *      apiPrefix:"/api",
+     *      root: import.meta.dirname,
+     *      public:"../public/main",
+     *      api:"/api",
      *      port:3000,
      *  });
      *
-     *  server.onAPI("GET:/test", (data) => {
+     *  server.onApi("GET:/test", (data) => {
      *      return data;
      *  });
      *  await server.start();
      */
-    constructor(options?: ServerOptions) {
-        if (options) {
-            this.serverContext.serverConfig.updateConfig(removeUndefined(options));
-        }
+    constructor(options: ServerOptions) {
+        this.serverContext.serverConfig.updateConfig(removeUndefined(options));
 
         setupServer(this.serverContext);
         setupExpress(this.serverContext);
     }
 
     /** `start()` の別名です。 */
-    async listen(options?: ServerStartOptions): Promise<http.Server | undefined> {
+    async listen(options?: StartOptions): Promise<http.Server | undefined> {
         return this.start(options);
     }
     private isStarting: boolean = false;
@@ -73,11 +71,11 @@ export class Server<
      * ```ts
      * await server.start({
      *   port: 3000,
-     *   showQrCode: false,
+     *   qr: false,
      * });
      * ```
      */
-    async start(options?: ServerStartOptions): Promise<http.Server | undefined> {
+    async start(options?: StartOptions): Promise<http.Server | undefined> {
         const context = this.serverContext;
 
         if (!isServerStart(this.httpServer, this.isStarting)) {
@@ -155,15 +153,15 @@ export class Server<
     hasEvent = this.serverContext.outEventBus.has.bind(this.serverContext.outEventBus);
 
     /** HTTP API ハンドラを登録します。 */
-    onAPI = this.serverContext.serverAPIs.on.bind(this.serverContext.serverAPIs);
+    onApi = this.serverContext.apiRegistry.on.bind(this.serverContext.apiRegistry);
     /** 一度だけ実行する HTTP API ハンドラを登録します。 */
-    onceAPI = this.serverContext.serverAPIs.once.bind(this.serverContext.serverAPIs);
+    onceApi = this.serverContext.apiRegistry.once.bind(this.serverContext.apiRegistry);
     /** HTTP API ハンドラを解除します。 */
-    offAPI = this.serverContext.serverAPIs.off.bind(this.serverContext.serverAPIs);
+    offApi = this.serverContext.apiRegistry.off.bind(this.serverContext.apiRegistry);
     /** 指定した HTTP API ハンドラが登録されているかを返します。 */
-    hasAPI = this.serverContext.serverAPIs.has.bind(this.serverContext.serverAPIs);
+    hasApi = this.serverContext.apiRegistry.has.bind(this.serverContext.apiRegistry);
     /** HTTP API ハンドラをリクエストなしで実行します。 */
-    emitAPI = this.serverContext.serverAPIs.emit.bind(this.serverContext.serverAPIs);
+    emitApi = this.serverContext.apiRegistry.emit.bind(this.serverContext.apiRegistry);
 
     /** WebSocket ハンドラを登録します。 */
     onWebSocket = this.serverContext.webSocketRouter.on.bind(this.serverContext.webSocketRouter);

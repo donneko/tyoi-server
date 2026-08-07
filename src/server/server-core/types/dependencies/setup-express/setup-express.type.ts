@@ -29,7 +29,7 @@ export type SetupMiddleware = (
 export type SetupDefaultMiddleware = (context: SetupDefaultMiddlewareContext) => void;
 
 export type SetupApiProcess = (
-    apiPrefix: string,
+    api: string,
     context: SetupApiProcessContext,
     dependencies?: Partial<SetupApiProcessDependencies>
 ) => void;

@@ -1,13 +1,13 @@
 {
   "name": "@donneko/tyoi-server",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "scripts": {
     "test": "npm run test:vitest",
     "test:vitest": "npx vitest run",
     "test:type": "npx tsc --noEmit",
     "test:templates": "npx tsc -p tsconfig.templates.json && npx tsc --ignoreConfig --noEmit --allowJs --checkJs templates/project/static-ts/public/main/assets/app.js && node --check templates/project/static-ts/public/main/assets/app.js && node --check templates/project/realtime-ts/public/main/assets/app.js",
     "test:ci": "npm run test:type && npm run test:templates && npm run check:format:check && npm run check:lint && npm run test:vitest",
-    "test:nonTTY": "npm run test </dev/null",
+    "test:nonTTY": "node scripts/run-test-non-tty.mjs",
     "check:format:write": "npx prettier . --write",
     "check:format:check": "npx prettier . --check",
     "check:lint": "npx eslint .",
