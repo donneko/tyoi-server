@@ -18,6 +18,10 @@ const defaultTestProcessConfig: TestProcessConfig = {
     timeout: 10_000,
 };
 
+export function createCommandArgs(cwd: string, command: string, args: string[]): string[] {
+    return command === getNpmCommand() ? ["--cache", path.join(cwd, ".npm-cache"), ...args] : args;
+}
+
 export async function runCommand(
     cwd: string,
     command: string,
@@ -69,8 +73,7 @@ export async function runCommand(
             }
         };
 
-        const commandArgs =
-            command === getNpmCommand() ? [...args, "--cache", path.join(cwd, ".npm-cache")] : args;
+        const commandArgs = createCommandArgs(cwd, command, args);
         const child = spawn(command, commandArgs, {
             cwd,
             detached: process.platform !== "win32",
