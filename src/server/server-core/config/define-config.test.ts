@@ -23,4 +23,26 @@ describe("defineConfig", () => {
 
         expect(defineConfig({ middlewares: [middleware] }).middlewares).toEqual([middleware]);
     });
+
+    it("v1 config names are accepted", () => {
+        const config = defineConfig({
+            root: "./",
+            public: "./public",
+            api: "/api",
+            lan: false,
+            qr: false,
+            browser: false,
+            signalClose: true,
+        });
+
+        expect(config).toMatchObject({
+            root: "./",
+            public: "./public",
+            api: "/api",
+            lan: false,
+            qr: false,
+            browser: false,
+            signalClose: true,
+        });
+    });
 });
