@@ -2,6 +2,9 @@ import { serverConfigSchema, resolvedServerConfigSchema } from "../types/server-
 import type { ResolvedServerConfig } from "../types/server-config.type.js";
 import type { ServerConfig } from "../types/public/config.type.js";
 
+type ExactServerConfig<Config extends ServerConfig> = Config &
+    Record<Exclude<keyof Config, keyof ServerConfig>, never>;
+
 /**
  * CLI で読み込むサーバー設定を検証して返します。
  *
@@ -22,7 +25,9 @@ import type { ServerConfig } from "../types/public/config.type.js";
  * });
  * ```
  */
-export function defineConfig<const Config extends ServerConfig>(config: Config): Config {
+export function defineConfig<const Config extends ServerConfig>(
+    config: ExactServerConfig<Config>
+): Config {
     serverConfigSchema.parse(config);
     return config;
 }

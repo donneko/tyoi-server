@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, expectTypeOf, it, vi } from "vitest";
 import { defineConfig } from "./define-config.js";
 
 describe("defineConfig", () => {
@@ -46,7 +46,21 @@ describe("defineConfig", () => {
         });
     });
 
+    it("preserves literal config values", () => {
+        const config = defineConfig({
+            browser: "lan",
+            port: 3000,
+        });
+
+        expectTypeOf(config.browser).toEqualTypeOf<"lan">();
+        expectTypeOf(config.port).toEqualTypeOf<3000>();
+    });
+
     it("rejects removed v0 config names", () => {
+        if (process.env.TYPECHECK_ONLY === "true") {
+            // @ts-expect-error Removed config names are rejected by the config type.
+            defineConfig({ publicDirname: "./public" });
+        }
         expect(() =>
             defineConfig({
                 publicDirname: "./public",
