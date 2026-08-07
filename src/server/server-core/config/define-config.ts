@@ -1,5 +1,6 @@
 import { serverConfigSchema, resolvedServerConfigSchema } from "../types/server-config.type.js";
-import type { ServerConfig, ResolvedServerConfig } from "../types/public/config.type.js";
+import type { ResolvedServerConfig } from "../types/server-config.type.js";
+import type { ServerConfig } from "../types/public/config.type.js";
 
 /**
  * CLI で読み込むサーバー設定を検証して返します。

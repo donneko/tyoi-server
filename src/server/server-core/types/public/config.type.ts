@@ -20,21 +20,4 @@ export type ServerOptions = ServerConfig & {
     root: string;
 };
 
-export type ResolvedServerConfig = {
-    root?: string;
-    public: string;
-    api: string;
-    port: number;
-    middlewares: express.RequestHandler[];
-    lan: boolean;
-    qr: boolean;
-    browser: BrowserTarget;
-    autoPort: boolean;
-    signalClose: boolean;
-    language: string;
-};
-
-export type StartOptions = Pick<
-    ServerConfig,
-    "port" | "lan" | "qr" | "browser" | "autoPort"
->;
+export type StartOptions = Pick<ServerConfig, "port" | "lan" | "qr" | "browser" | "autoPort">;

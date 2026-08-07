@@ -2,7 +2,6 @@ export type {
     BrowserTarget,
     RequestData,
     RequestEventMap,
-    ResolvedServerConfig,
     ServerConfig,
     ServerOptions,
     StartOptions,

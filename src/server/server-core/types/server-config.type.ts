@@ -34,3 +34,5 @@ export const resolvedServerConfigSchema = z.object({
     signalClose: z.boolean(),
     language: z.string(),
 });
+
+export type ResolvedServerConfig = z.infer<typeof resolvedServerConfigSchema>;
