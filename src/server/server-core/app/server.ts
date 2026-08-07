@@ -46,10 +46,8 @@ export class Server<
      *  });
      *  await server.start();
      */
-    constructor(options?: ServerOptions) {
-        if (options) {
-            this.serverContext.serverConfig.updateConfig(removeUndefined(options));
-        }
+    constructor(options: ServerOptions) {
+        this.serverContext.serverConfig.updateConfig(removeUndefined(options));
 
         setupServer(this.serverContext);
         setupExpress(this.serverContext);

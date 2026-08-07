@@ -1,4 +1,5 @@
 import { expectTypeOf, it } from "vitest";
+import type { ServerOptions } from "../types/public/config.type.js";
 import { Server } from "./server.js";
 
 it("preserves typed API and WebSocket route names", () => {
@@ -6,4 +7,5 @@ it("preserves typed API and WebSocket route names", () => {
 
     expectTypeOf(server.onApi).parameter(0).toEqualTypeOf<"GET:/health">();
     expectTypeOf(server.onWebSocket).parameter(0).toEqualTypeOf<"/events">();
+    expectTypeOf<ConstructorParameters<typeof Server>>().toEqualTypeOf<[ServerOptions]>();
 });
