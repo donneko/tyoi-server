@@ -43,4 +43,28 @@ describe("HandlerRegistry", () => {
 
         expect(currentHandler).toHaveBeenCalledOnce();
     });
+
+    test("uses HandlerRegistry names in diagnostic logs", async () => {
+        const warningRegistry = new HandlerRegistry<{ event: object }>();
+        const errorRegistry = new HandlerRegistry<{ event: object }>();
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+        const error = vi.spyOn(console, "error").mockImplementation(() => undefined);
+        const thrown = new Error("handler failed");
+
+        try {
+            warningRegistry.on("event", () => undefined);
+            warningRegistry.on("event", () => undefined);
+            errorRegistry.on("event", () => {
+                throw thrown;
+            });
+
+            await expect(errorRegistry.emit("event", {})).rejects.toBe(thrown);
+
+            expect(warn).toHaveBeenCalledWith(expect.stringContaining("[HandlerRegistry on warn]"));
+            expect(error).toHaveBeenCalledWith(`[HandlerRegistry emit error] event`, thrown);
+        } finally {
+            warn.mockRestore();
+            error.mockRestore();
+        }
+    });
 });

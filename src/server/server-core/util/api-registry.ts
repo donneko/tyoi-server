@@ -14,7 +14,7 @@ export class HandlerRegistry<HandlerRegistryMap extends Record<string, unknown>>
      */
     on<KEY extends keyof HandlerRegistryMap>(type: KEY, fn: Handler<HandlerRegistryMap[KEY]>) {
         if (this.#EVENT_DATA_STORE.has(type)) {
-            console.warn(`[EventBus on warn] すでに登録された関数が上書きされました。`);
+            console.warn(`[HandlerRegistry on warn] すでに登録された関数が上書きされました。`);
         }
 
         this.#EVENT_DATA_STORE.set(type, fn as unknown);
@@ -80,7 +80,7 @@ export class HandlerRegistry<HandlerRegistryMap extends Record<string, unknown>>
         try {
             return await (fn as Handler<HandlerRegistryMap[Key]>)(arg);
         } catch (error) {
-            console.error(`[EventBus emit error] ${String(type)}`, error);
+            console.error(`[HandlerRegistry emit error] ${String(type)}`, error);
             throw error;
         }
     }
