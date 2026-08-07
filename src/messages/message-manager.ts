@@ -29,7 +29,7 @@ export class MessageManager {
         }
 
         return template.replace(/\{([A-Za-z][A-Za-z0-9_]*)\}/g, (_, variable: string) => {
-            if (!(variable in variables)) {
+            if (!Object.hasOwn(variables, variable)) {
                 throw new Error(`Message variable not found: ${variable} (key=${key})`);
             }
             return String(variables[variable]);

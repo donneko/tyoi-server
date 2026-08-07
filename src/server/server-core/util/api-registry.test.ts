@@ -30,4 +30,17 @@ describe("HandlerRegistry", () => {
         apiRegistry.emit("b", {});
         expect(onCallback).toHaveBeenCalledTimes(0);
     });
+
+    test("old unsubscribe does not remove the overwritten handler", async () => {
+        const registry = new ApiRegistry<{ event: object }>();
+        const oldHandler = vi.fn();
+        const currentHandler = vi.fn();
+        const unsubscribe = registry.on("event", oldHandler);
+
+        registry.on("event", currentHandler);
+        unsubscribe();
+        await registry.emit("event", {});
+
+        expect(currentHandler).toHaveBeenCalledOnce();
+    });
 });

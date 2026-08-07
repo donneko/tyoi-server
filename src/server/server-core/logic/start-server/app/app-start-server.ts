@@ -31,6 +31,6 @@ export async function startServer(
 
         return httpServer;
     } catch (error) {
-        return deps.startCatchError(error, httpServer, context);
+        return await deps.startCatchError(error, httpServer, context);
     }
 }

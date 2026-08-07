@@ -7,22 +7,25 @@ export async function askPermission(message: string): Promise<boolean> {
         output: process.stdout,
     });
 
-    let answerReturn: boolean | null = null;
+    try {
+        let answerReturn: boolean | null = null;
 
-    while (answerReturn === null) {
-        const answer = await rl.question(`${message} (y/n): `);
-        const answerUpper = answer.toUpperCase();
+        while (answerReturn === null) {
+            const answer = await rl.question(`${message} (y/n): `);
+            const answerUpper = answer.toUpperCase();
 
-        if (answerUpper === "Y" || answerUpper === "YES") {
-            answerReturn = true;
-            break;
+            if (answerUpper === "Y" || answerUpper === "YES") {
+                answerReturn = true;
+                break;
+            }
+            if (answerUpper === "N" || answerUpper === "NO") {
+                answerReturn = false;
+                break;
+            }
         }
-        if (answerUpper === "N" || answerUpper === "NO") {
-            answerReturn = false;
-            break;
-        }
+
+        return answerReturn;
+    } finally {
+        rl.close();
     }
-
-    rl.close();
-    return answerReturn;
 }
