@@ -1,0 +1,22 @@
+# CLI オプション仕様
+
+| オプション | 短縮形 | 値 | 主な対象 | 動作 |
+| --- | --- | --- | --- | --- |
+| `--template` | なし | 文字列 | `create`, `init`, `config` | 使用するテンプレート名 |
+| `--port` | `-p` | 数値 | `run`, `dev`, 既定コマンド | 起動ポートを上書き |
+| `--open` | `-o` | フラグ | `run`, `dev`, 既定コマンド | `openBrowser: true` としてブラウザーを開く |
+| `--help` | `-h` | フラグ | 既定コマンド | ヘルプを表示して終了 |
+| `--version` | `-v` | フラグ | 既定コマンド | パッケージバージョンを表示して終了 |
+
+## 設定の渡し方
+
+CLI オプションは読み込んだ `tyoi*.config.js` より後に適用されるため、同じ項目は CLI が優先されます。`baseDirname` は CLI が最後に設定します。
+
+```text
+デフォルト設定
+  → tyoi*.config.js
+  → CLI オプション
+  → CLI が決める baseDirname
+```
+
+`--open` は Local URL を開くフラグです。Network URL を直接選ぶ CLI オプションはないため、`openBrowser: "network"` は設定ファイルで指定します。

@@ -1,7 +1,9 @@
 {
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": ["./src/index.ts"],
-    "out": "./docs/api",
+    "out": "./docs/api/reference",
+    "docsRoot": "./docs",
+    "sourceLinkTemplate": "https://github.com/donneko/tyoi-api-node-server/blob/{gitRevision}/{path}#L{line}",
 
     "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
     "readme": "none",

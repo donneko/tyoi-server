@@ -31,7 +31,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "docs/*.md",
+    "docs/**/*.md",
     "docs/src",
     "LICENSE",
     "README.md",
