@@ -1,18 +1,20 @@
 [@donneko/tyoi-server](../index.md) / ServerCreateExpressConfigReturn
 
-# Type Alias: ServerCreateExpressConfigReturn
+# 型エイリアス: ServerCreateExpressConfigReturn
 
 > **ServerCreateExpressConfigReturn** = `object`
 
-Defined in: [server-core/types/server.type.ts:74](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L74)
+定義: [server-core/types/server.type.ts:84](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L84)
 
-## Properties
+Express設定の生成結果です。 / Result of creating the Express configuration.
+
+## プロパティ
 
 ### apiPrefix
 
 > **apiPrefix**: `string`
 
-Defined in: [server-core/types/server.type.ts:76](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L76)
+定義: [server-core/types/server.type.ts:86](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L86)
 
 ***
 
@@ -20,7 +22,7 @@ Defined in: [server-core/types/server.type.ts:76](https://github.com/donneko/tyo
 
 > **middlewares**: `express.RequestHandler`[]
 
-Defined in: [server-core/types/server.type.ts:75](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L75)
+定義: [server-core/types/server.type.ts:85](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L85)
 
 ***
 
@@ -28,4 +30,4 @@ Defined in: [server-core/types/server.type.ts:75](https://github.com/donneko/tyo
 
 > **publicDirectoryPath**: `string`
 
-Defined in: [server-core/types/server.type.ts:77](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L77)
+定義: [server-core/types/server.type.ts:87](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L87)

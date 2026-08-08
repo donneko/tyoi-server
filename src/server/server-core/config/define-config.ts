@@ -11,9 +11,13 @@ type ExactServerConfig<Config extends ServerConfig> = Config &
  * `tyoi.config.js` の default export に指定します。
  * `root` は CLI 起動時に自動設定されるため、通常は指定不要です。
  *
- * @param config サーバー設定。未指定の項目には既定値が使われます。
- * @returns 検証済みのユーザー設定。
- * @throws {ZodError} 設定値が不正な場合。
+ * Validates and returns server configuration loaded by the CLI. Use it as the
+ * default export of `tyoi.config.js`. The CLI sets `baseDirname` automatically,
+ * so it normally does not need to be specified.
+ *
+ * @param config サーバー設定。未指定の項目には既定値が使われます。 / Server configuration. Defaults are used for omitted properties.
+ * @returns 検証済みのユーザー設定。 / The validated user configuration.
+ * @throws {ZodError} 設定値が不正な場合。 / If a configuration value is invalid.
  *
  * @example
  * ```ts

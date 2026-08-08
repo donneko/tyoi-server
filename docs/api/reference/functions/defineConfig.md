@@ -1,21 +1,25 @@
 [@donneko/tyoi-server](../index.md) / defineConfig
 
-# Function: defineConfig()
+# 関数: defineConfig()
 
 > **defineConfig**(`config`): `object`
 
-Defined in: [server-core/config/define-config.ts:24](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/config/define-config.ts#L24)
+定義: [server-core/config/define-config.ts:28](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/config/define-config.ts#L28)
 
 CLI で読み込むサーバー設定を検証して返します。
 
 `tyoi.config.js` の default export に指定します。
 `baseDirname` は CLI 起動時に自動設定されるため、通常は指定不要です。
 
-## Parameters
+Validates and returns server configuration loaded by the CLI. Use it as the
+default export of `tyoi.config.js`. The CLI sets `baseDirname` automatically,
+so it normally does not need to be specified.
+
+## パラメータ
 
 ### config
 
-サーバー設定。未指定の項目には既定値が使われます。
+サーバー設定。未指定の項目には既定値が使われます。 / Server configuration. Defaults are used for omitted properties.
 
 #### apiPrefix?
 
@@ -61,11 +65,11 @@ CLI で読み込むサーバー設定を検証して返します。
 
 `boolean` = `...`
 
-## Returns
+## 戻り値
 
 `object`
 
-検証済みのユーザー設定。
+検証済みのユーザー設定。 / The validated user configuration.
 
 ### apiPrefix?
 
@@ -113,9 +117,9 @@ CLI で読み込むサーバー設定を検証して返します。
 
 ## Throws
 
-設定値が不正な場合。
+設定値が不正な場合。 / If a configuration value is invalid.
 
-## Example
+## 例
 
 ```ts
 import { defineConfig } from "@donneko/tyoi-server";

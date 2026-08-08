@@ -1,18 +1,20 @@
 [@donneko/tyoi-server](../index.md) / ServerOpenBrowserArgs
 
-# Type Alias: ServerOpenBrowserArgs
+# 型エイリアス: ServerOpenBrowserArgs
 
 > **ServerOpenBrowserArgs** = `object`
 
-Defined in: [server-core/types/server.type.ts:68](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L68)
+定義: [server-core/types/server.type.ts:77](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L77)
 
-## Properties
+ブラウザーを開くための引数です。 / Arguments for opening a browser.
+
+## プロパティ
 
 ### host
 
 > **host**: `string`
 
-Defined in: [server-core/types/server.type.ts:69](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L69)
+定義: [server-core/types/server.type.ts:78](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L78)
 
 ***
 
@@ -20,7 +22,7 @@ Defined in: [server-core/types/server.type.ts:69](https://github.com/donneko/tyo
 
 > **port**: `number`
 
-Defined in: [server-core/types/server.type.ts:70](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L70)
+定義: [server-core/types/server.type.ts:79](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L79)
 
 ***
 
@@ -28,4 +30,4 @@ Defined in: [server-core/types/server.type.ts:70](https://github.com/donneko/tyo
 
 > **target**: [`ServerOpenBrowserTarget`](ServerOpenBrowserTarget.md)
 
-Defined in: [server-core/types/server.type.ts:71](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L71)
+定義: [server-core/types/server.type.ts:80](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L80)

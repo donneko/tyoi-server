@@ -3,13 +3,13 @@ export class EventBus<EventBusMap extends Record<string, unknown>> {
     #EVENT_DATA_STORE = new Map<keyof EventBusMap, unknown[]>();
 
     /**
-     * ハンドラを登録する関数
-     * @param type 登録するキー名
-     * @param fn 実行する関数処理
-     * @returns handler を解除するための関数
+     * ハンドラを登録します。 / Registers a handler.
+     * @param type 登録するキー名。 / Key to register.
+     * @param fn 実行するハンドラ。 / Handler to invoke.
+     * @returns ハンドラを解除するための関数。 / A function that unregisters the handler.
      * @example
      * const unsubscribe = eventBus.on("foo", handler);
-     * unsubscribe(); // handler を解除
+     * unsubscribe(); // ハンドラを解除 / Unregister the handler
      */
     on<Key extends keyof EventBusMap>(type: Key, fn: EventBusHandler<EventBusMap[Key]>) {
         if (!this.#EVENT_DATA_STORE.has(type)) {
@@ -23,9 +23,9 @@ export class EventBus<EventBusMap extends Record<string, unknown>> {
     }
 
     /**
-     * ハンドラを登録する関数して、一度のみ実行する
-     * @param type 登録するキー名
-     * @param fn 実行する関数処理
+     * 一度だけ実行するハンドラを登録します。 / Registers a handler that runs once.
+     * @param type 登録するキー名。 / Key to register.
+     * @param fn 実行するハンドラ。 / Handler to invoke.
      * @example
      * eventBus.once("foo", handler);
      */
@@ -38,9 +38,9 @@ export class EventBus<EventBusMap extends Record<string, unknown>> {
     }
 
     /**
-     * ハンドラがストアに存在するかを検証する
-     * @param type 調べるキー名
-     * @returns 存在するならtrue
+     * ハンドラが登録されているかを確認します。 / Checks whether a handler is registered.
+     * @param type 調べるキー名。 / Key to check.
+     * @returns 存在する場合は `true`。 / `true` when a handler exists.
      * @example
      * console.log(eventBus.has("foo"));
      */
@@ -49,8 +49,8 @@ export class EventBus<EventBusMap extends Record<string, unknown>> {
     }
 
     /**
-     * ハンドラの登録を解除する
-     * @param type 解除するするキー名
+     * ハンドラの登録を解除します。 / Unregisters a handler.
+     * @param type 解除するキー名。 / Key to unregister.
      * @example
      * eventBus.off("foo",handler);
      */
@@ -69,9 +69,9 @@ export class EventBus<EventBusMap extends Record<string, unknown>> {
     }
 
     /**
-     * キー名で登録されたハンドラを実行する
-     * @param type 解除するするキー名
-     * @param arg ハンドラにわたす引数
+     * キー名で登録されたハンドラを実行します。 / Invokes handlers registered for a key.
+     * @param type 実行するキー名。 / Key to invoke.
+     * @param arg ハンドラに渡す引数。 / Argument passed to the handlers.
      * @example
      * eventBus.emit("foo",arg);
      */

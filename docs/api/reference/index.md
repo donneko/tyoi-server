@@ -1,16 +1,19 @@
 # @donneko/tyoi-server
 
-Tyoi のプログラム API。
+Tyoi のプログラム API。 / Tyoi programmatic API.
 
 `Server` は低レベル API、`tyoi()` は API 登録を簡潔に行うための
 ショートハンド、`defineConfig()` は CLI 用設定を検証するために使います。
 
-## Classes
+`Server` is the low-level API, `tyoi()` is a shorthand for registering APIs,
+and `defineConfig()` validates configuration used by the CLI.
+
+## クラス
 
 - [Server](classes/Server.md)
 - [ShortHandler](classes/ShortHandler.md)
 
-## Type Aliases
+## 型エイリアス
 
 - [ApiRegistryHandler](type-aliases/ApiRegistryHandler.md)
 - [InnerEventBusMap](type-aliases/InnerEventBusMap.md)
@@ -33,12 +36,12 @@ Tyoi のプログラム API。
 - [ServerUserConfig](type-aliases/ServerUserConfig.md)
 - [WsHandler](type-aliases/WsHandler.md)
 
-## Variables
+## 変数
 
 - [serverDefaultConfigSchema](variables/serverDefaultConfigSchema.md)
 - [serverUserConfigSchema](variables/serverUserConfigSchema.md)
 
-## Functions
+## 関数
 
 - [defineConfig](functions/defineConfig.md)
 - [tyoi](functions/tyoi.md)

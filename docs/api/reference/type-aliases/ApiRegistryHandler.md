@@ -1,12 +1,14 @@
 [@donneko/tyoi-server](../index.md) / ApiRegistryHandler
 
-# Type Alias: ApiRegistryHandler\<Type, Result\>
+# 型エイリアス: ApiRegistryHandler\<Type, Result\>
 
 > **ApiRegistryHandler**\<`Type`, `Result`\> = (`arg`) => `Result` \| `Promise`\<`Result`\>
 
-Defined in: [server-core/util/api-registry.ts:1](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/util/api-registry.ts#L1)
+定義: [server-core/util/api-registry.ts:2](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/util/api-registry.ts#L2)
 
-## Type Parameters
+APIレジストリーへ登録するハンドラです。 / Handler registered with an API registry.
+
+## 型パラメーター
 
 ### Type
 
@@ -16,12 +18,12 @@ Defined in: [server-core/util/api-registry.ts:1](https://github.com/donneko/tyoi
 
 `Result` = `unknown`
 
-## Parameters
+## パラメータ
 
 ### arg
 
 `Type`
 
-## Returns
+## 戻り値
 
 `Result` \| `Promise`\<`Result`\>

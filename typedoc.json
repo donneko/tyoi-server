@@ -1,6 +1,7 @@
 {
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": ["./src/index.ts"],
+    "lang": "ja",
     "out": "./docs/api/reference",
     "docsRoot": "./docs",
     "sourceLinkTemplate": "https://github.com/donneko/tyoi-api-node-server/blob/{gitRevision}/{path}#L{line}",

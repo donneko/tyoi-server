@@ -1,7 +1,9 @@
 [@donneko/tyoi-server](../index.md) / LoggerCreateData
 
-# Type Alias: LoggerCreateData
+# 型エイリアス: LoggerCreateData
 
 > **LoggerCreateData** = `ReturnType`\<`Logger`\[`"createInfo"`\]\>
 
-Defined in: [server-core/types/server-event.type.ts:3](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server-event.type.ts#L3)
+定義: [server-core/types/server-event.type.ts:4](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server-event.type.ts#L4)
+
+ロガーが生成するログ情報です。 / Log data created by the logger.

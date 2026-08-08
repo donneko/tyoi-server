@@ -1,18 +1,20 @@
 [@donneko/tyoi-server](../index.md) / ServerStartUseConfig
 
-# Type Alias: ServerStartUseConfig
+# 型エイリアス: ServerStartUseConfig
 
 > **ServerStartUseConfig** = `object`
 
-Defined in: [server-core/types/server.type.ts:37](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L37)
+定義: [server-core/types/server.type.ts:41](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L41)
 
-## Properties
+起動処理で使用する解決済み設定です。 / Resolved configuration used during startup.
+
+## プロパティ
 
 ### apiPrefix
 
 > **apiPrefix**: `string`
 
-Defined in: [server-core/types/server.type.ts:44](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L44)
+定義: [server-core/types/server.type.ts:48](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L48)
 
 ***
 
@@ -20,7 +22,7 @@ Defined in: [server-core/types/server.type.ts:44](https://github.com/donneko/tyo
 
 > **exposeLan**: `boolean`
 
-Defined in: [server-core/types/server.type.ts:39](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L39)
+定義: [server-core/types/server.type.ts:43](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L43)
 
 ***
 
@@ -28,7 +30,7 @@ Defined in: [server-core/types/server.type.ts:39](https://github.com/donneko/tyo
 
 > **host**: `"0.0.0.0"` \| `"127.0.0.1"`
 
-Defined in: [server-core/types/server.type.ts:45](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L45)
+定義: [server-core/types/server.type.ts:49](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L49)
 
 ***
 
@@ -36,7 +38,7 @@ Defined in: [server-core/types/server.type.ts:45](https://github.com/donneko/tyo
 
 > **openBrowser**: [`ServerOpenBrowserTarget`](ServerOpenBrowserTarget.md)
 
-Defined in: [server-core/types/server.type.ts:43](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L43)
+定義: [server-core/types/server.type.ts:47](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L47)
 
 ***
 
@@ -44,7 +46,7 @@ Defined in: [server-core/types/server.type.ts:43](https://github.com/donneko/tyo
 
 > **port**: `number`
 
-Defined in: [server-core/types/server.type.ts:38](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L38)
+定義: [server-core/types/server.type.ts:42](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L42)
 
 ***
 
@@ -52,7 +54,7 @@ Defined in: [server-core/types/server.type.ts:38](https://github.com/donneko/tyo
 
 > **publicFullPath**: `string`
 
-Defined in: [server-core/types/server.type.ts:42](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L42)
+定義: [server-core/types/server.type.ts:46](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L46)
 
 ***
 
@@ -60,7 +62,7 @@ Defined in: [server-core/types/server.type.ts:42](https://github.com/donneko/tyo
 
 > **publicPath**: `string`
 
-Defined in: [server-core/types/server.type.ts:41](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L41)
+定義: [server-core/types/server.type.ts:45](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L45)
 
 ***
 
@@ -68,7 +70,7 @@ Defined in: [server-core/types/server.type.ts:41](https://github.com/donneko/tyo
 
 > **showQrCode**: `boolean`
 
-Defined in: [server-core/types/server.type.ts:40](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L40)
+定義: [server-core/types/server.type.ts:44](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L44)
 
 ***
 
@@ -76,4 +78,4 @@ Defined in: [server-core/types/server.type.ts:40](https://github.com/donneko/tyo
 
 > **signalShutdownHandling**: `boolean`
 
-Defined in: [server-core/types/server.type.ts:46](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L46)
+定義: [server-core/types/server.type.ts:50](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L50)

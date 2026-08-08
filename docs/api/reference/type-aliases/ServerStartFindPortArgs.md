@@ -1,18 +1,20 @@
 [@donneko/tyoi-server](../index.md) / ServerStartFindPortArgs
 
-# Type Alias: ServerStartFindPortArgs
+# 型エイリアス: ServerStartFindPortArgs
 
 > **ServerStartFindPortArgs** = `object`
 
-Defined in: [server-core/types/server.type.ts:49](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L49)
+定義: [server-core/types/server.type.ts:54](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L54)
 
-## Properties
+使用可能なポートを探すための引数です。 / Arguments for finding an available port.
+
+## プロパティ
 
 ### host
 
 > **host**: `string`
 
-Defined in: [server-core/types/server.type.ts:51](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L51)
+定義: [server-core/types/server.type.ts:56](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L56)
 
 ***
 
@@ -20,7 +22,7 @@ Defined in: [server-core/types/server.type.ts:51](https://github.com/donneko/tyo
 
 > **isAutoPort**: `boolean`
 
-Defined in: [server-core/types/server.type.ts:52](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L52)
+定義: [server-core/types/server.type.ts:57](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L57)
 
 ***
 
@@ -28,4 +30,4 @@ Defined in: [server-core/types/server.type.ts:52](https://github.com/donneko/tyo
 
 > **startPort**: `number`
 
-Defined in: [server-core/types/server.type.ts:50](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L50)
+定義: [server-core/types/server.type.ts:55](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L55)

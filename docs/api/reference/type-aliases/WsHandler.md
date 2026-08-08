@@ -1,18 +1,20 @@
 [@donneko/tyoi-server](../index.md) / WsHandler
 
-# Type Alias: WsHandler
+# 型エイリアス: WsHandler
 
 > **WsHandler** = `object`
 
-Defined in: [server-core/types/server.type.ts:13](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L13)
+定義: [server-core/types/server.type.ts:14](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L14)
 
-## Properties
+WebSocket ハンドラに渡される接続情報です。 / Connection data passed to a WebSocket handler.
+
+## プロパティ
 
 ### req
 
 > **req**: `IncomingMessage`
 
-Defined in: [server-core/types/server.type.ts:15](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L15)
+定義: [server-core/types/server.type.ts:16](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L16)
 
 ***
 
@@ -20,4 +22,4 @@ Defined in: [server-core/types/server.type.ts:15](https://github.com/donneko/tyo
 
 > **ws**: `WebSocket`
 
-Defined in: [server-core/types/server.type.ts:14](https://github.com/donneko/tyoi-api-node-server/blob/e72a58267f33c930a60b9d88a60b46a2e2fe77d4/src/server/server-core/types/server.type.ts#L14)
+定義: [server-core/types/server.type.ts:15](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L15)
