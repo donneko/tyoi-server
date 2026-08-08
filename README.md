@@ -1,5 +1,7 @@
 # tyoi-server
 
+[日本語](./README.md) | [English](./README.en.md)
+
 ![NPM Version](https://img.shields.io/npm/v/%40donneko%2Ftyoi-server) ![NPM License](https://img.shields.io/npm/l/%40donneko%2Ftyoi-server)
 
 Express をベースにした、ローカル開発向けの API・静的ファイルサーバーフレームワークです。CLI から用途別テンプレートを作成でき、HTTP API、WebSocket、静的ファイル配信、LAN 公開に対応しています。
