@@ -13,10 +13,10 @@ An Express-based API and static file server framework for local development. Cre
 Node.js 20.14 or later is required.
 
 ```bash
-npm exec --package @donneko/tyoi-server tyoi -- create my-app --template basic-ts
-cd my-app
+npm install @donneko/tyoi-server
+npx tyoi init my-app --template basic-js
 npm install
-npm run dev
+npm run
 ```
 
 After startup, open the displayed local URL in your browser. See the [quick start](./docs/en/quick-start/use/getting-started.md) for details.
@@ -29,6 +29,7 @@ After startup, open the displayed local URL in your browser. See the [quick star
 - [Template examples](./docs/en/example/use/templates.md) / [Template reference](./docs/en/example/specification/template-catalog.md)
 - [Practical recipes](./docs/en/can-do/use/recipes.md) / [Features and limitations](./docs/en/can-do/specification/features-and-limitations.md)
 - [Static file usage](./docs/en/public/use/static-files.md) / [Serving behavior](./docs/en/public/specification/routing.md)
+- [v1 migration guide](./docs/en/migration-v1.md)
 - [Generated API reference](./docs/en/api/reference/index.md)
 
 ## Minimal programmatic example
@@ -37,8 +38,9 @@ After startup, open the displayed local URL in your browser. See the [quick star
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public",
+    api: "/api",
     port: 3000,
 });
 
@@ -47,15 +49,6 @@ await app.start();
 ```
 
 With the default configuration, this API is available at `GET /api/hello`.
-
-## Development
-
-```bash
-npm install
-npm test
-npm run build
-npm run docs
-```
 
 ## License
 

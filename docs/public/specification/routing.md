@@ -1,25 +1,25 @@
 # 静的ファイルの配信仕様
 
-静的配信には Express の `express.static(publicDirectoryPath)` を使用します。`publicDirectoryPath` は `path.resolve(baseDirname, publicDirname)` で決まります。
+静的配信には Express の `express.static(publicDirectoryPath)` を使用します。`publicDirectoryPath` は `path.resolve(root, public)` で決まります。
 
 ## ルーティング順序
 
 ```text
 カスタム middleware
   → JSON parser
-  → apiPrefix 配下の API
+  → api 配下の API
   → 静的ファイル
   → HTML 404
 ```
 
-このため、`apiPrefix` 配下の未登録パスは API の JSON 404 になり、同じパスの静的ファイルへはフォールスルーしません。それ以外の未検出パスはローカライズされた HTML 404 を返します。
+このため、`api` 配下の未登録パスは API の JSON 404 になり、同じパスの静的ファイルへはフォールスルーしません。それ以外の未検出パスはローカライズされた HTML 404 を返します。
 
 ## ディレクトリの解決
 
-- 相対 `publicDirname` は `baseDirname` を基準に解決します。
-- 絶対 `publicDirname` も `path.resolve()` によりそのまま使用できます。
-- CLI は設定ファイルが見つかった場合、現在の作業ディレクトリを `baseDirname` にします。
-- プログラム API では `baseDirname` を明示する必要があります。
+- 相対 `public` は `root` を基準に解決します。
+- 絶対 `public` も `path.resolve()` によりそのまま使用できます。
+- CLI は設定ファイルが見つかった場合、現在の作業ディレクトリを `root` にします。
+- プログラム API では `root` を明示する必要があります。
 
 ## 対応範囲
 
@@ -30,4 +30,4 @@
 
 ## 公開時の注意
 
-`exposeLan: true` では配信ディレクトリの内容を LAN 上の端末から取得できます。秘密鍵、環境変数、ソースマップなど、公開不要なファイルを `publicDirname` に置かないでください。
+`lan: true` では配信ディレクトリの内容を LAN 上の端末から取得できます。秘密鍵、環境変数、ソースマップなど、公開不要なファイルを `public` に置かないでください。

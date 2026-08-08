@@ -6,7 +6,7 @@ API キーは `${method}:${path}` です。`app.get("/health")` は `GET:/health
 
 登録パスは `/` から始め、リクエストの pathname と完全一致させます。`/:id` のようなパスパラメーター展開は行いません。
 
-`apiPrefix` が `/api` の場合、HTTP 上のパスは `/api/health` のようになります。
+`api` が `/api` の場合、HTTP 上のパスは `/api/health` のようになります。
 
 ### ハンドラー入力
 
@@ -44,6 +44,6 @@ JSON body は Express の `express.json()` で解析されます。
 
 1. `middlewares` で指定したカスタム middleware
 2. `express.json()`
-3. `apiPrefix` 配下の API 処理
+3. `api` 配下の API 処理
 4. `express.static()` による静的ファイル配信
 5. 静的ファイル用の HTML 404 レスポンス

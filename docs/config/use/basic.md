@@ -10,9 +10,9 @@ import { defineConfig } from "@donneko/tyoi-server";
 export default defineConfig({
     port: 3000,
     autoPort: true,
-    publicDirname: "./public/main",
-    apiPrefix: "/api",
-    openBrowser: false,
+    public: "./public/main",
+    api: "/api",
+    browser: false,
 });
 ```
 
@@ -20,7 +20,7 @@ export default defineConfig({
 tyoi run
 ```
 
-CLI は `baseDirname` をプロジェクトのディレクトリに設定します。そのため `publicDirname` は通常、設定ファイルを置いたプロジェクトを基準に指定します。
+CLI は `root` をプロジェクトのディレクトリに設定します。そのため `public` は通常、設定ファイルを置いたプロジェクトを基準に指定します。
 
 ## プログラムから設定する
 
@@ -28,9 +28,9 @@ CLI は `baseDirname` をプロジェクトのディレクトリに設定しま�
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
-    apiPrefix: "/api",
+    root: import.meta.dirname,
+    public: "../public/main",
+    api: "/api",
     port: 3000,
     autoPort: true,
 });
@@ -38,7 +38,7 @@ const app = tyoi({
 await app.start();
 ```
 
-プログラムから生成する場合は `baseDirname` が必須です。
+プログラムから生成する場合は `root` が必須です。
 
 ## 起動時だけ設定を渡す
 
@@ -46,8 +46,8 @@ await app.start();
 await app.start({
     port: 3001,
     autoPort: true,
-    openBrowser: "local",
+    browser: "local",
 });
 ```
 
-`start()` で指定できるのは `port`、`exposeLan`、`showQrCode`、`autoPort`、`openBrowser` です。それ以外は `tyoi()` / `new Server()` または設定ファイルで指定します。
+`start()` で指定できるのは `port`、`lan`、`qr`、`autoPort`、`browser` です。それ以外は `tyoi()` / `new Server()` または設定ファイルで指定します。

@@ -5,14 +5,11 @@
 | `tyoi` | None | Same as `run`; also handles `--help` and `--version` |
 | `tyoi create [name]` | Project name | Creates `<cwd>/<name>/` and copies a project template |
 | `tyoi init [name]` | Project name | Copies a project template into the current directory |
-| `tyoi config [name]` | Project name | Copies a configuration template into the current directory |
+| `tyoi config` | None | Copies a configuration template into the current directory |
 | `tyoi run` | None | Finds a configuration file and starts the server |
 | `tyoi info` | None | Displays the configuration produced from the file and CLI options |
 | `tyoi setting <key> <value>` | Setting key and value | Saves CLI settings to `.tyoi-server/config.json` |
 | `tyoi help` | None | Displays the command list |
-| `tyoi dev` | None | Starts the server with the package's own development configuration |
-
-`dev` is intended for development checks in the tyoi-server repository. In a generated application, use the template's `npm run dev` script or `tyoi run`.
 
 ## Project names
 

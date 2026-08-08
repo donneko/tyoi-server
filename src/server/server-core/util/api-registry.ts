@@ -1,6 +1,7 @@
 /** APIレジストリーへ登録するハンドラです。 / Handler registered with an API registry. */
 export type Handler<Type, Result = unknown> = (arg: Type) => Result | Promise<Result>;
 
+/** キーごとに1つのハンドラを管理します。 / Stores one handler for each key. */
 export class HandlerRegistry<HandlerRegistryMap extends Record<string, unknown>> {
     #EVENT_DATA_STORE = new Map<keyof HandlerRegistryMap, unknown>();
 

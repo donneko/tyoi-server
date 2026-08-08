@@ -4,6 +4,7 @@
     "lang": "ja",
     "out": "./docs/api/reference",
     "docsRoot": "./docs",
+    "gitRevision": "main",
     "sourceLinkTemplate": "https://github.com/donneko/tyoi-api-node-server/blob/{gitRevision}/{path}#L{line}",
 
     "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],

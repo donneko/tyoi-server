@@ -6,8 +6,8 @@
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 
 app.get("/status", ({ query }) => ({
@@ -23,7 +23,7 @@ app.post("/messages", ({ body, headers }) => ({
 await app.start();
 ```
 
-The default `apiPrefix` is `/api`, so the endpoints are `GET /api/status` and `POST /api/messages`.
+The default `api` is `/api`, so the endpoints are `GET /api/status` and `POST /api/messages`.
 
 ## Send requests
 
@@ -62,11 +62,11 @@ app.get("/users", async () => {
 Use the `server` property returned by `tyoi()` to inspect, remove, register one-time handlers, or execute handlers without HTTP.
 
 ```ts
-const unsubscribe = app.server.onAPI("GET:/health", () => ({ status: "ok" }));
+const unsubscribe = app.server.onApi("GET:/health", () => ({ status: "ok" }));
 
-console.log(app.server.hasAPI("GET:/health"));
+console.log(app.server.hasApi("GET:/health"));
 
-const result = await app.server.emitAPI("GET:/health", {
+const result = await app.server.emitApi("GET:/health", {
     query: {},
     body: undefined,
     headers: {},
@@ -75,4 +75,4 @@ const result = await app.server.emitAPI("GET:/health", {
 unsubscribe();
 ```
 
-`emitAPI()` executes only the registered handler and does not add the HTTP `{ ok, data }` response wrapper.
+`emitApi()` executes only the registered handler and does not add the HTTP `{ ok, data }` response wrapper.

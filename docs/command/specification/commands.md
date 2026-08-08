@@ -5,14 +5,11 @@
 | `tyoi` | なし | `run` と同じ。`--help`、`--version` も処理する |
 | `tyoi create [name]` | プロジェクト名 | `<cwd>/<name>/` を作り、プロジェクトテンプレートをコピーする |
 | `tyoi init [name]` | プロジェクト名 | 現在のディレクトリへプロジェクトテンプレートをコピーする |
-| `tyoi config [name]` | プロジェクト名 | 現在のディレクトリへ設定テンプレートをコピーする |
+| `tyoi config` | なし | 現在のディレクトリへ設定テンプレートをコピーする |
 | `tyoi run` | なし | 設定ファイルを探索し、サーバーを起動する |
 | `tyoi info` | なし | 設定ファイルと CLI オプションを合わせた設定を表示する |
 | `tyoi setting <key> <value>` | 設定キーと値 | `.tyoi-server/config.json` に CLI 設定を保存する |
 | `tyoi help` | なし | コマンド一覧を表示する |
-| `tyoi dev` | なし | パッケージ自身の開発用設定でサーバーを起動する |
-
-`dev` は tyoi-server リポジトリの開発確認用です。生成したアプリではテンプレートの `npm run dev` または `tyoi run` を使います。
 
 ## プロジェクト名
 

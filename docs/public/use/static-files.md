@@ -15,11 +15,11 @@ my-app/
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 
-await app.start({ openBrowser: "local" });
+await app.start({ browser: "local" });
 ```
 
 `src/server.ts` から見て `../public/main` が配信元になります。
@@ -38,7 +38,7 @@ http://localhost:3000/assets/style.css  → public/main/assets/style.css
 import { defineConfig } from "@donneko/tyoi-server";
 
 export default defineConfig({
-    publicDirname: "./public/main",
+    public: "./public/main",
     port: 3000,
     autoPort: true,
 });

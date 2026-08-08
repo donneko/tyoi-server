@@ -6,8 +6,8 @@
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 
 app.ws("/ws", ({ ws, req }) => {
@@ -31,7 +31,7 @@ socket.addEventListener("open", () => socket.send("hello"));
 socket.addEventListener("message", (event) => console.log(event.data));
 ```
 
-WebSocket のパスには `apiPrefix` は付きません。同じ HTTP サーバーとポートを使い、URL の pathname が登録パスと完全一致する接続だけを受け付けます。
+WebSocket のパスには `api` は付きません。同じ HTTP サーバーとポートを使い、URL の pathname が登録パスと完全一致する接続だけを受け付けます。
 
 ## 複数クライアントへ送る
 

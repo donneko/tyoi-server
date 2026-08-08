@@ -37,7 +37,7 @@ tyoi init
 既存プロジェクトへ `tyoi.config.js` を追加できます。
 
 ```bash
-tyoi config my-app --template basic
+tyoi config --template basic
 ```
 
 設定テンプレートは現在 `basic` のみです。

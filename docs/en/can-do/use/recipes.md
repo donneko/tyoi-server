@@ -4,9 +4,9 @@
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
-    apiPrefix: "/api",
+    root: import.meta.dirname,
+    public: "../public/main",
+    api: "/api",
 });
 
 app.get("/status", () => ({ ready: true }));
@@ -19,8 +19,8 @@ await app.start();
 
 ```ts
 await app.start({
-    exposeLan: true,
-    showQrCode: true,
+    lan: true,
+    qr: true,
 });
 ```
 
@@ -30,8 +30,8 @@ Scan the QR code with a device connected to the same LAN.
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     middlewares: [
         (req, res, next) => {
             const startedAt = Date.now();
@@ -47,7 +47,7 @@ const app = tyoi({
 `ShortHandler` provides shortcuts only for GET and POST, but its underlying `Server` can register a key for any HTTP method.
 
 ```ts
-app.server.onAPI("PUT:/items", ({ body }) => ({ updated: body }));
+app.server.onApi("PUT:/items", ({ body }) => ({ updated: body }));
 ```
 
 This example is invoked by `PUT /api/items`.
@@ -59,7 +59,7 @@ type API = "GET:/health" | "POST:/items";
 type WS = "/events";
 
 const server = new Server<API, WS>({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 ```

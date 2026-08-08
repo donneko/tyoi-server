@@ -22,7 +22,7 @@ Built-in defaults
   → selected tyoi*.config.js
   → language from .tyoi-server/config.json
   → CLI options
-  → baseDirname set by the CLI
+  → root set by the CLI
   → actual port selected during startup
 ```
 
@@ -44,7 +44,7 @@ import { defineConfig } from "@donneko/tyoi-server";
 
 export default defineConfig({
     port: 3000,
-    publicDirname: "./public/main",
+    public: "./public/main",
 });
 ```
 

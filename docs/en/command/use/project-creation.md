@@ -37,7 +37,7 @@ tyoi init
 You can add `tyoi.config.js` to an existing project.
 
 ```bash
-tyoi config my-app --template basic
+tyoi config --template basic
 ```
 
 Currently, `basic` is the only configuration template.

@@ -6,14 +6,14 @@
 import { defineConfig } from "@donneko/tyoi-server";
 
 export default defineConfig({
-    publicDirname: "./public/main",
-    exposeLan: true,
-    showQrCode: true,
-    openBrowser: "network",
+    public: "./public/main",
+    lan: true,
+    qr: true,
+    browser: "lan",
 });
 ```
 
-With `exposeLan: true`, the server listens on `0.0.0.0`. It displays the network URL and a QR code in the terminal, allowing access from devices on the same network.
+With `lan: true`, the server listens on `0.0.0.0`. It displays the network URL and a QR code in the terminal, allowing access from devices on the same network.
 
 > The API and static files become accessible from other devices on the LAN. Authentication, authorization, and TLS are not added automatically, so only expose development data that is safe to share.
 
@@ -24,7 +24,7 @@ import { defineConfig } from "@donneko/tyoi-server";
 import morgan from "morgan";
 
 export default defineConfig({
-    publicDirname: "./public/main",
+    public: "./public/main",
     middlewares: [morgan("dev")],
 });
 ```
@@ -33,8 +33,8 @@ Custom middleware is registered before the built-in JSON parser, APIs, and stati
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     middlewares: [
         (req, res, next) => {
             res.setHeader("x-powered-by", "tyoi");

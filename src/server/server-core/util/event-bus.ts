@@ -1,3 +1,4 @@
+/** イベントバスへ登録するハンドラです。 / Handler registered with an event bus. */
 export type EventBusHandler<Type, Result = unknown> = (arg: Type) => Result | Promise<Result>;
 export class EventBus<EventBusMap extends Record<string, unknown>> {
     #EVENT_DATA_STORE = new Map<keyof EventBusMap, unknown[]>();

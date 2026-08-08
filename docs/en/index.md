@@ -26,4 +26,4 @@ features:
 
 ## How to read the documentation
 
-Each topic is split into usage guides for hands-on work and specifications for exact behavior. See the [generated API reference](/en/api/reference/index.html) for type and method listings.
+Each topic is split into usage guides for hands-on work and specifications for exact behavior. See the [generated API reference](/en/api/reference/index.html) for type and method listings. If you are upgrading from v0.0.8, see the [v1.0.0 migration guide](/en/migration-v1).

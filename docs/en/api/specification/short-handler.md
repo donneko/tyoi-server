@@ -8,7 +8,7 @@
 function tyoi(options: ServerOptions): ShortHandler;
 ```
 
-When used programmatically, `options.baseDirname` is required. In most cases, pass `import.meta.dirname`.
+When used programmatically, `options.root` is required. In most cases, pass `import.meta.dirname`.
 
 ## `ShortHandler`
 

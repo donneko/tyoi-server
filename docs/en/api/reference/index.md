@@ -10,36 +10,23 @@ and `defineConfig()` validates configuration used by the CLI.
 
 ## Classes
 
+- [HandlerRegistry](classes/HandlerRegistry.md)
 - [Server](classes/Server.md)
 - [ShortHandler](classes/ShortHandler.md)
 
 ## Type Aliases
 
-- [ApiRegistryHandler](type-aliases/ApiRegistryHandler.md)
-- [InnerEventBusMap](type-aliases/InnerEventBusMap.md)
+- [BrowserTarget](type-aliases/BrowserTarget.md)
+- [EventBusHandler](type-aliases/EventBusHandler.md)
+- [Handler](type-aliases/Handler.md)
 - [LoggerCreateData](type-aliases/LoggerCreateData.md)
 - [OutEventBusMap](type-aliases/OutEventBusMap.md)
 - [RequestData](type-aliases/RequestData.md)
 - [RequestEventMap](type-aliases/RequestEventMap.md)
-- [ServerCreateExpressConfigReturn](type-aliases/ServerCreateExpressConfigReturn.md)
-- [ServerCreateNetworkReturn](type-aliases/ServerCreateNetworkReturn.md)
-- [ServerCreateServerConfigReturn](type-aliases/ServerCreateServerConfigReturn.md)
-- [ServerDefaultConfig](type-aliases/ServerDefaultConfig.md)
-- [ServerOpenBrowserArgs](type-aliases/ServerOpenBrowserArgs.md)
-- [ServerOpenBrowserTarget](type-aliases/ServerOpenBrowserTarget.md)
+- [ServerConfig](type-aliases/ServerConfig.md)
 - [ServerOptions](type-aliases/ServerOptions.md)
-- [ServerRegister](type-aliases/ServerRegister.md)
-- [ServerStartFindPortArgs](type-aliases/ServerStartFindPortArgs.md)
-- [ServerStartOptions](type-aliases/ServerStartOptions.md)
-- [ServerStartSummaryArgs](type-aliases/ServerStartSummaryArgs.md)
-- [ServerStartUseConfig](type-aliases/ServerStartUseConfig.md)
-- [ServerUserConfig](type-aliases/ServerUserConfig.md)
+- [StartOptions](type-aliases/StartOptions.md)
 - [WsHandler](type-aliases/WsHandler.md)
-
-## Variables
-
-- [serverDefaultConfigSchema](variables/serverDefaultConfigSchema.md)
-- [serverUserConfigSchema](variables/serverUserConfigSchema.md)
 
 ## Functions
 

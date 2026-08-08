@@ -6,14 +6,14 @@
 import { defineConfig } from "@donneko/tyoi-server";
 
 export default defineConfig({
-    publicDirname: "./public/main",
-    exposeLan: true,
-    showQrCode: true,
-    openBrowser: "network",
+    public: "./public/main",
+    lan: true,
+    qr: true,
+    browser: "lan",
 });
 ```
 
-`exposeLan: true` では `0.0.0.0` で待ち受けます。ターミナルに Network URL と QR コードを表示し、同じネットワーク上の端末からアクセスできます。
+`lan: true` では `0.0.0.0` で待ち受けます。ターミナルに Network URL と QR コードを表示し、同じネットワーク上の端末からアクセスできます。
 
 > LAN 上の他端末から API と静的ファイルへアクセス可能になります。認証・認可・TLS は自動では追加されないため、公開してよい開発用データだけを扱ってください。
 
@@ -24,7 +24,7 @@ import { defineConfig } from "@donneko/tyoi-server";
 import morgan from "morgan";
 
 export default defineConfig({
-    publicDirname: "./public/main",
+    public: "./public/main",
     middlewares: [morgan("dev")],
 });
 ```
@@ -33,8 +33,8 @@ export default defineConfig({
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     middlewares: [
         (req, res, next) => {
             res.setHeader("x-powered-by", "tyoi");

@@ -8,7 +8,7 @@
 function tyoi(options: ServerOptions): ShortHandler;
 ```
 
-プログラムから使用する場合、`options.baseDirname` は必須です。通常は `import.meta.dirname` を指定します。
+プログラムから使用する場合、`options.root` は必須です。通常は `import.meta.dirname` を指定します。
 
 ## `ShortHandler`
 

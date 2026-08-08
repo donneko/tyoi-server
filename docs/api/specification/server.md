@@ -13,8 +13,8 @@ type API = "GET:/health" | "POST:/messages";
 type WS = "/ws";
 
 const server = new Server<API, WS>({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 ```
 
@@ -31,7 +31,7 @@ const server = new Server<API, WS>({
 | `getHttpServer()` | HTTP サーバーを返す。未起動・停止後は `null` |
 | `getConfig(key)` | 解決済みの設定値を返す |
 
-`signalShutdownHandling` が `true` の場合、起動時に `SIGINT` と `SIGTERM` の停止ハンドラーを登録し、停止時に解除します。
+`signalClose` が `true` の場合、起動時に `SIGINT` と `SIGTERM` の停止ハンドラーを登録し、停止時に解除します。
 
 停止処理では idle HTTP 接続を閉じ、10 秒以内に終了しない接続は `closeAllConnections()` で終了します。WebSocket は先に close code `1001` で閉じ、3 秒後も残るクライアントを強制終了します。
 
@@ -39,11 +39,11 @@ const server = new Server<API, WS>({
 
 | メソッド | 仕様 |
 | --- | --- |
-| `onAPI(key, handler)` | ハンドラーを登録し、解除関数を返す |
-| `onceAPI(key, handler)` | 最初の実行前に登録を解除するハンドラーを登録 |
-| `offAPI(key)` | 登録を解除 |
-| `hasAPI(key)` | 登録済みか確認 |
-| `emitAPI(key, data)` | ハンドラーを直接実行し、結果を Promise で返す |
+| `onApi(key, handler)` | ハンドラーを登録し、解除関数を返す |
+| `onceApi(key, handler)` | 最初の実行前に登録を解除するハンドラーを登録 |
+| `offApi(key)` | 登録を解除 |
+| `hasApi(key)` | 登録済みか確認 |
+| `emitApi(key, data)` | ハンドラーを直接実行し、結果を Promise で返す |
 
 API レジストリは 1 キーにつき 1 ハンドラーです。再登録は上書きになります。
 
@@ -53,4 +53,4 @@ API レジストリは 1 キーにつき 1 ハンドラーです。再登録は�
 
 ## イベント
 
-公開イベントは現在 `server/*:log` です。`onEvent` と `onceEvent` は解除関数を返し、同じイベントへ複数のリスナーを登録できます。`offEvent(event, handler)` は指定したリスナーだけを解除します。
+公開イベントは現在 `server/log:*` です。`onEvent` と `onceEvent` は解除関数を返し、同じイベントへ複数のリスナーを登録できます。`offEvent(event, handler)` は指定したリスナーだけを解除します。

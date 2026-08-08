@@ -4,7 +4,7 @@
 
 > **RequestEventMap**\<`L`\> = `{ [N in L]: RequestData }`
 
-定義: [server-core/types/server.type.ts:24](https://github.com/donneko/tyoi-api-node-server/blob/8fc6549033de1a5f4451d86f6614883350995cac/src/server/server-core/types/server.type.ts#L24)
+定義: [server-core/types/public/api.type.ts:9](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/api.type.ts#L9)
 
 HTTP API キーをリクエスト情報へ対応付けます。 / Maps HTTP API keys to request data.
 

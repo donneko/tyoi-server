@@ -6,8 +6,8 @@
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 
 app.get("/status", ({ query }) => ({
@@ -23,7 +23,7 @@ app.post("/messages", ({ body, headers }) => ({
 await app.start();
 ```
 
-デフォルトの `apiPrefix` は `/api` なので、エンドポイントは `GET /api/status` と `POST /api/messages` です。
+デフォルトの `api` は `/api` なので、エンドポイントは `GET /api/status` と `POST /api/messages` です。
 
 ## リクエストする
 
@@ -62,11 +62,11 @@ app.get("/users", async () => {
 `tyoi()` の戻り値にある `server` から、登録確認、解除、一度だけの実行、HTTP を介さない手動実行ができます。
 
 ```ts
-const unsubscribe = app.server.onAPI("GET:/health", () => ({ status: "ok" }));
+const unsubscribe = app.server.onApi("GET:/health", () => ({ status: "ok" }));
 
-console.log(app.server.hasAPI("GET:/health"));
+console.log(app.server.hasApi("GET:/health"));
 
-const result = await app.server.emitAPI("GET:/health", {
+const result = await app.server.emitApi("GET:/health", {
     query: {},
     body: undefined,
     headers: {},
@@ -75,4 +75,4 @@ const result = await app.server.emitAPI("GET:/health", {
 unsubscribe();
 ```
 
-`emitAPI()` は登録済みハンドラーだけを実行し、HTTP レスポンスの `{ ok, data }` ラッパーは付けません。
+`emitApi()` は登録済みハンドラーだけを実行し、HTTP レスポンスの `{ ok, data }` ラッパーは付けません。

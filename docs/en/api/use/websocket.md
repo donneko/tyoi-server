@@ -6,8 +6,8 @@
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 
 app.ws("/ws", ({ ws, req }) => {
@@ -31,7 +31,7 @@ socket.addEventListener("open", () => socket.send("hello"));
 socket.addEventListener("message", (event) => console.log(event.data));
 ```
 
-`apiPrefix` is not added to WebSocket paths. WebSockets use the same HTTP server and port, and only connections whose URL pathname exactly matches a registered path are accepted.
+`api` is not added to WebSocket paths. WebSockets use the same HTTP server and port, and only connections whose URL pathname exactly matches a registered path are accepted.
 
 ## Send to multiple clients
 

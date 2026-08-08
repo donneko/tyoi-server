@@ -16,7 +16,7 @@
 
 | 名前 | 生成物 | 主な設定 |
 | --- | --- | --- |
-| `basic` | `tyoi.config.js` | port、autoPort、publicDirname、apiPrefix、LAN、QR、browser、morgan |
+| `basic` | `tyoi.config.js` | port、autoPort、public、api、LAN、QR、browser、morgan |
 
 ## 共通スクリプト
 

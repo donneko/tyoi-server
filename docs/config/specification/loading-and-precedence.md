@@ -22,7 +22,7 @@
   → 選択した tyoi*.config.js
   → .tyoi-server/config.json の language
   → CLI オプション
-  → CLI が設定する baseDirname
+  → CLI が設定する root
   → 起動時に決まった実ポート
 ```
 
@@ -44,7 +44,7 @@ import { defineConfig } from "@donneko/tyoi-server";
 
 export default defineConfig({
     port: 3000,
-    publicDirname: "./public/main",
+    public: "./public/main",
 });
 ```
 

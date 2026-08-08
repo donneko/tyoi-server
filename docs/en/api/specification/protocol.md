@@ -6,7 +6,7 @@ API keys use the `${method}:${path}` format. `app.get("/health")` registers `GET
 
 Registration paths should start with `/` and must exactly match the request pathname. Path parameter expansion such as `/:id` is not supported.
 
-When `apiPrefix` is `/api`, the corresponding HTTP path is `/api/health`.
+When `api` is `/api`, the corresponding HTTP path is `/api/health`.
 
 ### Handler input
 
@@ -44,6 +44,6 @@ Requests are processed in this order:
 
 1. Custom middleware specified in `middlewares`
 2. `express.json()`
-3. API processing under `apiPrefix`
+3. API processing under `api`
 4. Static file delivery through `express.static()`
 5. HTML 404 response for static files

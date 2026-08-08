@@ -16,7 +16,7 @@ All templates require Node.js 20.14 or later and use ESM. The package name in `p
 
 | Name | Output | Main settings |
 | --- | --- | --- |
-| `basic` | `tyoi.config.js` | port, autoPort, publicDirname, apiPrefix, LAN, QR code, browser, morgan |
+| `basic` | `tyoi.config.js` | port, autoPort, public, api, LAN, QR code, browser, morgan |
 
 ## Common scripts
 

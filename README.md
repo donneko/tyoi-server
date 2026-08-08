@@ -13,10 +13,10 @@ Express をベースにした、ローカル開発向けの API・静的ファ�
 Node.js 20.14 以上が必要です。
 
 ```bash
-npm exec --package @donneko/tyoi-server tyoi -- create my-app --template basic-ts
-cd my-app
+npm install @donneko/tyoi-server
+npx tyoi init my-app --template basic-js
 npm install
-npm run dev
+npm run
 ```
 
 起動後、表示された Local URL をブラウザーで開きます。詳しくは[クイックスタート](./docs/quick-start/use/getting-started.md)を参照してください。
@@ -39,25 +39,18 @@ import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
     root: import.meta.dirname,
-    public: "../public/main",
+    public: "../public",
     api: "/api",
     port: 3000,
 });
 
 app.get("/hello", () => ({ message: "Hello Tyoi!" }));
+
 await app.start();
 ```
 
 この API はデフォルト設定では `GET /api/hello` で呼び出せます。
 
-## 開発
-
-```bash
-npm install
-npm test
-npm run build
-npm run docs
-```
 
 ## ライセンス
 

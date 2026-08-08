@@ -10,9 +10,9 @@ import { defineConfig } from "@donneko/tyoi-server";
 export default defineConfig({
     port: 3000,
     autoPort: true,
-    publicDirname: "./public/main",
-    apiPrefix: "/api",
-    openBrowser: false,
+    public: "./public/main",
+    api: "/api",
+    browser: false,
 });
 ```
 
@@ -20,7 +20,7 @@ export default defineConfig({
 tyoi run
 ```
 
-The CLI sets `baseDirname` to the project directory. Therefore, `publicDirname` is normally specified relative to the project containing the configuration file.
+The CLI sets `root` to the project directory. Therefore, `public` is normally specified relative to the project containing the configuration file.
 
 ## Configure programmatically
 
@@ -28,9 +28,9 @@ The CLI sets `baseDirname` to the project directory. Therefore, `publicDirname` 
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
-    apiPrefix: "/api",
+    root: import.meta.dirname,
+    public: "../public/main",
+    api: "/api",
     port: 3000,
     autoPort: true,
 });
@@ -38,7 +38,7 @@ const app = tyoi({
 await app.start();
 ```
 
-`baseDirname` is required when creating a server programmatically.
+`root` is required when creating a server programmatically.
 
 ## Pass options only when starting
 
@@ -46,8 +46,8 @@ await app.start();
 await app.start({
     port: 3001,
     autoPort: true,
-    openBrowser: "local",
+    browser: "local",
 });
 ```
 
-`start()` accepts `port`, `exposeLan`, `showQrCode`, `autoPort`, and `openBrowser`. Specify all other options in `tyoi()` / `new Server()` or the configuration file.
+`start()` accepts `port`, `lan`, `qr`, `autoPort`, and `browser`. Specify all other options in `tyoi()` / `new Server()` or the configuration file.

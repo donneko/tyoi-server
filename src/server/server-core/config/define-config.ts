@@ -12,7 +12,7 @@ type ExactServerConfig<Config extends ServerConfig> = Config &
  * `root` は CLI 起動時に自動設定されるため、通常は指定不要です。
  *
  * Validates and returns server configuration loaded by the CLI. Use it as the
- * default export of `tyoi.config.js`. The CLI sets `baseDirname` automatically,
+ * default export of `tyoi.config.js`. The CLI sets `root` automatically,
  * so it normally does not need to be specified.
  *
  * @param config サーバー設定。未指定の項目には既定値が使われます。 / Server configuration. Defaults are used for omitted properties.

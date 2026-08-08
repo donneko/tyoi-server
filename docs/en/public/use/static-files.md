@@ -15,11 +15,11 @@ my-app/
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 
-await app.start({ openBrowser: "local" });
+await app.start({ browser: "local" });
 ```
 
 Relative to `src/server.ts`, `../public/main` becomes the directory to serve.
@@ -38,7 +38,7 @@ A static site that does not need server code can start with only `tyoi.config.js
 import { defineConfig } from "@donneko/tyoi-server";
 
 export default defineConfig({
-    publicDirname: "./public/main",
+    public: "./public/main",
     port: 3000,
     autoPort: true,
 });

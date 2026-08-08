@@ -4,9 +4,9 @@
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
-    apiPrefix: "/api",
+    root: import.meta.dirname,
+    public: "../public/main",
+    api: "/api",
 });
 
 app.get("/status", () => ({ ready: true }));
@@ -19,8 +19,8 @@ await app.start();
 
 ```ts
 await app.start({
-    exposeLan: true,
-    showQrCode: true,
+    lan: true,
+    qr: true,
 });
 ```
 
@@ -30,8 +30,8 @@ await app.start({
 
 ```ts
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
     middlewares: [
         (req, res, next) => {
             const startedAt = Date.now();
@@ -47,7 +47,7 @@ const app = tyoi({
 `ShortHandler` のショートカットは GET と POST だけですが、内部の `Server` には任意の HTTP method のキーを登録できます。
 
 ```ts
-app.server.onAPI("PUT:/items", ({ body }) => ({ updated: body }));
+app.server.onApi("PUT:/items", ({ body }) => ({ updated: body }));
 ```
 
 この例は `PUT /api/items` で呼び出せます。
@@ -59,7 +59,7 @@ type API = "GET:/health" | "POST:/items";
 type WS = "/events";
 
 const server = new Server<API, WS>({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
+    root: import.meta.dirname,
+    public: "../public/main",
 });
 ```
