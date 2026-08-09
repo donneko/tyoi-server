@@ -95,4 +95,19 @@ describe("findAvailablePort", () => {
             errorName: "PORT_NOT_PERMISSION",
         });
     });
+
+    it("rejects after the maximum port is occupied", async () => {
+        const { context } = createContext();
+
+        const promise = findAvailablePort(
+            { startPort: 65535, host: "127.0.0.1", isAutoPort: true },
+            context as never,
+            { isPortUsed: vi.fn(async () => true), askPermission: vi.fn() }
+        );
+
+        await expect(promise).rejects.toMatchObject<Partial<CustomError>>({
+            message: "port 65535 was rejected",
+            errorName: "PORT_NOT_PERMISSION",
+        });
+    });
 });

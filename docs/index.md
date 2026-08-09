@@ -1,25 +1,29 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
-  name: "Tyoi-server"
-  text: "A Explanation Site"
-  tagline: Small local API and static file server
+  name: "tyoi-server"
+  text: "ローカル API と静的ファイルサーバー"
+  tagline: HTTP API、WebSocket、静的配信を小さな構成ですぐに開始
   actions:
     - theme: brand
-      text: cli コマンドについて
-      link: /cli
+      text: クイックスタート
+      link: /quick-start/use/getting-started
     - theme: alt
-      text: 使用例
-      link: /usage
+      text: できること
+      link: /can-do/specification/features-and-limitations
 
 features:
-  - title: local API
-    details: ローカル環境で簡単にAPIサーバーを構築することができます
-  - title: static file
-    details: フォルダーを指定するだけです。面倒な設定や複雑なコードは必要ありません
-  - title: command
-    details: コマンドで簡単にテンプレートを生成できます。
+  - title: HTTP API
+    details: GET / POST ハンドラーを登録し、JSON API を作成できます。
+  - title: WebSocket
+    details: HTTP サーバーと同じポートに WebSocket パスを登録できます。
+  - title: 静的ファイル
+    details: 指定したディレクトリを Express から配信できます。
+  - title: テンプレート CLI
+    details: TypeScript、JavaScript、静的サイト、JSON API、リアルタイムアプリの雛形を作成できます。
 ---
 
+## ドキュメントの読み方
+
+各トピックは、手を動かすための「使用例」と、正確な挙動を確認するための「仕様」に分かれています。型とメソッドの一覧は[自動生成 API リファレンス](/api/reference/index.html)で確認できます。v0.0.8から更新する場合は[v1.0.0移行ガイド](/migration-v1)を参照してください。

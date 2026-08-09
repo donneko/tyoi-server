@@ -1,12 +1,12 @@
 import { Server } from "../../../../src/index.js";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
+    root: import.meta.dirname,
     port: 0,
-    apiPrefix: "/api",
+    api: "/api",
 });
 
-server.onAPI("GET:/get/a", () => {
+server.onApi("GET:/get/a", () => {
     throw new Error();
 });
 
@@ -24,7 +24,7 @@ const res = async (url: string, init?: RequestInit | undefined): Promise<object>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 await res(`http://localhost:${port}/api/get/a`).then((json: any) => {
-    if (!(!json?.ok && json?.code === "API_INTERNAL_ERROR" && typeof json?.message === "string"))
+    if (!(json?.code === "API_INTERNAL_ERROR" && typeof json?.message === "string"))
         throw new Error();
 });
 

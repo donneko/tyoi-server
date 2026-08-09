@@ -1,7 +1,7 @@
 import type { OutEventBusMap, InnerEventBusMap } from "../../server-event.type.js";
 import type { EventBus } from "../../../util/event-bus.js";
 import type { ConfigManager } from "../../../service/config-manager.js";
-import type { ApiRegistry } from "../../../util/api-registry.js";
+import type { HandlerRegistry } from "../../../util/api-registry.js";
 import type { ServerLogger } from "../../../service/server-logger.js";
 import type { RegisterManager } from "../../../service/register-manager.js";
 import type { WebSocketRouter } from "../../../service/web-socket-router.js";
@@ -21,6 +21,6 @@ export type ServerContext<
     messageManager: MessageManager;
     webSocketRouter: WebSocketRouter<WebSocketNameList>;
     expressServer: express.Express;
-    serverAPIs: ApiRegistry<RequestEventMap<RequestNameList>>;
+    apiRegistry: HandlerRegistry<RequestEventMap<RequestNameList>>;
     stopHandler: () => Promise<void> | void;
 };

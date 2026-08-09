@@ -26,18 +26,33 @@ export function serverRuntime(
 
     const child = deps.fork(new URL("../server-process/server-process.js", import.meta.url));
 
-    deps.mainProcessSetup(child);
+    const cleanupSignalHandlers = deps.mainProcessSetup(child);
 
     return new Promise<void>((resolve, reject) => {
+        let settled = false;
         let hasStarted = false;
         let hasStopped = false;
 
-        child.once("error", reject);
+        const settle = (callback: () => void) => {
+            if (settled) return;
+            settled = true;
+            cleanupSignalHandlers?.();
+            callback();
+        };
+
+        child.once("error", (error) => settle(() => reject(error)));
         child.once("exit", (code, signal) => {
             if (hasStopped) return;
 
             const phase = hasStarted ? "after startup" : "before startup";
-            reject(new Error(`Server process exited ${phase} (code=${code}, signal=${signal})`));
+            settle(() =>
+                reject(new Error(`Server process exited ${phase} (code=${code}, signal=${signal})`))
+            );
+        });
+        child.once("disconnect", () => {
+            if (hasStopped) return;
+
+            settle(() => reject(new Error("Server process disconnected unexpectedly")));
         });
         child.on("message", (message: unknown) => {
             if (!isProcessMessage<ServerMessage>(message, SERVER_MESSAGE_TYPES)) return;
@@ -47,23 +62,45 @@ export function serverRuntime(
                 return;
             }
             if (message.type === "error") {
-                reject(new Error(message.message));
-                child.disconnect();
-                child.kill();
+                settle(() => reject(new Error(message.message)));
+                try {
+                    child.disconnect();
+                } catch {
+                    // The child may already have disconnected while reporting the error.
+                }
+                try {
+                    child.kill();
+                } catch {
+                    // The child may already have exited while reporting the error.
+                }
                 return;
             }
             if (message.type === "stopped") {
                 hasStopped = true;
-                resolve();
+                settle(resolve);
             }
         });
 
-        deps.processSend<MainMessage>(child, {
-            type: "boot",
-            data: { path, option },
-        });
-        deps.processSend<MainMessage>(child, {
-            type: "start",
-        });
+        try {
+            deps.processSend<MainMessage>(child, {
+                type: "boot",
+                data: { path, option },
+            });
+            deps.processSend<MainMessage>(child, {
+                type: "start",
+            });
+        } catch (error) {
+            settle(() => reject(error));
+            try {
+                child.disconnect();
+            } catch {
+                // The child may already have disconnected while reporting the error.
+            }
+            try {
+                child.kill();
+            } catch {
+                // The child may already have exited while reporting the error.
+            }
+        }
     });
 }

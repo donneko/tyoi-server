@@ -1,6 +1,7 @@
 import { tyoi } from "@donneko/tyoi-server";
 import { WebSocket } from "ws";
 import { parseClientMessage } from "./client-message.js";
+import { getServerPort } from "./server-port.js";
 
 type ServerMessage = {
     type: "system" | "message" | "error";
@@ -26,9 +27,9 @@ function broadcast(type: ServerMessage["type"], text: string): void {
 }
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
-    port: Number(process.env.PORT ?? 3000),
+    root: import.meta.dirname,
+    public: "../public/main",
+    port: getServerPort(process.env.PORT),
     autoPort: true,
 });
 
@@ -60,4 +61,4 @@ app.ws("/ws", ({ ws }) => {
     ws.once("error", disconnect);
 });
 
-await app.start({ openBrowser: "local" });
+await app.start({ browser: "local" });

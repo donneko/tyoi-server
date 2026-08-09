@@ -266,28 +266,4 @@ describe("cli e2e", () => {
         expect(result.error, debag).toBeUndefined();
         expect(result.status, debag).toBe(0);
     });
-    it("dev を実行できる", async () => {
-        const result = await runCommand(
-            tmpDir,
-            npmCmd,
-            ["exec", "--", "tyoi", "dev"],
-            serverCommandConfig
-        );
-        const debag = formatTestProcessResult(result);
-
-        expect(result.error, debag).toBeUndefined();
-        expect(result.status, debag).toBe(0);
-    });
-    it("dev -p オプションつきで実行できる", async () => {
-        const result = await runCommand(
-            tmpDir,
-            npmCmd,
-            ["exec", "--", "tyoi", "dev", "-p", "0"],
-            serverCommandConfig
-        );
-        const debag = formatTestProcessResult(result);
-
-        expect(result.error, debag).toBeUndefined();
-        expect(result.status, debag).toBe(0);
-    });
 });

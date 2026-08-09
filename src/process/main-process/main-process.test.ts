@@ -68,6 +68,14 @@ describe("serverRuntime", () => {
         await expect(promise).rejects.toThrow(`Server process exited ${phase}`);
     });
 
+    it("stopped 通知前の IPC 切断で reject する", async () => {
+        const { child, promise } = createRuntime();
+
+        child.emit("disconnect");
+
+        await expect(promise).rejects.toThrow("Server process disconnected unexpectedly");
+    });
+
     it("boot と start メッセージを順番に送る", () => {
         const { processSend, mainProcessSetup } = createRuntime();
 
@@ -79,5 +87,49 @@ describe("serverRuntime", () => {
         expect(processSend).toHaveBeenNthCalledWith(2, expect.anything(), {
             type: "start",
         });
+    });
+
+    it("初期 IPC 送信に失敗した場合もシグナル cleanup を実行する", async () => {
+        const child = new FakeChildProcess();
+        const error = new Error("IPC send failed");
+        const cleanup = vi.fn();
+        const promise = serverRuntime(
+            "config.js",
+            { port: 3000 },
+            {
+                fork: vi.fn(() => child) as never,
+                mainProcessSetup: vi.fn(() => cleanup),
+                processSend: vi.fn(() => {
+                    throw error;
+                }),
+            }
+        );
+
+        await expect(promise).rejects.toBe(error);
+        expect(cleanup).toHaveBeenCalledOnce();
+        expect(child.disconnect).toHaveBeenCalledOnce();
+        expect(child.kill).toHaveBeenCalledOnce();
+    });
+
+    it("エラー通知時の disconnect 失敗でも子プロセスを kill する", async () => {
+        const child = new FakeChildProcess();
+        const error = new Error("server failed");
+        child.disconnect.mockImplementationOnce(() => {
+            throw new Error("already disconnected");
+        });
+        const promise = serverRuntime(
+            "config.js",
+            { port: 3000 },
+            {
+                fork: vi.fn(() => child) as never,
+                mainProcessSetup: vi.fn(() => vi.fn()),
+                processSend: vi.fn(),
+            }
+        );
+
+        child.emit("message", { type: "error", message: error.message });
+
+        await expect(promise).rejects.toThrow(error.message);
+        expect(child.kill).toHaveBeenCalledOnce();
     });
 });

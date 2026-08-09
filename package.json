@@ -1,20 +1,23 @@
 {
   "name": "@donneko/tyoi-server",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "scripts": {
     "test": "npm run test:vitest",
     "test:vitest": "npx vitest run",
     "test:type": "npx tsc --noEmit",
     "test:templates": "npx tsc -p tsconfig.templates.json && npx tsc --ignoreConfig --noEmit --allowJs --checkJs templates/project/static-ts/public/main/assets/app.js && node --check templates/project/static-ts/public/main/assets/app.js && node --check templates/project/realtime-ts/public/main/assets/app.js",
     "test:ci": "npm run test:type && npm run test:templates && npm run check:format:check && npm run check:lint && npm run test:vitest",
-    "test:nonTTY": "npm run test </dev/null",
+    "test:nonTTY": "node scripts/run-test-non-tty.mjs",
     "check:format:write": "npx prettier . --write",
     "check:format:check": "npx prettier . --check",
     "check:lint": "npx eslint .",
     "check:lint:fix": "npx eslint . --fix",
-    "docs": "npm run docs:typedoc:build && npm run docs:vitepress:build",
+    "docs": "npm run docs:typedoc:build && npm run docs:check:locales && npm run docs:vitepress:build",
     "docs:dev": "npx vitepress dev docs",
-    "docs:typedoc:build": "npx typedoc",
+    "docs:typedoc:build": "npm run docs:typedoc:ja && npm run docs:typedoc:en",
+    "docs:typedoc:ja": "npx typedoc --options typedoc.json",
+    "docs:typedoc:en": "npx typedoc --options typedoc.en.json",
+    "docs:check:locales": "node scripts/check-doc-locales.mjs",
     "docs:vitepress:build": "npx vitepress build docs",
     "docs:preview": "npx vitepress preview docs",
     "compile": "node scripts/remove-dist.mjs && tsc",
@@ -31,10 +34,9 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "docs/*.md",
-    "docs/src",
     "LICENSE",
     "README.md",
+    "README.en.md",
     "CHANGELOG.md",
     "languages",
     "public",
@@ -43,11 +45,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/donneko/tyoi-api-node-server.git"
+    "url": "git+https://github.com/donneko/tyoi-server.git"
   },
-  "homepage": "https://github.com/donneko/tyoi-api-node-server#readme",
+  "homepage": "https://donneko.github.io/tyoi-server/",
   "bugs": {
-    "url": "https://github.com/donneko/tyoi-api-node-server/issues"
+    "url": "https://github.com/donneko/tyoi-server/issues"
   },
   "keywords": [
     "server",

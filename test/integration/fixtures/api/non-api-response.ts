@@ -1,9 +1,9 @@
 import { Server } from "../../../../src/index.js";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
+    root: import.meta.dirname,
     port: 0,
-    apiPrefix: "/api",
+    api: "/api",
 });
 
 await server.start();
@@ -20,8 +20,7 @@ const res = async (url: string, init?: RequestInit | undefined): Promise<object>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 await res(`http://localhost:${port}/api/get/a`).then((json: any) => {
-    if (!(!json?.ok && json?.code === "API_NOT_FOUND" && typeof json?.message === "string"))
-        throw new Error();
+    if (!(json?.code === "API_NOT_FOUND" && typeof json?.message === "string")) throw new Error();
 });
 
 await server.stop();

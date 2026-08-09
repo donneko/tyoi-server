@@ -1,0 +1,705 @@
+[@donneko/tyoi-server](../index.md) / Server
+
+# クラス: Server\<RequestNameList, WebSocketNameList\>
+
+定義: [server-core/app/server.ts:18](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L18)
+
+HTTP API、WebSocket、静的ファイル配信を提供するサーバーです。
+
+A server that provides HTTP APIs, WebSocket endpoints, and static file serving.
+
+## 型パラメーター
+
+### RequestNameList
+
+`RequestNameList` *extends* `string` = `string`
+
+登録できる HTTP API キー（例: `"GET:/health"`）。 / HTTP API keys that can be registered, such as `"GET:/health"`.
+
+### WebSocketNameList
+
+`WebSocketNameList` *extends* `string` = `string`
+
+登録できる WebSocket パス。 / WebSocket paths that can be registered.
+
+## コンストラクター
+
+### コンストラクター
+
+> **new Server**\<`RequestNameList`, `WebSocketNameList`\>(`options`): `Server`\<`RequestNameList`, `WebSocketNameList`\>
+
+定義: [server-core/app/server.ts:54](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L54)
+
+サーバーを作成し、ルーティングと静的ファイル配信を初期化します。
+
+`root` は必須です。起動は `start()` で明示的に行います。
+
+Creates the server and initializes routing and static file serving.
+`root` is required. Call `start()` explicitly to start listening.
+
+#### パラメータ
+
+##### options
+
+[`ServerOptions`](../type-aliases/ServerOptions.md)
+
+サーバー設定。 / Server options.
+
+#### 戻り値
+
+`Server`\<`RequestNameList`, `WebSocketNameList`\>
+
+#### 例
+
+```ts
+import { Server } from "@donneko/tyoi-server";
+
+ type RequestNameList = "GET:/test" | "GET:/test/a" | "GET:/a";
+
+ const server = new Server<RequestNameList>({
+     root: import.meta.dirname,
+     public:"../public/main",
+     api:"/api",
+     port:3000,
+ });
+
+ server.onApi("GET:/test", (data) => {
+     return data;
+ });
+ await server.start();
+```
+
+## プロパティ
+
+### emitApi
+
+> **emitApi**: \<`Key`\>(`type`, `arg`) => `Promise`\<`unknown`\>
+
+定義: [server-core/app/server.ts:177](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L177)
+
+HTTP API ハンドラをリクエストなしで実行します。 / Invokes an HTTP API handler without an HTTP request.
+
+キー名で登録されたハンドラを実行します。 / Invokes the handler registered for a key.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `string`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+実行するキー名。 / Key to invoke.
+
+##### arg
+
+[`RequestEventMap`](../type-aliases/RequestEventMap.md)\<`RequestNameList`\>\[`Key`\]
+
+ハンドラに渡す引数。 / Argument passed to the handler.
+
+#### 戻り値
+
+`Promise`\<`unknown`\>
+
+#### 例
+
+```ts
+registry.emit("foo",arg);
+```
+
+***
+
+### getConfig
+
+> **getConfig**: \<`K`\>(`key`) => `object`\[`K`\]
+
+定義: [server-core/app/server.ts:157](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L157)
+
+解決済みのサーバー設定を取得します。 / Returns the resolved server configuration.
+
+#### 型パラメーター
+
+##### K
+
+`K` *extends* `"lan"` \| `"port"` \| `"qr"` \| `"browser"` \| `"autoPort"` \| `"root"` \| `"public"` \| `"api"` \| `"middlewares"` \| `"signalClose"` \| `"language"`
+
+#### パラメータ
+
+##### key
+
+`K`
+
+#### 戻り値
+
+`object`\[`K`\]
+
+***
+
+### hasApi
+
+> **hasApi**: (`type`) => `type is Extract<RequestNameList, string>`
+
+定義: [server-core/app/server.ts:175](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L175)
+
+指定した HTTP API ハンドラが登録されているかを返します。 / Returns whether the HTTP API has a registered handler.
+
+ハンドラが登録されているかを確認します。 / Checks whether a handler is registered.
+
+#### パラメータ
+
+##### type
+
+`string`
+
+調べるキー名。 / Key to check.
+
+#### 戻り値
+
+`type is Extract<RequestNameList, string>`
+
+存在する場合は `true`。 / `true` when a handler exists.
+
+#### 例
+
+```ts
+console.log(registry.has("foo"));
+```
+
+***
+
+### hasEvent
+
+> **hasEvent**: (`type`) => `type is "server/log:*"`
+
+定義: [server-core/app/server.ts:166](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L166)
+
+指定したイベントにハンドラが登録されているかを返します。 / Returns whether the event has a registered handler.
+
+ハンドラが登録されているかを確認します。 / Checks whether a handler is registered.
+
+#### パラメータ
+
+##### type
+
+`string`
+
+調べるキー名。 / Key to check.
+
+#### 戻り値
+
+`type is "server/log:*"`
+
+存在する場合は `true`。 / `true` when a handler exists.
+
+#### 例
+
+```ts
+console.log(eventBus.has("foo"));
+```
+
+***
+
+### hasWebSocket
+
+> **hasWebSocket**: (`type`) => `type is Extract<WebSocketNameList, string>`
+
+定義: [server-core/app/server.ts:188](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L188)
+
+指定した WebSocket ハンドラが登録されているかを返します。 / Returns whether the WebSocket path has a registered handler.
+
+#### パラメータ
+
+##### type
+
+`string`
+
+#### 戻り値
+
+`type is Extract<WebSocketNameList, string>`
+
+***
+
+### offApi
+
+> **offApi**: \<`Key`\>(`type`) => `void`
+
+定義: [server-core/app/server.ts:173](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L173)
+
+HTTP API ハンドラを解除します。 / Removes an HTTP API handler.
+
+ハンドラの登録を解除します。 / Unregisters a handler.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `string`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+解除するキー名。 / Key to unregister.
+
+#### 戻り値
+
+`void`
+
+#### 例
+
+```ts
+registry.off("foo");
+```
+
+***
+
+### offEvent
+
+> **offEvent**: \<`Key`\>(`type`, `fn`) => `void`
+
+定義: [server-core/app/server.ts:164](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L164)
+
+イベントハンドラを解除します。 / Removes an event handler.
+
+ハンドラの登録を解除します。 / Unregisters a handler.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `"server/log:*"`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+解除するキー名。 / Key to unregister.
+
+##### fn
+
+[`EventBusHandler`](../type-aliases/EventBusHandler.md)\<[`OutEventBusMap`](../type-aliases/OutEventBusMap.md)\[`Key`\]\>
+
+#### 戻り値
+
+`void`
+
+#### 例
+
+```ts
+eventBus.off("foo",handler);
+```
+
+***
+
+### offWebSocket
+
+> **offWebSocket**: \<`Key`\>(`type`) => `void`
+
+定義: [server-core/app/server.ts:186](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L186)
+
+WebSocket ハンドラを解除します。 / Removes a WebSocket handler.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `string`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+#### 戻り値
+
+`void`
+
+***
+
+### onApi
+
+> **onApi**: \<`KEY`\>(`type`, `fn`) => () => `void`
+
+定義: [server-core/app/server.ts:169](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L169)
+
+HTTP API ハンドラを登録します。 / Registers an HTTP API handler.
+
+ハンドラを登録します。 / Registers a handler.
+
+#### 型パラメーター
+
+##### KEY
+
+`KEY` *extends* `string`
+
+#### パラメータ
+
+##### type
+
+`KEY`
+
+登録するキー名。 / Key to register.
+
+##### fn
+
+[`Handler`](../type-aliases/Handler.md)\<[`RequestEventMap`](../type-aliases/RequestEventMap.md)\<`RequestNameList`\>\[`KEY`\]\>
+
+実行するハンドラ。 / Handler to invoke.
+
+#### 戻り値
+
+ハンドラを解除するための関数。 / A function that unregisters the handler.
+
+() => `void`
+
+#### 例
+
+```ts
+const unsubscribe = registry.on("foo", handler);
+unsubscribe(); // ハンドラを解除 / Unregister the handler
+```
+
+***
+
+### onceApi
+
+> **onceApi**: \<`Key`\>(`type`, `fn`) => () => `void`
+
+定義: [server-core/app/server.ts:171](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L171)
+
+一度だけ実行する HTTP API ハンドラを登録します。 / Registers a one-time HTTP API handler.
+
+一度だけ実行するハンドラを登録します。 / Registers a handler that runs once.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `string`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+登録するキー名。 / Key to register.
+
+##### fn
+
+[`Handler`](../type-aliases/Handler.md)\<[`RequestEventMap`](../type-aliases/RequestEventMap.md)\<`RequestNameList`\>\[`Key`\]\>
+
+実行するハンドラ。 / Handler to invoke.
+
+#### 戻り値
+
+() => `void`
+
+#### 例
+
+```ts
+registry.once("foo", handler);
+```
+
+***
+
+### onceEvent
+
+> **onceEvent**: \<`Key`\>(`type`, `fn`) => () => `void`
+
+定義: [server-core/app/server.ts:162](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L162)
+
+一度だけ実行するイベントハンドラを登録します。 / Registers a one-time event handler.
+
+一度だけ実行するハンドラを登録します。 / Registers a handler that runs once.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `"server/log:*"`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+登録するキー名。 / Key to register.
+
+##### fn
+
+[`EventBusHandler`](../type-aliases/EventBusHandler.md)\<[`OutEventBusMap`](../type-aliases/OutEventBusMap.md)\[`Key`\]\>
+
+実行するハンドラ。 / Handler to invoke.
+
+#### 戻り値
+
+() => `void`
+
+#### 例
+
+```ts
+eventBus.once("foo", handler);
+```
+
+***
+
+### onceWebSocket
+
+> **onceWebSocket**: \<`Key`\>(`type`, `fn`) => () => `void`
+
+定義: [server-core/app/server.ts:182](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L182)
+
+一度だけ実行する WebSocket ハンドラを登録します。 / Registers a one-time WebSocket handler.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `string`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+##### fn
+
+[`Handler`](../type-aliases/Handler.md)\<[`WsHandler`](../type-aliases/WsHandler.md)\>
+
+#### 戻り値
+
+() => `void`
+
+***
+
+### onEvent
+
+> **onEvent**: \<`Key`\>(`type`, `fn`) => () => `void`
+
+定義: [server-core/app/server.ts:160](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L160)
+
+イベントハンドラを登録します。 / Registers an event handler.
+
+ハンドラを登録します。 / Registers a handler.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `"server/log:*"`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+登録するキー名。 / Key to register.
+
+##### fn
+
+[`EventBusHandler`](../type-aliases/EventBusHandler.md)\<[`OutEventBusMap`](../type-aliases/OutEventBusMap.md)\[`Key`\]\>
+
+実行するハンドラ。 / Handler to invoke.
+
+#### 戻り値
+
+ハンドラを解除するための関数。 / A function that unregisters the handler.
+
+() => `void`
+
+#### 例
+
+```ts
+const unsubscribe = eventBus.on("foo", handler);
+unsubscribe(); // ハンドラを解除 / Unregister the handler
+```
+
+***
+
+### onWebSocket
+
+> **onWebSocket**: \<`Key`\>(`type`, `fn`) => () => `void`
+
+定義: [server-core/app/server.ts:180](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L180)
+
+WebSocket ハンドラを登録します。 / Registers a WebSocket handler.
+
+#### 型パラメーター
+
+##### Key
+
+`Key` *extends* `string`
+
+#### パラメータ
+
+##### type
+
+`Key`
+
+##### fn
+
+[`Handler`](../type-aliases/Handler.md)\<[`WsHandler`](../type-aliases/WsHandler.md)\>
+
+#### 戻り値
+
+() => `void`
+
+## メソッド
+
+### close()
+
+> **close**(): `Promise`\<`void`\>
+
+定義: [server-core/app/server.ts:110](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L110)
+
+`stop()` の別名です。 / Alias for `stop()`.
+
+#### 戻り値
+
+`Promise`\<`void`\>
+
+***
+
+### getHttpServer()
+
+> **getHttpServer**(): `Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `null`
+
+定義: [server-core/app/server.ts:153](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L153)
+
+基盤となる Node.js の HTTP サーバーを取得します。 / Returns the underlying Node.js HTTP server.
+
+#### 戻り値
+
+`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `null`
+
+***
+
+### getPort()
+
+> **getPort**(): `number`
+
+定義: [server-core/app/server.ts:149](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L149)
+
+現在設定されているポート番号を返します。 / Returns the currently configured port.
+
+#### 戻り値
+
+`number`
+
+***
+
+### isRunning()
+
+> **isRunning**(): `boolean`
+
+定義: [server-core/app/server.ts:145](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L145)
+
+サーバーが起動中かを返します。 / Returns whether the server is running.
+
+#### 戻り値
+
+`boolean`
+
+***
+
+### listen()
+
+> **listen**(`options?`): `Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
+
+定義: [server-core/app/server.ts:62](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L62)
+
+`start()` の別名です。 / Alias for `start()`.
+
+#### パラメータ
+
+##### options?
+
+[`StartOptions`](../type-aliases/StartOptions.md)
+
+#### 戻り値
+
+`Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
+
+***
+
+### start()
+
+> **start**(`options?`): `Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
+
+定義: [server-core/app/server.ts:87](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L87)
+
+HTTP サーバーを起動します。
+
+`options` はコンストラクターで渡した設定を、この起動に限らず
+上書きします。すでに起動済み、または起動処理中の場合は `undefined` を返します。
+
+Starts the HTTP server. `options` overrides the constructor configuration
+for this and subsequent starts. Returns `undefined` if the server is already
+running or is currently starting.
+
+#### パラメータ
+
+##### options?
+
+[`StartOptions`](../type-aliases/StartOptions.md)
+
+起動時に上書きする設定。 / Options that override the current configuration when starting.
+
+#### 戻り値
+
+`Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
+
+起動した HTTP サーバー。すでに起動済みの場合は `undefined`。 / The started HTTP server, or `undefined` if already running.
+
+#### Throws
+
+ポートの確保や HTTP サーバーの起動に失敗した場合。 / If the port cannot be acquired or the HTTP server cannot start.
+
+#### 例
+
+```ts
+await server.start({
+  port: 3000,
+  qr: false,
+});
+```
+
+***
+
+### stop()
+
+> **stop**(): `Promise`\<`void`\>
+
+定義: [server-core/app/server.ts:128](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L128)
+
+HTTP サーバーを停止し、既存の接続を終了します。
+
+接続が 10 秒以内に閉じない場合は、残った接続を強制的に閉じます。
+起動していない場合、または停止処理中の場合は何もしません。
+
+Stops the HTTP server and closes existing connections. Remaining connections
+are forcibly closed after 10 seconds. Does nothing if the server is not running
+or is already stopping.
+
+#### 戻り値
+
+`Promise`\<`void`\>
+
+停止完了時に解決する Promise。 / A promise that resolves when shutdown completes.
+
+#### Throws
+
+HTTP サーバーの停止に失敗した場合。 / If the HTTP server cannot be stopped.

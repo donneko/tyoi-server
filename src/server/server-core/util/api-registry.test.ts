@@ -1,8 +1,8 @@
 import { expect, describe, test, vi } from "vitest";
-import { ApiRegistry } from "./api-registry.js";
+import { HandlerRegistry } from "./api-registry.js";
 
-describe("ApiRegistry", () => {
-    const apiRegistry = new ApiRegistry();
+describe("HandlerRegistry", () => {
+    const apiRegistry = new HandlerRegistry();
     const onceCallback = vi.fn();
     const onCallback = vi.fn();
 
@@ -30,16 +30,41 @@ describe("ApiRegistry", () => {
         apiRegistry.emit("b", {});
         expect(onCallback).toHaveBeenCalledTimes(0);
     });
-    test("stale unsubscribe does not remove a replacement handler", async () => {
-        const registry = new ApiRegistry<Record<"c", object>>();
-        const oldCallback = vi.fn();
-        const newCallback = vi.fn();
-        const unsubscribe = registry.on("c", oldCallback);
 
-        registry.on("c", newCallback);
+    test("old unsubscribe does not remove the overwritten handler", async () => {
+        const registry = new HandlerRegistry<{ event: object }>();
+        const oldHandler = vi.fn();
+        const currentHandler = vi.fn();
+        const unsubscribe = registry.on("event", oldHandler);
+
+        registry.on("event", currentHandler);
         unsubscribe();
-        await registry.emit("c", {});
+        await registry.emit("event", {});
 
-        expect(newCallback).toHaveBeenCalledTimes(1);
+        expect(currentHandler).toHaveBeenCalledOnce();
+    });
+
+    test("uses HandlerRegistry names in diagnostic logs", async () => {
+        const warningRegistry = new HandlerRegistry<{ event: object }>();
+        const errorRegistry = new HandlerRegistry<{ event: object }>();
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+        const error = vi.spyOn(console, "error").mockImplementation(() => undefined);
+        const thrown = new Error("handler failed");
+
+        try {
+            warningRegistry.on("event", () => undefined);
+            warningRegistry.on("event", () => undefined);
+            errorRegistry.on("event", () => {
+                throw thrown;
+            });
+
+            await expect(errorRegistry.emit("event", {})).rejects.toBe(thrown);
+
+            expect(warn).toHaveBeenCalledWith(expect.stringContaining("[HandlerRegistry on warn]"));
+            expect(error).toHaveBeenCalledWith(`[HandlerRegistry emit error] event`, thrown);
+        } finally {
+            warn.mockRestore();
+            error.mockRestore();
+        }
     });
 });

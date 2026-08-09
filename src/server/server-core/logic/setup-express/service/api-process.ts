@@ -9,28 +9,23 @@ export async function apiProcess(
     try {
         const key = `${req.method}:${req.path}`;
 
-        if (!context.serverAPIs.has(key)) {
+        if (!context.apiRegistry.has(key)) {
             res.status(404).json({
-                ok: false,
                 code: "API_NOT_FOUND",
                 message: context.messageManager.message("http.api.notFound"),
             });
             return;
         }
 
-        const result = await context.serverAPIs.emit(key, {
+        const result = await context.apiRegistry.emit(key, {
             query: req.query,
             body: req.body,
             headers: req.headers,
         });
 
-        res.json({
-            ok: true,
-            data: result,
-        });
+        res.json(result);
     } catch {
         res.status(500).json({
-            ok: false,
             code: "API_INTERNAL_ERROR",
             message: context.messageManager.message("http.api.internalError"),
         });

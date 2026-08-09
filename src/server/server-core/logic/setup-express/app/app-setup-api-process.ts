@@ -4,7 +4,7 @@ import { defaultSetupApiProcessDependencies } from "../dependencies/setup-expres
 import { createDependencies } from "../../../dependencies/create-dependencies.js";
 
 export async function setupApiProcess(
-    apiPrefix: string,
+    api: string,
     context: SetupApiProcessContext,
     dependencies: Partial<SetupApiProcessDependencies> = {}
 ) {
@@ -13,7 +13,7 @@ export async function setupApiProcess(
         dependencies
     );
 
-    context.expressServer.use(apiPrefix, (rep, res) => {
-        deps.apiProcess(rep, res, context);
+    context.expressServer.use(api, (rep, res) => {
+        return deps.apiProcess(rep, res, context);
     });
 }

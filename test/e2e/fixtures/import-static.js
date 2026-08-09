@@ -5,7 +5,7 @@ await checkStatic();
 
 async function checkNotFound() {
     const server = new Server({
-        baseDirname: import.meta.dirname,
+        root: import.meta.dirname,
         port: 0,
     });
 
@@ -20,8 +20,8 @@ async function checkNotFound() {
 
 async function checkStatic() {
     const server = new Server({
-        baseDirname: import.meta.dirname,
-        publicDirname: "./test-data",
+        root: import.meta.dirname,
+        public: "./test-data",
         port: 0,
     });
 

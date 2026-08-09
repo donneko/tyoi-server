@@ -1,153 +1,56 @@
 # tyoi-server
 
+[日本語](./README.md) | [English](./README.en.md)
+
 ![NPM Version](https://img.shields.io/npm/v/%40donneko%2Ftyoi-server) ![NPM License](https://img.shields.io/npm/l/%40donneko%2Ftyoi-server)
 
-小さな API と静的ファイル配信をすぐに立てるための、ローカル向けサーバーフレームワークです。
-CLI でテンプレートを作り、HTML / CSS / API / WebSocket の動作確認をすばやく始められます。
+Express をベースにした、ローカル開発向けの API・静的ファイルサーバーフレームワークです。CLI から用途別テンプレートを作成でき、HTTP API、WebSocket、静的ファイル配信、LAN 公開に対応しています。
 
-![server start img](./docs/src/img/server-start-image.png)
+v1.x では公開 TypeScript API と文書化済みの通信仕様に破壊的変更を行いません。後方互換な追加と修正は行われる場合があります。次の破壊的変更は v2.0.0 で行います。
 
-> This project is experimental. APIs may change in future releases.
+## クイックスタート
 
-## Features
-
-- Express ベースの API / 静的ファイル配信
-- JavaScript / TypeScript テンプレート
-- WebSocket 対応
-- Local / Network URL 表示
-- LAN 公開、QR Code 表示、ブラウザ自動起動
-- 使用中ポートの自動切り替え
-- Express middleware と設定ファイル対応
-
-## Quick Start
-
-TypeScript テンプレートで始める場合:
+Node.js 20.14 以上が必要です。
 
 ```bash
-npm exec --package @donneko/tyoi-server tyoi -- create my-app --template basic-ts
-cd my-app
+npm install @donneko/tyoi-server
+npx tyoi init my-app --template basic-js
 npm install
 npm run dev
 ```
 
-JavaScript テンプレートで始める場合:
+起動後、表示された Local URL をブラウザーで開きます。詳しくは[クイックスタート](https://donneko.github.io/tyoi-server/quick-start/use/getting-started.html)を参照してください。
 
-```bash
-npm exec --package @donneko/tyoi-server tyoi -- create my-app --template basic-js
-cd my-app
-npm install
-npm run dev
-```
+## 用途別ドキュメント
 
-起動後、表示された Local URL をブラウザで開くと、`public/main` のページを確認できます。
+- [API の使用例](https://donneko.github.io/tyoi-server/api/use/http-api.html) / [API の仕様](https://donneko.github.io/tyoi-server/api/specification/short-handler.html)
+- [CLI の使用例](https://donneko.github.io/tyoi-server/command/use/project-creation.html) / [CLI の仕様](https://donneko.github.io/tyoi-server/command/specification/commands.html)
+- [設定の使用例](https://donneko.github.io/tyoi-server/config/use/basic.html) / [設定の仕様](https://donneko.github.io/tyoi-server/config/specification/options.html)
+- [テンプレートの使用例](https://donneko.github.io/tyoi-server/example/use/templates.html) / [テンプレートの仕様](https://donneko.github.io/tyoi-server/example/specification/template-catalog.html)
+- [できることの例](https://donneko.github.io/tyoi-server/can-do/use/recipes.html) / [機能と制約](https://donneko.github.io/tyoi-server/can-do/specification/features-and-limitations.html)
+- [静的ファイル配信の使用例](https://donneko.github.io/tyoi-server/public/use/static-files.html) / [配信仕様](https://donneko.github.io/tyoi-server/public/specification/routing.html)
+- [v1 移行ガイド](https://donneko.github.io/tyoi-server/migration-v1.html)
+- [自動生成 API リファレンス](https://donneko.github.io/tyoi-server/api/reference/)
 
-今いるディレクトリにテンプレートを作る場合は `init` を使います。
-
-```bash
-mkdir my-app
-cd my-app
-npm exec --package @donneko/tyoi-server tyoi -- init my-app --template basic-ts
-npm install
-npm run dev
-```
-
-## Programmatic Usage
-
-コードから小さな API サーバーを作る場合は `tyoi()` を使えます。
+## 最小のプログラム例
 
 ```ts
 import { tyoi } from "@donneko/tyoi-server";
 
 const app = tyoi({
-    baseDirname: import.meta.dirname,
-    publicDirname: "../public/main",
-    port: 3000
+    root: import.meta.dirname,
+    public: "../public",
+    api: "/api",
+    port: 3000,
 });
 
-app.get("/hello", () => {
-    return {
-        message: "Hello Tyoi!"
-    };
-});
+app.get("/hello", () => ({ message: "Hello Tyoi!" }));
 
 await app.start();
 ```
 
-## Templates
+この API はデフォルト設定では `GET /api/hello` で呼び出せます。
 
-- `basic-ts`: TypeScript 用テンプレート
-- `basic-js`: JavaScript 用テンプレート
-- `static-ts`: レスポンシブな静的サイト用テンプレート
-- `api-ts`: 入力検証とインメモリデータを含む JSON API 用テンプレート
-- `realtime-ts`: WebSocket チャットを含むリアルタイムアプリ用テンプレート
-
-テンプレートを指定しない場合は、CLI 上で選択できます。
-
-```bash
-npm exec --package @donneko/tyoi-server tyoi -- create my-app
-```
-
-用途別テンプレートを直接指定する場合:
-
-```bash
-tyoi create my-site --template static-ts
-tyoi create my-api --template api-ts
-tyoi create my-chat --template realtime-ts
-```
-
-## Common CLI
-
-作成済みプロジェクトでは、ローカルにインストールした `tyoi` を npm scripts から使えます。
-
-```bash
-tyoi create my-app --template basic-ts
-tyoi init my-app --template basic-ts
-tyoi config
-tyoi info
-tyoi run
-tyoi run --port 3001
-tyoi run --open
-tyoi help
-tyoi --version
-```
-
-主なコマンド:
-
-- `tyoi create <name>`: 新しいフォルダにテンプレートを作成
-- `tyoi init <name>`: 今いるフォルダにテンプレートを作成
-- `tyoi config`: 今いるフォルダに `tyoi.config.js` を追加
-- `tyoi info`: `tyoi run` で使われる設定を表示
-- `tyoi run`: 現在のプロジェクトの設定でサーバーを起動
-- `tyoi dev`: このパッケージの開発確認用サーバーを起動
-- `tyoi help`: コマンド一覧を表示
-
-## Docs
-
-詳しい使い方は `docs/` に分けています。
-
-- [Usage](./docs/usage.md): `tyoi()` の基本、API、WebSocket、middleware、イベント、`Server` 直接利用
-- [Config](./docs/config.md): `tyoi.config.js` と設定項目
-- [CLI](./docs/cli.md): CLI コマンドとオプション
-
-機能ごとの使い方とコード例は [Usage](./docs/usage.md) で確認できます。
-
-## Development
-
-このリポジトリを開発する場合:
-
-```bash
-npm install
-npm test
-npm run build
-```
-
-公開前には、公開パッケージに含まれるファイルを確認してください。
-
-```bash
-npm pack --dry-run
-npm publish --dry-run
-```
-
-## License
+## ライセンス
 
 MIT

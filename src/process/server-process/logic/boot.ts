@@ -11,7 +11,7 @@ export default async function serverBoot(message: BootMessage): Promise<Server> 
     const server = new Server({
         ...useConfig,
         ...option,
-        signalShutdownHandling: false,
+        signalClose: false,
     } as ServerOptions);
 
     return server;

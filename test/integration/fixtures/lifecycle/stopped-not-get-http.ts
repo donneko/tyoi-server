@@ -2,7 +2,7 @@ import { Server } from "../../../../src/index.js";
 import http from "node:http";
 
 const server = new Server({
-    baseDirname: import.meta.dirname,
+    root: import.meta.dirname,
 });
 
 await server.start();

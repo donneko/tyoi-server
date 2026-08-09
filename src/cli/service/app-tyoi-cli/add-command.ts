@@ -1,6 +1,5 @@
 import type { CmdHandler } from "../../types/tyoi-cli.type.js";
 
-import dev from "../../command/dev.js";
 import create from "../../command/create/main.js";
 import init from "../../command/init/main.js";
 import help from "../../command/help.js";
@@ -13,7 +12,6 @@ import setting from "../../command/setting.js";
 export function addCommand(cmdHandler: CmdHandler) {
     cmdHandler
         .add("", def)
-        .add("dev", dev)
         .add("run", run)
         .add("create", create)
         .add("config", config)

@@ -11,9 +11,9 @@ function createResponse() {
     return response;
 }
 
-function createContext(serverAPIs: object) {
+function createContext(apiRegistry: object) {
     return {
-        serverAPIs,
+        apiRegistry,
         messageManager: {
             message: vi.fn((key: string) =>
                 key === "http.api.notFound" ? "API not found" : "Internal server error"
@@ -33,26 +33,23 @@ describe("apiProcess", () => {
         };
         const response = createResponse();
         const emit = vi.fn(async () => ({ id: 1 }));
-        const serverAPIs = { has: vi.fn(() => true), emit };
+        const apiRegistry = { has: vi.fn(() => true), emit };
 
-        await apiProcess(request as never, response as never, createContext(serverAPIs) as never);
+        await apiProcess(request as never, response as never, createContext(apiRegistry) as never);
 
-        expect(serverAPIs.has).toHaveBeenCalledWith("POST:/users");
+        expect(apiRegistry.has).toHaveBeenCalledWith("POST:/users");
         expect(emit).toHaveBeenCalledWith("POST:/users", {
             query: request.query,
             body: request.body,
             headers: request.headers,
         });
-        expect(response.json).toHaveBeenCalledWith({
-            ok: true,
-            data: { id: 1 },
-        });
+        expect(response.json).toHaveBeenCalledWith({ id: 1 });
         expect(response.status).not.toHaveBeenCalled();
     });
 
     it("未登録 API には404エラーを返す", async () => {
         const response = createResponse();
-        const serverAPIs = {
+        const apiRegistry = {
             has: vi.fn(() => false),
             emit: vi.fn(),
         };
@@ -63,16 +60,15 @@ describe("apiProcess", () => {
                 path: "/missing",
             } as never,
             response as never,
-            createContext(serverAPIs) as never
+            createContext(apiRegistry) as never
         );
 
         expect(response.status).toHaveBeenCalledWith(404);
         expect(response.json).toHaveBeenCalledWith({
-            ok: false,
             code: "API_NOT_FOUND",
             message: "API not found",
         });
-        expect(serverAPIs.emit).not.toHaveBeenCalled();
+        expect(apiRegistry.emit).not.toHaveBeenCalled();
     });
 
     it.each([
@@ -94,18 +90,17 @@ describe("apiProcess", () => {
                 }),
             },
         ],
-    ])("%s の例外には500エラーを返す", async (_operation, serverAPIs) => {
+    ])("%s の例外には500エラーを返す", async (_operation, apiRegistry) => {
         const response = createResponse();
 
         await apiProcess(
             { method: "GET", path: "/users" } as never,
             response as never,
-            createContext(serverAPIs) as never
+            createContext(apiRegistry) as never
         );
 
         expect(response.status).toHaveBeenCalledWith(500);
         expect(response.json).toHaveBeenCalledWith({
-            ok: false,
             code: "API_INTERNAL_ERROR",
             message: "Internal server error",
         });

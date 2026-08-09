@@ -1,15 +1,14 @@
 import { ConfigController } from "../util/config-controller.js";
-import {
-    type ServerDefaultConfig,
-    serverDefaultConfigSchema,
-} from "../types/server-config.type.js";
+import z from "zod";
+import { resolvedServerConfigSchema } from "../types/server-config.type.js";
 import TYOI_DEFAULT_CONFIG from "../config/tyoi.default.config.js";
 
-type ConfigControllerType = ConfigController<ServerDefaultConfig>;
+type RuntimeServerConfig = z.infer<typeof resolvedServerConfigSchema>;
+type ConfigControllerType = ConfigController<RuntimeServerConfig>;
 export class ConfigManager {
-    private configController = new ConfigController<ServerDefaultConfig>(
+    private configController = new ConfigController<RuntimeServerConfig>(
         TYOI_DEFAULT_CONFIG,
-        serverDefaultConfigSchema
+        resolvedServerConfigSchema
     );
 
     updateConfig(
@@ -17,7 +16,7 @@ export class ConfigManager {
     ): ReturnType<ConfigControllerType["updateConfig"]> {
         return this.configController.updateConfig(...config);
     }
-    getConfig<K extends keyof ServerDefaultConfig>(key: K): ServerDefaultConfig[K] {
+    getConfig<K extends keyof RuntimeServerConfig>(key: K): RuntimeServerConfig[K] {
         return this.configController.getConfig(key);
     }
 }
