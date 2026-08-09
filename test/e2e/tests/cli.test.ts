@@ -24,7 +24,7 @@ describe("cli e2e", () => {
         const packageUrl = new URL("../template/package.json", import.meta.url);
         await copyTmpDir(tmpDir, packageUrl);
         await installPackage(tmpDir, packDir);
-    }, 15_000);
+    }, 30_000);
     afterEach(async () => {
         await removeTmpDir(tmpDir);
     });
