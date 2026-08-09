@@ -4,7 +4,7 @@
 
 > **RequestData** = `object`
 
-Defined in: [server-core/types/public/api.type.ts:2](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/api.type.ts#L2)
+Defined in: [server-core/types/public/api.type.ts:2](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/api.type.ts#L2)
 
 HTTP API ハンドラに渡されるリクエスト情報です。 / Request data passed to an HTTP API handler.
 
@@ -14,7 +14,7 @@ HTTP API ハンドラに渡されるリクエスト情報です。 / Request dat
 
 > **body**: `unknown`
 
-Defined in: [server-core/types/public/api.type.ts:4](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/api.type.ts#L4)
+Defined in: [server-core/types/public/api.type.ts:4](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/api.type.ts#L4)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [server-core/types/public/api.type.ts:4](https://github.com/donneko/
 
 > **headers**: `unknown`
 
-Defined in: [server-core/types/public/api.type.ts:5](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/api.type.ts#L5)
+Defined in: [server-core/types/public/api.type.ts:5](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/api.type.ts#L5)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [server-core/types/public/api.type.ts:5](https://github.com/donneko/
 
 > **query**: `unknown`
 
-Defined in: [server-core/types/public/api.type.ts:3](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/api.type.ts#L3)
+Defined in: [server-core/types/public/api.type.ts:3](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/api.type.ts#L3)

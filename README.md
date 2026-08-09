@@ -19,18 +19,18 @@ npm install
 npm run dev
 ```
 
-起動後、表示された Local URL をブラウザーで開きます。詳しくは[クイックスタート](./docs/quick-start/use/getting-started.md)を参照してください。
+起動後、表示された Local URL をブラウザーで開きます。詳しくは[クイックスタート](https://donneko.github.io/tyoi-server/quick-start/use/getting-started.html)を参照してください。
 
 ## 用途別ドキュメント
 
-- [API の使用例](./docs/api/use/http-api.md) / [API の仕様](./docs/api/specification/short-handler.md)
-- [CLI の使用例](./docs/command/use/project-creation.md) / [CLI の仕様](./docs/command/specification/commands.md)
-- [設定の使用例](./docs/config/use/basic.md) / [設定の仕様](./docs/config/specification/options.md)
-- [テンプレートの使用例](./docs/example/use/templates.md) / [テンプレートの仕様](./docs/example/specification/template-catalog.md)
-- [できることの例](./docs/can-do/use/recipes.md) / [機能と制約](./docs/can-do/specification/features-and-limitations.md)
-- [静的ファイル配信の使用例](./docs/public/use/static-files.md) / [配信仕様](./docs/public/specification/routing.md)
-- [v1 移行ガイド](./docs/migration-v1.md)
-- [自動生成 API リファレンス](./docs/api/reference/index.md)
+- [API の使用例](https://donneko.github.io/tyoi-server/api/use/http-api.html) / [API の仕様](https://donneko.github.io/tyoi-server/api/specification/short-handler.html)
+- [CLI の使用例](https://donneko.github.io/tyoi-server/command/use/project-creation.html) / [CLI の仕様](https://donneko.github.io/tyoi-server/command/specification/commands.html)
+- [設定の使用例](https://donneko.github.io/tyoi-server/config/use/basic.html) / [設定の仕様](https://donneko.github.io/tyoi-server/config/specification/options.html)
+- [テンプレートの使用例](https://donneko.github.io/tyoi-server/example/use/templates.html) / [テンプレートの仕様](https://donneko.github.io/tyoi-server/example/specification/template-catalog.html)
+- [できることの例](https://donneko.github.io/tyoi-server/can-do/use/recipes.html) / [機能と制約](https://donneko.github.io/tyoi-server/can-do/specification/features-and-limitations.html)
+- [静的ファイル配信の使用例](https://donneko.github.io/tyoi-server/public/use/static-files.html) / [配信仕様](https://donneko.github.io/tyoi-server/public/specification/routing.html)
+- [v1 移行ガイド](https://donneko.github.io/tyoi-server/migration-v1.html)
+- [自動生成 API リファレンス](https://donneko.github.io/tyoi-server/api/reference/)
 
 ## 最小のプログラム例
 

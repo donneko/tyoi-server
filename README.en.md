@@ -19,18 +19,18 @@ npm install
 npm run dev
 ```
 
-After startup, open the displayed local URL in your browser. See the [quick start](./docs/en/quick-start/use/getting-started.md) for details.
+After startup, open the displayed local URL in your browser. See the [quick start](https://donneko.github.io/tyoi-server/en/quick-start/use/getting-started.html) for details.
 
 ## Documentation by topic
 
-- [API usage](./docs/en/api/use/http-api.md) / [API specification](./docs/en/api/specification/short-handler.md)
-- [CLI usage](./docs/en/command/use/project-creation.md) / [CLI specification](./docs/en/command/specification/commands.md)
-- [Configuration usage](./docs/en/config/use/basic.md) / [Configuration reference](./docs/en/config/specification/options.md)
-- [Template examples](./docs/en/example/use/templates.md) / [Template reference](./docs/en/example/specification/template-catalog.md)
-- [Practical recipes](./docs/en/can-do/use/recipes.md) / [Features and limitations](./docs/en/can-do/specification/features-and-limitations.md)
-- [Static file usage](./docs/en/public/use/static-files.md) / [Serving behavior](./docs/en/public/specification/routing.md)
-- [v1 migration guide](./docs/en/migration-v1.md)
-- [Generated API reference](./docs/en/api/reference/index.md)
+- [API usage](https://donneko.github.io/tyoi-server/en/api/use/http-api.html) / [API specification](https://donneko.github.io/tyoi-server/en/api/specification/short-handler.html)
+- [CLI usage](https://donneko.github.io/tyoi-server/en/command/use/project-creation.html) / [CLI specification](https://donneko.github.io/tyoi-server/en/command/specification/commands.html)
+- [Configuration usage](https://donneko.github.io/tyoi-server/en/config/use/basic.html) / [Configuration reference](https://donneko.github.io/tyoi-server/en/config/specification/options.html)
+- [Template examples](https://donneko.github.io/tyoi-server/en/example/use/templates.html) / [Template reference](https://donneko.github.io/tyoi-server/en/example/specification/template-catalog.html)
+- [Practical recipes](https://donneko.github.io/tyoi-server/en/can-do/use/recipes.html) / [Features and limitations](https://donneko.github.io/tyoi-server/en/can-do/specification/features-and-limitations.html)
+- [Static file usage](https://donneko.github.io/tyoi-server/en/public/use/static-files.html) / [Serving behavior](https://donneko.github.io/tyoi-server/en/public/specification/routing.html)
+- [v1 migration guide](https://donneko.github.io/tyoi-server/en/migration-v1.html)
+- [Generated API reference](https://donneko.github.io/tyoi-server/en/api/reference/)
 
 ## Minimal programmatic example
 

@@ -4,7 +4,7 @@
 
 > **Handler**\<`Type`, `Result`\> = (`arg`) => `Result` \| `Promise`\<`Result`\>
 
-定義: [server-core/util/api-registry.ts:2](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/api-registry.ts#L2)
+定義: [server-core/util/api-registry.ts:2](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/api-registry.ts#L2)
 
 APIレジストリーへ登録するハンドラです。 / Handler registered with an API registry.
 

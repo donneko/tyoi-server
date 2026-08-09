@@ -45,11 +45,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/donneko/tyoi-api-node-server.git"
+    "url": "git+https://github.com/donneko/tyoi-server.git"
   },
-  "homepage": "https://github.com/donneko/tyoi-api-node-server#readme",
+  "homepage": "https://donneko.github.io/tyoi-server/",
   "bugs": {
-    "url": "https://github.com/donneko/tyoi-api-node-server/issues"
+    "url": "https://github.com/donneko/tyoi-server/issues"
   },
   "keywords": [
     "server",

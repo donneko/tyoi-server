@@ -4,7 +4,7 @@
 
 > **EventBusHandler**\<`Type`, `Result`\> = (`arg`) => `Result` \| `Promise`\<`Result`\>
 
-定義: [server-core/util/event-bus.ts:2](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/event-bus.ts#L2)
+定義: [server-core/util/event-bus.ts:2](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/event-bus.ts#L2)
 
 イベントバスへ登録するハンドラです。 / Handler registered with an event bus.
 

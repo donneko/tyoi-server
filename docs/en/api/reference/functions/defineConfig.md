@@ -4,7 +4,7 @@
 
 > **defineConfig**\<`Config`\>(`config`): `Config`
 
-Defined in: [server-core/config/define-config.ts:32](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/config/define-config.ts#L32)
+Defined in: [server-core/config/define-config.ts:32](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/config/define-config.ts#L32)
 
 CLI で読み込むサーバー設定を検証して返します。
 

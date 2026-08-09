@@ -4,7 +4,7 @@
 
 > **WsHandler** = `object`
 
-Defined in: [server-core/types/public/websocket.type.ts:5](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/websocket.type.ts#L5)
+Defined in: [server-core/types/public/websocket.type.ts:5](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/websocket.type.ts#L5)
 
 WebSocket ハンドラに渡される接続情報です。 / Connection data passed to a WebSocket handler.
 
@@ -14,7 +14,7 @@ WebSocket ハンドラに渡される接続情報です。 / Connection data pas
 
 > **req**: `IncomingMessage`
 
-Defined in: [server-core/types/public/websocket.type.ts:7](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/websocket.type.ts#L7)
+Defined in: [server-core/types/public/websocket.type.ts:7](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/websocket.type.ts#L7)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [server-core/types/public/websocket.type.ts:7](https://github.com/do
 
 > **ws**: `WebSocket`
 
-Defined in: [server-core/types/public/websocket.type.ts:6](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/websocket.type.ts#L6)
+Defined in: [server-core/types/public/websocket.type.ts:6](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/websocket.type.ts#L6)

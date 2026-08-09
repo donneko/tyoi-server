@@ -3,13 +3,13 @@ import typedocSidebarJa from "../api/reference/typedoc-sidebar.json";
 import typedocSidebarEn from "../en/api/reference/typedoc-sidebar.json";
 
 const socialLinks = [
-    { icon: "github" as const, link: "https://github.com/donneko/tyoi-api-node-server" },
+    { icon: "github" as const, link: "https://github.com/donneko/tyoi-server" },
 ];
 
 export default defineConfig({
     title: "tyoi-server",
     description: "A local API and static file server built with Express and TypeScript",
-    base: "/tyoi-api-node-server/",
+    base: "/tyoi-server/",
     locales: {
         root: {
             label: "日本語",

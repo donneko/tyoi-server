@@ -4,7 +4,7 @@
 
 > **ServerConfig** = `object`
 
-定義: [server-core/types/public/config.type.ts:7](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L7)
+定義: [server-core/types/public/config.type.ts:7](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L7)
 
 利用者が指定できるサーバー設定です。 / Server configuration that users can provide.
 
@@ -14,7 +14,7 @@
 
 > `optional` **api?**: `string`
 
-定義: [server-core/types/public/config.type.ts:10](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L10)
+定義: [server-core/types/public/config.type.ts:10](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L10)
 
 ***
 
@@ -22,7 +22,7 @@
 
 > `optional` **autoPort?**: `boolean`
 
-定義: [server-core/types/public/config.type.ts:16](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L16)
+定義: [server-core/types/public/config.type.ts:16](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L16)
 
 ***
 
@@ -30,7 +30,7 @@
 
 > `optional` **browser?**: [`BrowserTarget`](BrowserTarget.md)
 
-定義: [server-core/types/public/config.type.ts:15](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L15)
+定義: [server-core/types/public/config.type.ts:15](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L15)
 
 ***
 
@@ -38,7 +38,7 @@
 
 > `optional` **lan?**: `boolean`
 
-定義: [server-core/types/public/config.type.ts:13](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L13)
+定義: [server-core/types/public/config.type.ts:13](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L13)
 
 ***
 
@@ -46,7 +46,7 @@
 
 > `optional` **language?**: `string`
 
-定義: [server-core/types/public/config.type.ts:18](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L18)
+定義: [server-core/types/public/config.type.ts:18](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L18)
 
 ***
 
@@ -54,7 +54,7 @@
 
 > `optional` **middlewares?**: `express.RequestHandler`[]
 
-定義: [server-core/types/public/config.type.ts:12](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L12)
+定義: [server-core/types/public/config.type.ts:12](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L12)
 
 ***
 
@@ -62,7 +62,7 @@
 
 > `optional` **port?**: `number`
 
-定義: [server-core/types/public/config.type.ts:11](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L11)
+定義: [server-core/types/public/config.type.ts:11](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L11)
 
 ***
 
@@ -70,7 +70,7 @@
 
 > `optional` **public?**: `string`
 
-定義: [server-core/types/public/config.type.ts:9](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L9)
+定義: [server-core/types/public/config.type.ts:9](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L9)
 
 ***
 
@@ -78,7 +78,7 @@
 
 > `optional` **qr?**: `boolean`
 
-定義: [server-core/types/public/config.type.ts:14](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L14)
+定義: [server-core/types/public/config.type.ts:14](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L14)
 
 ***
 
@@ -86,7 +86,7 @@
 
 > `optional` **root?**: `string`
 
-定義: [server-core/types/public/config.type.ts:8](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L8)
+定義: [server-core/types/public/config.type.ts:8](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L8)
 
 ***
 
@@ -94,4 +94,4 @@
 
 > `optional` **signalClose?**: `boolean`
 
-定義: [server-core/types/public/config.type.ts:17](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/types/public/config.type.ts#L17)
+定義: [server-core/types/public/config.type.ts:17](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/config.type.ts#L17)

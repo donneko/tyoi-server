@@ -4,7 +4,7 @@
 
 > **tyoi**\<`RequestNameList`, `WebSocketNameList`\>(`options`): [`ShortHandler`](../classes/ShortHandler.md)\<`RequestNameList`, `WebSocketNameList`\>
 
-定義: [short-handler/short-handler.ts:107](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L107)
+定義: [short-handler/short-handler.ts:107](https://github.com/donneko/tyoi-server/blob/main/src/server/short-handler/short-handler.ts#L107)
 
 API と WebSocket の登録を簡潔に行うサーバーを作成します。
 Creates a server with a compact API for registering HTTP and WebSocket handlers.

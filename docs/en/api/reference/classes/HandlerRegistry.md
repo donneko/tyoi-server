@@ -2,7 +2,7 @@
 
 # Class: HandlerRegistry\<HandlerRegistryMap\>
 
-Defined in: [server-core/util/api-registry.ts:5](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/api-registry.ts#L5)
+Defined in: [server-core/util/api-registry.ts:5](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/api-registry.ts#L5)
 
 キーごとに1つのハンドラを管理します。 / Stores one handler for each key.
 
@@ -28,7 +28,7 @@ Defined in: [server-core/util/api-registry.ts:5](https://github.com/donneko/tyoi
 
 > **emit**\<`Key`\>(`type`, `arg`): `Promise`\<`unknown`\>
 
-Defined in: [server-core/util/api-registry.ts:74](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/api-registry.ts#L74)
+Defined in: [server-core/util/api-registry.ts:74](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/api-registry.ts#L74)
 
 キー名で登録されたハンドラを実行します。 / Invokes the handler registered for a key.
 
@@ -68,7 +68,7 @@ registry.emit("foo",arg);
 
 > **has**(`type`): `type is Extract<keyof HandlerRegistryMap, string>`
 
-Defined in: [server-core/util/api-registry.ts:53](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/api-registry.ts#L53)
+Defined in: [server-core/util/api-registry.ts:53](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/api-registry.ts#L53)
 
 ハンドラが登録されているかを確認します。 / Checks whether a handler is registered.
 
@@ -98,7 +98,7 @@ console.log(registry.has("foo"));
 
 > **off**\<`Key`\>(`type`): `void`
 
-Defined in: [server-core/util/api-registry.ts:63](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/api-registry.ts#L63)
+Defined in: [server-core/util/api-registry.ts:63](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/api-registry.ts#L63)
 
 ハンドラの登録を解除します。 / Unregisters a handler.
 
@@ -132,7 +132,7 @@ registry.off("foo");
 
 > **on**\<`KEY`\>(`type`, `fn`): () => `void`
 
-Defined in: [server-core/util/api-registry.ts:17](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/api-registry.ts#L17)
+Defined in: [server-core/util/api-registry.ts:17](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/api-registry.ts#L17)
 
 ハンドラを登録します。 / Registers a handler.
 
@@ -175,7 +175,7 @@ unsubscribe(); // ハンドラを解除 / Unregister the handler
 
 > **once**\<`Key`\>(`type`, `fn`): () => `void`
 
-Defined in: [server-core/util/api-registry.ts:38](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/server-core/util/api-registry.ts#L38)
+Defined in: [server-core/util/api-registry.ts:38](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/util/api-registry.ts#L38)
 
 一度だけ実行するハンドラを登録します。 / Registers a handler that runs once.
 
