@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- `ShortHandler` と `tyoi()` に HTTP API・WebSocket の型付き登録キーを追加
+
 ## [0.0.8] - 2026-07-27
 
 ### Added

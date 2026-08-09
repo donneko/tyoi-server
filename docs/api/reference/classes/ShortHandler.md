@@ -1,8 +1,8 @@
 [@donneko/tyoi-server](../index.md) / ShortHandler
 
-# クラス: ShortHandler
+# クラス: ShortHandler\<RequestNameList, WebSocketNameList\>
 
-定義: [short-handler/short-handler.ts:19](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L19)
+定義: [short-handler/short-handler.ts:23](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L23)
 
 `tyoi()` が返す簡易サーバー API。
 
@@ -12,23 +12,37 @@ API と WebSocket を登録し、必要に応じて `server` から
 A compact server API returned by `tyoi()`. Register HTTP APIs and WebSocket
 handlers directly, or use `server` to access the complete underlying `Server` API.
 
+## 型パラメーター
+
+### RequestNameList
+
+`RequestNameList` *extends* `string` = `string`
+
+登録できる HTTP API キー（例: `"GET:/health"`）。 / HTTP API keys that can be registered, such as `"GET:/health"`.
+
+### WebSocketNameList
+
+`WebSocketNameList` *extends* `string` = `string`
+
+登録できる WebSocket パス。 / WebSocket paths that can be registered.
+
 ## コンストラクター
 
 ### コンストラクター
 
-> **new ShortHandler**(`server`): `ShortHandler`
+> **new ShortHandler**\<`RequestNameList`, `WebSocketNameList`\>(`server`): `ShortHandler`\<`RequestNameList`, `WebSocketNameList`\>
 
-定義: [short-handler/short-handler.ts:22](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L22)
+定義: [short-handler/short-handler.ts:29](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L29)
 
 #### パラメータ
 
 ##### server
 
-[`Server`](Server.md)
+[`Server`](Server.md)\<`RequestNameList`, `WebSocketNameList`\>
 
 #### 戻り値
 
-`ShortHandler`
+`ShortHandler`\<`RequestNameList`, `WebSocketNameList`\>
 
 ## アクセッサー
 
@@ -36,15 +50,15 @@ handlers directly, or use `server` to access the complete underlying `Server` AP
 
 #### 署名を取得する
 
-> **get** **server**(): [`Server`](Server.md)
+> **get** **server**(): [`Server`](Server.md)\<`RequestNameList`, `WebSocketNameList`\>
 
-定義: [short-handler/short-handler.ts:26](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L26)
+定義: [short-handler/short-handler.ts:33](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L33)
 
 基盤となる `Server` インスタンスを取得します。 / Returns the underlying `Server` instance.
 
 ##### 戻り値
 
-[`Server`](Server.md)
+[`Server`](Server.md)\<`RequestNameList`, `WebSocketNameList`\>
 
 ## メソッド
 
@@ -52,7 +66,7 @@ handlers directly, or use `server` to access the complete underlying `Server` AP
 
 > **close**(): `Promise`\<`void`\>
 
-定義: [short-handler/short-handler.ts:58](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L58)
+定義: [short-handler/short-handler.ts:79](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L79)
 
 サーバーを停止し、接続の終了を待機します。 / Stops the server and waits for connections to close.
 
@@ -66,15 +80,15 @@ handlers directly, or use `server` to access the complete underlying `Server` AP
 
 > **get**(`pass`, `fn`): `this`
 
-定義: [short-handler/short-handler.ts:31](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L31)
+定義: [short-handler/short-handler.ts:38](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L38)
 
-GET API ハンドラを登録します。 / Registers a GET API handler.
+型付きキーの `GET:` に対応する API ハンドラを登録します。 / Registers an API handler for a typed `GET:` key.
 
 #### パラメータ
 
 ##### pass
 
-`string`
+`string` *extends* `RequestNameList` ? `string` : `RequestNameList` *extends* `` `GET:${Path}` `` ? `Path` : `never`
 
 ##### fn
 
@@ -90,7 +104,7 @@ GET API ハンドラを登録します。 / Registers a GET API handler.
 
 > **listen**(`options?`): `Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
 
-定義: [short-handler/short-handler.ts:46](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L46)
+定義: [short-handler/short-handler.ts:67](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L67)
 
 `start()` の別名です。 / Alias for `start()`.
 
@@ -110,15 +124,15 @@ GET API ハンドラを登録します。 / Registers a GET API handler.
 
 > **post**(`pass`, `fn`): `this`
 
-定義: [short-handler/short-handler.ts:36](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L36)
+定義: [short-handler/short-handler.ts:50](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L50)
 
-POST API ハンドラを登録します。 / Registers a POST API handler.
+型付きキーの `POST:` に対応する API ハンドラを登録します。 / Registers an API handler for a typed `POST:` key.
 
 #### パラメータ
 
 ##### pass
 
-`string`
+`string` *extends* `RequestNameList` ? `string` : `RequestNameList` *extends* `` `POST:${Path}` `` ? `Path` : `never`
 
 ##### fn
 
@@ -134,7 +148,7 @@ POST API ハンドラを登録します。 / Registers a POST API handler.
 
 > **start**(`options?`): `Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
 
-定義: [short-handler/short-handler.ts:50](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L50)
+定義: [short-handler/short-handler.ts:71](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L71)
 
 サーバーを起動します。 / Starts the server.
 
@@ -154,7 +168,7 @@ POST API ハンドラを登録します。 / Registers a POST API handler.
 
 > **stop**(): `Promise`\<`void`\>
 
-定義: [short-handler/short-handler.ts:54](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L54)
+定義: [short-handler/short-handler.ts:75](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L75)
 
 `close()` の別名です。 / Alias for `close()`.
 
@@ -168,7 +182,7 @@ POST API ハンドラを登録します。 / Registers a POST API handler.
 
 > **ws**(`pass`, `fn`): `this`
 
-定義: [short-handler/short-handler.ts:41](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L41)
+定義: [short-handler/short-handler.ts:62](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L62)
 
 WebSocket ハンドラを登録します。 / Registers a WebSocket handler.
 
@@ -176,7 +190,7 @@ WebSocket ハンドラを登録します。 / Registers a WebSocket handler.
 
 ##### pass
 
-`string`
+`WebSocketNameList`
 
 ##### fn
 

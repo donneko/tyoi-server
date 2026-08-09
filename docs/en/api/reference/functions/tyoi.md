@@ -2,12 +2,26 @@
 
 # Function: tyoi()
 
-> **tyoi**(`options`): [`ShortHandler`](../classes/ShortHandler.md)
+> **tyoi**\<`RequestNameList`, `WebSocketNameList`\>(`options`): [`ShortHandler`](../classes/ShortHandler.md)\<`RequestNameList`, `WebSocketNameList`\>
 
-Defined in: [short-handler/short-handler.ts:81](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L81)
+Defined in: [short-handler/short-handler.ts:107](https://github.com/donneko/tyoi-api-node-server/blob/main/src/server/short-handler/short-handler.ts#L107)
 
 API と WebSocket の登録を簡潔に行うサーバーを作成します。
 Creates a server with a compact API for registering HTTP and WebSocket handlers.
+
+## Type Parameters
+
+### RequestNameList
+
+`RequestNameList` *extends* `string` = `string`
+
+登録できる HTTP API キー（例: `"GET:/health"`）。 / HTTP API keys that can be registered, such as `"GET:/health"`.
+
+### WebSocketNameList
+
+`WebSocketNameList` *extends* `string` = `string`
+
+登録できる WebSocket パス。 / WebSocket paths that can be registered.
 
 ## Parameters
 
@@ -19,18 +33,21 @@ Creates a server with a compact API for registering HTTP and WebSocket handlers.
 
 ## Returns
 
-[`ShortHandler`](../classes/ShortHandler.md)
+[`ShortHandler`](../classes/ShortHandler.md)\<`RequestNameList`, `WebSocketNameList`\>
 
 API 登録・起動・停止を行う簡易 API。 / A compact API for registration, startup, and shutdown.
 
 ## Example
 
 ```ts
-const app = tyoi({
+type ApiKeys = "GET:/health";
+type WebSocketKeys = "/events";
+
+const app = tyoi<ApiKeys, WebSocketKeys>({
   root: import.meta.dirname,
   public: "../public/main",
 });
 
-app.get("/health", () => ({ ok: true }));
+app.get("/health", () => ({ status: "ok" }));
 await app.start();
 ```

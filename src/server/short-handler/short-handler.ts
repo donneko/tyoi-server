@@ -7,6 +7,7 @@ import type {
     WsHandler,
     RequestData,
 } from "../server-core/index.js";
+
 /**
  * `tyoi()` が返す簡易サーバー API。
  *
@@ -15,31 +16,51 @@ import type {
  *
  * A compact server API returned by `tyoi()`. Register HTTP APIs and WebSocket
  * handlers directly, or use `server` to access the complete underlying `Server` API.
+ *
+ * @typeParam RequestNameList 登録できる HTTP API キー（例: `"GET:/health"`）。 / HTTP API keys that can be registered, such as `"GET:/health"`.
+ * @typeParam WebSocketNameList 登録できる WebSocket パス。 / WebSocket paths that can be registered.
  */
-export class ShortHandler {
-    private tyoiServer: Server;
+export class ShortHandler<
+    RequestNameList extends string = string,
+    WebSocketNameList extends string = string,
+> {
+    private tyoiServer: Server<RequestNameList, WebSocketNameList>;
 
-    constructor(server: Server) {
+    constructor(server: Server<RequestNameList, WebSocketNameList>) {
         this.tyoiServer = server;
     }
     /** 基盤となる `Server` インスタンスを取得します。 / Returns the underlying `Server` instance. */
-    get server(): Server {
+    get server(): Server<RequestNameList, WebSocketNameList> {
         return this.tyoiServer;
     }
 
-    /** GET API ハンドラを登録します。 / Registers a GET API handler. */
-    get(pass: string, fn: Handler<RequestData>): this {
-        this.tyoiServer.onApi(`GET:${pass}`, fn);
+    /** 型付きキーの `GET:` に対応する API ハンドラを登録します。 / Registers an API handler for a typed `GET:` key. */
+    get(
+        pass: string extends RequestNameList
+            ? string
+            : RequestNameList extends `GET:${infer Path}`
+              ? Path
+              : never,
+        fn: Handler<RequestData>
+    ): this {
+        this.tyoiServer.onApi(`GET:${pass}` as RequestNameList, fn);
         return this;
     }
-    /** POST API ハンドラを登録します。 / Registers a POST API handler. */
-    post(pass: string, fn: Handler<RequestData>): this {
-        this.tyoiServer.onApi(`POST:${pass}`, fn);
+    /** 型付きキーの `POST:` に対応する API ハンドラを登録します。 / Registers an API handler for a typed `POST:` key. */
+    post(
+        pass: string extends RequestNameList
+            ? string
+            : RequestNameList extends `POST:${infer Path}`
+              ? Path
+              : never,
+        fn: Handler<RequestData>
+    ): this {
+        this.tyoiServer.onApi(`POST:${pass}` as RequestNameList, fn);
         return this;
     }
     /** WebSocket ハンドラを登録します。 / Registers a WebSocket handler. */
-    ws(pass: string, fn: Handler<WsHandler>): this {
-        this.tyoiServer.onWebSocket(`${pass}`, fn);
+    ws(pass: WebSocketNameList, fn: Handler<WsHandler>): this {
+        this.tyoiServer.onWebSocket(pass, fn);
         return this;
     }
     /** `start()` の別名です。 / Alias for `start()`. */
@@ -64,21 +85,29 @@ export class ShortHandler {
  * API と WebSocket の登録を簡潔に行うサーバーを作成します。
  * Creates a server with a compact API for registering HTTP and WebSocket handlers.
  *
+ * @typeParam RequestNameList 登録できる HTTP API キー（例: `"GET:/health"`）。 / HTTP API keys that can be registered, such as `"GET:/health"`.
+ * @typeParam WebSocketNameList 登録できる WebSocket パス。 / WebSocket paths that can be registered.
  * @param options サーバー設定。`root` は必須です。 / Server options. `root` is required.
  * @returns API 登録・起動・停止を行う簡易 API。 / A compact API for registration, startup, and shutdown.
  *
  * @example
  * ```ts
- * const app = tyoi({
+ * type ApiKeys = "GET:/health";
+ * type WebSocketKeys = "/events";
+ *
+ * const app = tyoi<ApiKeys, WebSocketKeys>({
  *   root: import.meta.dirname,
  *   public: "../public/main",
  * });
  *
- * app.get("/health", () => ({ ok: true }));
+ * app.get("/health", () => ({ status: "ok" }));
  * await app.start();
  * ```
  */
-export function tyoi(options: ServerOptions): ShortHandler {
-    const server = new Server(options);
+export function tyoi<
+    RequestNameList extends string = string,
+    WebSocketNameList extends string = string,
+>(options: ServerOptions): ShortHandler<RequestNameList, WebSocketNameList> {
+    const server = new Server<RequestNameList, WebSocketNameList>(options);
     return new ShortHandler(server);
 }
