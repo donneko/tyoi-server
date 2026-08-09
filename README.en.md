@@ -6,7 +6,7 @@
 
 An Express-based API and static file server framework for local development. Create templates for different use cases from the CLI and use HTTP APIs, WebSocket endpoints, static file serving, and LAN access.
 
-> This project is experimental. The API may change in future releases.
+> This project is experimental. However, the public TypeScript API and documented protocol remain backward compatible throughout v1.x. Breaking changes are reserved for v2.0.0.
 
 ## Quick start
 
