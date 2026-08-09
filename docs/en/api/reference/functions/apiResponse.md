@@ -4,7 +4,7 @@
 
 > **apiResponse**\<`T`\>(`body`, `options`): [`ApiResponse`](../type-aliases/ApiResponse.md)\<`T`\>
 
-Defined in: server-core/service/api-response.ts:11
+Defined in: [server-core/service/api-response.ts:11](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/service/api-response.ts#L11)
 
 指定したHTTP statusのAPIレスポンスを作成します。 / Creates an API response with an explicit HTTP status.
 

@@ -4,7 +4,7 @@
 
 > **ApiResponse**\<`T`\> = `object`
 
-定義: server-core/service/api-response.ts:4
+定義: [server-core/service/api-response.ts:4](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/service/api-response.ts#L4)
 
 APIハンドラーが返すHTTP statusとbodyです。 / HTTP status and body returned by an API handler.
 
@@ -20,7 +20,7 @@ APIハンドラーが返すHTTP statusとbodyです。 / HTTP status and body re
 
 > `readonly` **\[API\_RESPONSE\]**: `true`
 
-定義: server-core/service/api-response.ts:7
+定義: [server-core/service/api-response.ts:7](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/service/api-response.ts#L7)
 
 ***
 
@@ -28,7 +28,7 @@ APIハンドラーが返すHTTP statusとbodyです。 / HTTP status and body re
 
 > `readonly` **body**: `T`
 
-定義: server-core/service/api-response.ts:5
+定義: [server-core/service/api-response.ts:5](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/service/api-response.ts#L5)
 
 ***
 
@@ -36,4 +36,4 @@ APIハンドラーが返すHTTP statusとbodyです。 / HTTP status and body re
 
 > `readonly` **status**: `number`
 
-定義: server-core/service/api-response.ts:6
+定義: [server-core/service/api-response.ts:6](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/service/api-response.ts#L6)
