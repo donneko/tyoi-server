@@ -9,7 +9,6 @@
 | パッケージ | `@donneko/tyoi-server` |
 | CLI 実行ファイル | `tyoi` |
 
-パッケージは experimental です。ただし、v1.x では公開 TypeScript API と文書化済みの通信仕様に破壊的変更を行いません。後方互換な追加と修正は行われる場合があります。破壊的変更は v2.0.0 で行います。
 
 ## `create` と `init` の違い
 

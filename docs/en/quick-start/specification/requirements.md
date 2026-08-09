@@ -9,7 +9,6 @@
 | Package | `@donneko/tyoi-server` |
 | CLI executable | `tyoi` |
 
-The package is experimental. However, the public TypeScript API and documented protocol remain backward compatible throughout v1.x. Backward-compatible additions and fixes may be released. Breaking changes are reserved for v2.0.0.
 
 ## Difference between `create` and `init`
 

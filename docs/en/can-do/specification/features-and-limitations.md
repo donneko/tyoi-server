@@ -17,7 +17,6 @@
 
 ## Current limitations
 
-- The package is experimental, but the public TypeScript API and documented protocol remain backward compatible throughout v1.x. Backward-compatible additions and fixes may be released, and breaking changes are reserved for v2.0.0
 - For API registration paths, WebSocket registration paths, and public file URL paths, names whose first segment starts with `__tyoi` are reserved for internal use. Do not use paths such as `/__tyoi`, `/__tyoi-status`, or `/__tyoi_assets/...` in applications. When the API base is `/api`, `/api/__tyoi-status`, which corresponds to the registration path `/__tyoi-status`, is also reserved
 - `ShortHandler` provides HTTP shortcuts only for `get()` and `post()`
 - API paths use exact matching and do not support Express-style path parameters such as `/:id`

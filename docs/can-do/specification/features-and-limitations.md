@@ -17,7 +17,6 @@
 
 ## 現在の制約
 
-- パッケージは experimental だが、v1.x では公開 TypeScript API と文書化済みの通信仕様に破壊的変更を行わない。後方互換な追加と修正は行われる場合があり、破壊的変更は v2.0.0 で行う
 - API 登録パス、WebSocket 登録パス、公開ファイルの URL パスでは、先頭セグメントが `__tyoi` から始まる名前を内部利用のために予約している。`/__tyoi`、`/__tyoi-status`、`/__tyoi_assets/...` などはアプリケーションから使用しない。API のベースが `/api` の場合、登録パス `/__tyoi-status` に対応する `/api/__tyoi-status` も予約対象になる
 - `ShortHandler` の HTTP ショートカットは `get()` と `post()` のみ
 - API パスは完全一致で、Express の `/:id` のようなパスパラメーター登録には対応していない

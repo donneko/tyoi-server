@@ -6,8 +6,6 @@
 
 Express をベースにした、ローカル開発向けの API・静的ファイルサーバーフレームワークです。CLI から用途別テンプレートを作成でき、HTTP API、WebSocket、静的ファイル配信、LAN 公開に対応しています。
 
-> このプロジェクトは experimental です。ただし、v1.x では公開 TypeScript API と文書化済みの通信仕様に破壊的変更を行いません。破壊的変更は v2.0.0 で行います。
-
 ## クイックスタート
 
 Node.js 20.14 以上が必要です。
@@ -16,7 +14,7 @@ Node.js 20.14 以上が必要です。
 npm install @donneko/tyoi-server
 npx tyoi init my-app --template basic-js
 npm install
-npm run
+npm run dev
 ```
 
 起動後、表示された Local URL をブラウザーで開きます。詳しくは[クイックスタート](./docs/quick-start/use/getting-started.md)を参照してください。
