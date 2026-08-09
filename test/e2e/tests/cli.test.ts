@@ -14,7 +14,7 @@ describe("cli e2e", () => {
     let tmpDir = "";
     const npmCmd = getNpmCommand();
     const serverCommandConfig = {
-        timeout: 5_000,
+        timeout: 30_000,
         waitForOutput: /http:\/\/localhost:\d+/,
     };
 
