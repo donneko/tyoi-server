@@ -27,6 +27,7 @@
     "http.static.notFound.message": "Not Found",
     "http.static.notFound.description": "The specified file was not found. The URL may have changed, or the file may have been removed.",
     "http.api.notFound": "API not found",
+    "http.api.methodNotAllowed": "Method not allowed",
     "http.api.internalError": "Internal server error",
     "cli.help.title": "Display help",
     "cli.help.introduction": "The commands currently available are as follows.\nUpdated: [2026/06/07]",

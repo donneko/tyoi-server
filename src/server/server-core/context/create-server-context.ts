@@ -1,7 +1,7 @@
 import { ServerContext } from "../types/context/integration/server.type.js";
 import { EventBus } from "../util/event-bus.js";
 import { ConfigManager } from "../service/config-manager.js";
-import { HandlerRegistry } from "../util/api-registry.js";
+import { ApiRouter } from "../service/api-router.js";
 import { ServerLogger } from "../service/server-logger.js";
 import { RegisterManager } from "../service/register-manager.js";
 import { WebSocketRouter } from "../service/web-socket-router.js";
@@ -28,7 +28,7 @@ export function createServerContext<
         innerEventBus,
         outEventBus,
         expressServer: express(),
-        apiRegistry: new HandlerRegistry<RequestEventMap<RequestNameList>>(),
+        apiRegistry: new ApiRouter<RequestEventMap<RequestNameList>>(),
         stopHandler: async () => {
             await stop();
         },
