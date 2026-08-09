@@ -47,9 +47,9 @@ app.ws("/events", ({ ws }) => ws.send("ready"));
 
 ```ts
 app
-    .get("/a", () => "a")
-    .post("/b", () => "b")
-    .ws("/ws", ({ ws }) => ws.send("ready"));
+    .get("/health", () => ({ status: "ok" }))
+    .post("/users", () => ({ created: true }))
+    .ws("/events", ({ ws }) => ws.send("ready"));
 ```
 
 同じメソッド・パスの API、または同じ WebSocket パスを再登録すると、以前のハンドラーは上書きされます。

@@ -6,6 +6,8 @@
 
 An Express-based API and static file server framework for local development. Create templates for different use cases from the CLI and use HTTP APIs, WebSocket endpoints, static file serving, and LAN access.
 
+The public TypeScript API and documented protocol remain backward compatible throughout v1.x. Backward-compatible additions and fixes may be released. The next breaking changes are reserved for v2.0.0.
+
 ## Quick start
 
 Node.js 20.14 or later is required.
@@ -14,7 +16,7 @@ Node.js 20.14 or later is required.
 npm install @donneko/tyoi-server
 npx tyoi init my-app --template basic-js
 npm install
-npm run
+npm run dev
 ```
 
 After startup, open the displayed local URL in your browser. See the [quick start](./docs/en/quick-start/use/getting-started.md) for details.

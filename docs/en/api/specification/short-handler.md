@@ -47,9 +47,9 @@ When the type arguments are omitted, any string can be registered as before. Typ
 
 ```ts
 app
-    .get("/a", () => "a")
-    .post("/b", () => "b")
-    .ws("/ws", ({ ws }) => ws.send("ready"));
+    .get("/health", () => ({ status: "ok" }))
+    .post("/users", () => ({ created: true }))
+    .ws("/events", ({ ws }) => ws.send("ready"));
 ```
 
 Registering the same method and path, or the same WebSocket path, replaces the previous handler.

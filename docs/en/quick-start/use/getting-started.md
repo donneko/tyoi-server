@@ -8,7 +8,8 @@
 ## Create a TypeScript project
 
 ```bash
-npm exec --package @donneko/tyoi-server tyoi -- create my-app --template basic-ts
+npm install @donneko/tyoi-server
+npx tyoi create my-app --template basic-ts
 cd my-app
 npm install
 npm run dev
@@ -33,7 +34,11 @@ curl http://localhost:3000/api/hello
 ## Start with JavaScript
 
 ```bash
-npm exec --package @donneko/tyoi-server tyoi -- create my-app --template basic-js
+npm install @donneko/tyoi-server
+npx tyoi create my-app --template basic-js
+cd my-app
+npm install
+npm run dev
 ```
 
 The project structure is the same as the TypeScript version, but the server is implemented in JavaScript.
@@ -45,7 +50,8 @@ The project structure is the same as the TypeScript version, but the server is i
 ```bash
 mkdir my-app
 cd my-app
-npm exec --package @donneko/tyoi-server tyoi -- init my-app --template basic-ts
+npm install @donneko/tyoi-server
+npx tyoi init my-app --template basic-ts
 npm install
 npm run dev
 ```
