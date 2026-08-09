@@ -6,6 +6,11 @@
 
 - `ShortHandler` と `tyoi()` に HTTP API・WebSocket の型付き登録キーを追加
 
+### Changed
+
+- HTTP API の成功レスポンスから `{ ok, data }` ラッパーを削除し、ハンドラーの戻り値を直接返すよう変更
+- 未登録 API とハンドラー例外の JSON レスポンスから `ok` を削除
+
 ## [0.0.8] - 2026-07-27
 
 ### Added

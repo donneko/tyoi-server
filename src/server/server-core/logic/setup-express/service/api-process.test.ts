@@ -43,10 +43,7 @@ describe("apiProcess", () => {
             body: request.body,
             headers: request.headers,
         });
-        expect(response.json).toHaveBeenCalledWith({
-            ok: true,
-            data: { id: 1 },
-        });
+        expect(response.json).toHaveBeenCalledWith({ id: 1 });
         expect(response.status).not.toHaveBeenCalled();
     });
 
@@ -68,7 +65,6 @@ describe("apiProcess", () => {
 
         expect(response.status).toHaveBeenCalledWith(404);
         expect(response.json).toHaveBeenCalledWith({
-            ok: false,
             code: "API_NOT_FOUND",
             message: "API not found",
         });
@@ -105,7 +101,6 @@ describe("apiProcess", () => {
 
         expect(response.status).toHaveBeenCalledWith(500);
         expect(response.json).toHaveBeenCalledWith({
-            ok: false,
             code: "API_INTERNAL_ERROR",
             message: "Internal server error",
         });

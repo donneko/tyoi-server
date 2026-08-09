@@ -34,16 +34,26 @@ curl -X POST http://localhost:3000/api/messages \
   -d '{"text":"hello"}'
 ```
 
-On success, the handler result is returned in `data`.
+On success, the handler result becomes the JSON response directly.
 
 ```json
 {
-  "ok": true,
-  "data": {
-    "received": { "text": "hello" },
-    "contentType": "application/json"
-  }
+  "received": { "text": "hello" },
+  "contentType": "application/json"
 }
+```
+
+With `fetch()`, check `Response.ok`, which is based on the HTTP status.
+
+```ts
+const response = await fetch("http://localhost:3000/api/status");
+
+if (!response.ok) {
+    const error = await response.json();
+    throw new Error(`${error.code}: ${error.message}`);
+}
+
+const result = await response.json();
 ```
 
 ## Asynchronous handlers
@@ -75,4 +85,4 @@ const result = await app.server.emitApi("GET:/health", {
 unsubscribe();
 ```
 
-`emitApi()` executes only the registered handler and does not add the HTTP `{ ok, data }` response wrapper.
+Both `emitApi()` and the HTTP API return the registered handler result directly. Only the HTTP API converts that value into a JSON response.

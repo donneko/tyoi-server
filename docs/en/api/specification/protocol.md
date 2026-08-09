@@ -24,9 +24,11 @@ JSON request bodies are parsed by Express `express.json()`.
 
 | State | HTTP status | Body |
 | --- | --- | --- |
-| Success | `200` | `{ "ok": true, "data": <handler result> }` |
-| Unregistered API | `404` | `{ "ok": false, "code": "API_NOT_FOUND", "message": <localized message> }` |
-| Handler error | `500` | `{ "ok": false, "code": "API_INTERNAL_ERROR", "message": <localized message> }` |
+| Success | `200` | `<handler result>` |
+| Unregistered API | `404` | `{ "code": "API_NOT_FOUND", "message": <localized message> }` |
+| Handler error | `500` | `{ "code": "API_INTERNAL_ERROR", "message": <localized message> }` |
+
+Successful responses do not include a framework-specific wrapper. Clients determine success from the HTTP status or `fetch()`'s `Response.ok` and treat the body as the handler result.
 
 There is no API for directly setting an HTTP status or response headers from a handler. Add Express middleware through `middlewares` when that control is required.
 

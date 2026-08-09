@@ -13,7 +13,7 @@ it("preserves typed API and WebSocket route names", () => {
     expectTypeOf(app.ws).parameter(0).toEqualTypeOf<WebSocketKeys>();
     expectTypeOf(app.server).toEqualTypeOf<Server<ApiKeys, WebSocketKeys>>();
 
-    if (false) {
+    if (app.server.isRunning()) {
         // @ts-expect-error POST keys cannot be registered through get().
         app.get("/users", () => undefined);
         // @ts-expect-error GET keys cannot be registered through post().

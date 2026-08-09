@@ -34,16 +34,26 @@ curl -X POST http://localhost:3000/api/messages \
   -d '{"text":"hello"}'
 ```
 
-成功時はハンドラーの戻り値が `data` に入ります。
+成功時はハンドラーの戻り値がそのまま JSON レスポンスになります。
 
 ```json
 {
-  "ok": true,
-  "data": {
-    "received": { "text": "hello" },
-    "contentType": "application/json"
-  }
+  "received": { "text": "hello" },
+  "contentType": "application/json"
 }
+```
+
+`fetch()` では HTTP status に基づく `Response.ok` で成功を判定します。
+
+```ts
+const response = await fetch("http://localhost:3000/api/status");
+
+if (!response.ok) {
+    const error = await response.json();
+    throw new Error(`${error.code}: ${error.message}`);
+}
+
+const result = await response.json();
 ```
 
 ## 非同期処理
@@ -75,4 +85,4 @@ const result = await app.server.emitApi("GET:/health", {
 unsubscribe();
 ```
 
-`emitApi()` は登録済みハンドラーだけを実行し、HTTP レスポンスの `{ ok, data }` ラッパーは付けません。
+`emitApi()` と HTTP API は、どちらも登録済みハンドラーの戻り値を直接返します。HTTP API の場合だけ、その値が JSON レスポンスへ変換されます。

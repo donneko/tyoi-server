@@ -16,17 +16,16 @@ server.onApi("POST:/post/a", (data) => {
 await server.start();
 const port = server.getPort();
 
-const res = async (url: string, init?: RequestInit | undefined): Promise<object> => {
+const res = async (url: string, init?: RequestInit | undefined): Promise<unknown> => {
     const response = await fetch(url, init);
-    if (!(response.ok && [404, 200].includes(response.status))) throw new Error();
+    if (!(response.ok && response.status === 200)) throw new Error();
 
     const json = await response.json();
     return json;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-await res(`http://localhost:${port}/api/get/a`).then((json: any) => {
-    if (!(json?.ok && json?.data === "hello")) throw new Error();
+await res(`http://localhost:${port}/api/get/a`).then((json) => {
+    if (json !== "hello") throw new Error();
 });
 
 await res(`http://localhost:${port}/api/post/a`, {
@@ -35,10 +34,8 @@ await res(`http://localhost:${port}/api/post/a`, {
         "Content-Type": "application/json",
     },
     body: JSON.stringify({ post: "hello" }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}).then((json: any) => {
-    if (!(json.ok && json.data === "hello"))
-        throw new Error(`json.ok: ${json.ok},json.data: ${json.data}`);
+}).then((json) => {
+    if (json !== "hello") throw new Error(JSON.stringify(json));
 });
 
 await server.stop();

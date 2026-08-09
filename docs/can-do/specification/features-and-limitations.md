@@ -4,6 +4,7 @@
 
 - GET / POST の JSON API を短いコードで登録する
 - `Server` から任意の HTTP method の API キーを登録する
+- API ハンドラーの戻り値を成功レスポンスとして直接返す
 - 同じ HTTP サーバーで静的ファイルを配信する
 - パス単位で WebSocket ハンドラーを登録する
 - 同じプロセスから API、ページ、WebSocket を提供する
@@ -21,7 +22,6 @@
 - `ShortHandler` の HTTP ショートカットは `get()` と `post()` のみ
 - API パスは完全一致で、Express の `/:id` のようなパスパラメーター登録には対応していない
 - API ハンドラーから HTTP status、レスポンスヘッダー、ストリームを直接制御する API はない
-- API の成功レスポンスは `{ ok: true, data }` でラップされる
 - 認証、認可、CORS、TLS、rate limit、永続化は組み込みではない
 - 静的配信に SPA fallback はなく、未検出パスは HTML の 404 になる
 - WebSocket の部屋、broadcast、メッセージ形式はアプリ側で実装する

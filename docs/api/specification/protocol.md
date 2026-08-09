@@ -24,9 +24,11 @@ JSON body は Express の `express.json()` で解析されます。
 
 | 状態 | HTTP status | body |
 | --- | --- | --- |
-| 成功 | `200` | `{ "ok": true, "data": <handler result> }` |
-| 未登録 API | `404` | `{ "ok": false, "code": "API_NOT_FOUND", "message": <localized message> }` |
-| ハンドラー例外 | `500` | `{ "ok": false, "code": "API_INTERNAL_ERROR", "message": <localized message> }` |
+| 成功 | `200` | `<handler result>` |
+| 未登録 API | `404` | `{ "code": "API_NOT_FOUND", "message": <localized message> }` |
+| ハンドラー例外 | `500` | `{ "code": "API_INTERNAL_ERROR", "message": <localized message> }` |
+
+成功レスポンスにフレームワーク独自のラッパーは付きません。クライアントは HTTP status または `fetch()` の `Response.ok` で成功を判定し、body をハンドラーの戻り値として扱います。
 
 ハンドラーが返した HTTP status やヘッダーを直接指定する API はありません。必要な場合は `middlewares` で Express middleware を追加します。
 
