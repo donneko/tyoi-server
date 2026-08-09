@@ -30,4 +30,16 @@ describe("ApiRegistry", () => {
         apiRegistry.emit("b", {});
         expect(onCallback).toHaveBeenCalledTimes(0);
     });
+    test("stale unsubscribe does not remove a replacement handler", async () => {
+        const registry = new ApiRegistry<Record<"c", object>>();
+        const oldCallback = vi.fn();
+        const newCallback = vi.fn();
+        const unsubscribe = registry.on("c", oldCallback);
+
+        registry.on("c", newCallback);
+        unsubscribe();
+        await registry.emit("c", {});
+
+        expect(newCallback).toHaveBeenCalledTimes(1);
+    });
 });
