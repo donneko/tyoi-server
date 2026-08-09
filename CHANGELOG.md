@@ -4,6 +4,10 @@
 
 ### Added
 
+- Express 5互換のHTTP APIルートパラメータ、ワイルドカード、省略可能部分に対応
+- `apiResponse()` と `ApiResponse<T>` を追加し、ハンドラーからHTTP statusを指定可能に変更
+- パス一致・メソッド不一致時の `405 Method Not Allowed` と `Allow` ヘッダーに対応
+
 - `ShortHandler` と `tyoi()` に HTTP API・WebSocket の型付き登録キーを追加
 
 ### Changed

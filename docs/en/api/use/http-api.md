@@ -23,6 +23,31 @@ app.post("/messages", ({ body, headers }) => ({
 await app.start();
 ```
 
+## Route parameters
+
+Routes accept Express 5 named parameters, wildcards, and optional groups.
+
+```ts
+app.get("/users/:id", ({ params }) => ({ id: params?.id }));
+app.get("/files/*splat", ({ params }) => ({ path: params?.splat }));
+app.get("/reports{/:year}", ({ params }) => ({ year: params?.year }));
+```
+
+Static routes take priority over dynamic routes, so `/users/me` and `/users/:id` can be registered together safely.
+
+## Set an HTTP status
+
+Return `apiResponse()` to specify the body and HTTP status. Ordinary handler results continue to use `200`.
+
+```ts
+import { apiResponse } from "@donneko/tyoi-server";
+
+app.post("/users", () => apiResponse({ id: 1 }, { status: 201 }));
+app.post("/jobs", () => apiResponse(undefined, { status: 204 }));
+```
+
+When the path matches but the method is not registered, the server returns `405 Method Not Allowed` with an `Allow` header.
+
 The default `api` is `/api`, so the endpoints are `GET /api/status` and `POST /api/messages`.
 
 ## Send requests

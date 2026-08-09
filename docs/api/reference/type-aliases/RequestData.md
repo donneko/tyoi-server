@@ -26,6 +26,16 @@ HTTP API ハンドラに渡されるリクエスト情報です。 / Request dat
 
 ***
 
+### params?
+
+> `optional` **params?**: `Readonly`\<`Record`\<`string`, `string` \| `string`[]\>\>
+
+定義: [server-core/types/public/api.type.ts:7](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/api.type.ts#L7)
+
+ルートから抽出されたパラメータです。 / Parameters extracted from the route.
+
+***
+
 ### query
 
 > **query**: `unknown`

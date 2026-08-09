@@ -108,7 +108,7 @@ HTTP API ハンドラをリクエストなしで実行します。 / Invokes an 
 #### Example
 
 ```ts
-registry.emit("foo",arg);
+router.emit("GET:/users/:id", { params: { id: "1" } });
 ```
 
 ***
@@ -166,7 +166,7 @@ Defined in: [server-core/app/server.ts:175](https://github.com/donneko/tyoi-serv
 #### Example
 
 ```ts
-console.log(registry.has("foo"));
+console.log(router.has("GET:/users/:id"));
 ```
 
 ***
@@ -254,7 +254,7 @@ HTTP API ハンドラを解除します。 / Removes an HTTP API handler.
 #### Example
 
 ```ts
-registry.off("foo");
+router.off("GET:/users/:id");
 ```
 
 ***
@@ -364,8 +364,8 @@ HTTP API ハンドラを登録します。 / Registers an HTTP API handler.
 #### Example
 
 ```ts
-const unsubscribe = registry.on("foo", handler);
-unsubscribe(); // ハンドラを解除 / Unregister the handler
+const unsubscribe = router.on("GET:/users/:id", handler);
+unsubscribe();
 ```
 
 ***
@@ -407,7 +407,7 @@ Defined in: [server-core/app/server.ts:171](https://github.com/donneko/tyoi-serv
 #### Example
 
 ```ts
-registry.once("foo", handler);
+router.once("GET:/users/:id", handler);
 ```
 
 ***

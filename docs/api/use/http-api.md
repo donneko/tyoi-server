@@ -23,6 +23,31 @@ app.post("/messages", ({ body, headers }) => ({
 await app.start();
 ```
 
+## ルートパラメータ
+
+Express 5形式の名前付きパラメータ、ワイルドカード、省略可能部分を利用できます。
+
+```ts
+app.get("/users/:id", ({ params }) => ({ id: params?.id }));
+app.get("/files/*splat", ({ params }) => ({ path: params?.splat }));
+app.get("/reports{/:year}", ({ params }) => ({ year: params?.year }));
+```
+
+静的ルートは動的ルートより優先されるため、`/users/me` と `/users/:id` は安全に併用できます。
+
+## HTTP statusを指定する
+
+`apiResponse()` を返すと、本文とHTTP statusを明示できます。通常の戻り値は引き続き `200` です。
+
+```ts
+import { apiResponse } from "@donneko/tyoi-server";
+
+app.post("/users", () => apiResponse({ id: 1 }, { status: 201 }));
+app.post("/jobs", () => apiResponse(undefined, { status: 204 }));
+```
+
+パスは一致してもメソッドが未登録の場合は `405 Method Not Allowed` と `Allow` ヘッダーを返します。
+
 デフォルトの `api` は `/api` なので、エンドポイントは `GET /api/status` と `POST /api/messages` です。
 
 ## リクエストする

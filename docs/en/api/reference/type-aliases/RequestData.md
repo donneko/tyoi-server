@@ -26,6 +26,16 @@ Defined in: [server-core/types/public/api.type.ts:5](https://github.com/donneko/
 
 ***
 
+### params?
+
+> `optional` **params?**: `Readonly`\<`Record`\<`string`, `string` \| `string`[]\>\>
+
+Defined in: [server-core/types/public/api.type.ts:7](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/types/public/api.type.ts#L7)
+
+ルートから抽出されたパラメータです。 / Parameters extracted from the route.
+
+***
+
 ### query
 
 > **query**: `unknown`
