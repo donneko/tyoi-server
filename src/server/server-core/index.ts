@@ -9,6 +9,8 @@ export type {
 } from "./types/public/index.js";
 export { Server } from "./app/server.js";
 export { defineConfig } from "./config/define-config.js";
+export { apiResponse } from "./service/api-response.js";
+export type { ApiResponse } from "./service/api-response.js";
 export { HandlerRegistry } from "./util/api-registry.js";
 export type { Handler } from "./util/api-registry.js";
 export type { EventBusHandler } from "./util/event-bus.js";

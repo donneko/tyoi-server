@@ -16,6 +16,7 @@ and `defineConfig()` validates configuration used by the CLI.
 
 ## Type Aliases
 
+- [ApiResponse](type-aliases/ApiResponse.md)
 - [BrowserTarget](type-aliases/BrowserTarget.md)
 - [EventBusHandler](type-aliases/EventBusHandler.md)
 - [Handler](type-aliases/Handler.md)
@@ -30,5 +31,6 @@ and `defineConfig()` validates configuration used by the CLI.
 
 ## Functions
 
+- [apiResponse](functions/apiResponse.md)
 - [defineConfig](functions/defineConfig.md)
 - [tyoi](functions/tyoi.md)

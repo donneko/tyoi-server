@@ -3,6 +3,8 @@ export type RequestData = {
     query: unknown;
     body: unknown;
     headers: unknown;
+    /** ルートから抽出されたパラメータです。 / Parameters extracted from the route. */
+    params?: Readonly<Record<string, string | string[]>>;
 };
 
 /** HTTP API キーをリクエスト情報へ対応付けます。 / Maps HTTP API keys to request data. */

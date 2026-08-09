@@ -5,6 +5,8 @@
 - Register GET and POST JSON APIs with minimal code
 - Register API keys for any HTTP method through `Server`
 - Return an API handler result directly as the successful response
+- Match Express 5 route parameters and return them through `params`
+- Set an explicit HTTP status and body with `apiResponse()`
 - Serve static files from the same HTTP server
 - Register WebSocket handlers by path
 - Provide APIs, pages, and WebSocket endpoints from the same process
@@ -23,8 +25,7 @@ The public TypeScript API and documented protocol remain backward compatible thr
 
 - For API registration paths, WebSocket registration paths, and public file URL paths, names whose first segment starts with `__tyoi` are reserved for internal use. Do not use paths such as `/__tyoi`, `/__tyoi-status`, or `/__tyoi_assets/...` in applications. When the API base is `/api`, `/api/__tyoi-status`, which corresponds to the registration path `/__tyoi-status`, is also reserved
 - `ShortHandler` provides HTTP shortcuts only for `get()` and `post()`
-- API paths use exact matching and do not support Express-style path parameters such as `/:id`
-- There is no API for directly controlling the HTTP status, response headers, or streams from an API handler
+- Response headers and streams cannot be controlled directly from an API handler
 - Authentication, authorization, CORS, TLS, rate limiting, and persistence are not built in
 - Static serving has no SPA fallback; unmatched paths return the HTML 404 page
 - WebSocket rooms, broadcasting, and message formats must be implemented by the application

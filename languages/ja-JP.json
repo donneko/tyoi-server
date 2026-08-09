@@ -27,6 +27,7 @@
     "http.static.notFound.message": "Not Found",
     "http.static.notFound.description": "指定したファイルがありませんでした。URLが変更、またはファイルが消去された可能性があります。",
     "http.api.notFound": "API not found",
+    "http.api.methodNotAllowed": "Method not allowed",
     "http.api.internalError": "Internal server error",
     "cli.help.title": "help 表示",
     "cli.help.introduction": "現在使用できるコマンドは以下の通りです。\n更新 : [2026/06/07]",

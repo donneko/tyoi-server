@@ -1,4 +1,4 @@
-import { Server } from "@donneko/tyoi-server";
+import { Server, apiResponse } from "@donneko/tyoi-server";
 
 const server = new Server({
     root: import.meta.dirname,
@@ -18,6 +18,8 @@ server.onApi("GET:/get/error", () => {
 server.onApi("POST:/post/error", () => {
     throw new Error();
 });
+server.onApi("GET:/users/:id", ({ params }) => params);
+server.onApi("POST:/users", () => apiResponse({ id: 1 }, { status: 201 }));
 
 await server.start();
 const port = server.getPort();
@@ -60,13 +62,27 @@ await res(`${base}/api/post/error`, [500], postInit).then((json) => {
         throw new Error(JSON.stringify(json));
 });
 
+await res(`${base}/api/users/a%20b`, [200]).then((json) => {
+    if (json?.id !== "a b") throw new Error(JSON.stringify(json));
+});
+
+await res(`${base}/api/users`, [201], postInit).then((json) => {
+    if (json?.id !== 1) throw new Error(JSON.stringify(json));
+});
+
+const methodNotAllowed = await fetch(`${base}/api/users/1`, { method: "PATCH" });
+if (methodNotAllowed.status !== 405 || methodNotAllowed.headers.get("allow") !== "GET")
+    throw new Error(
+        `status:${methodNotAllowed.status},allow:${methodNotAllowed.headers.get("allow")}`
+    );
+
 await server.stop();
 
 async function res(url, status, init) {
     const response = await fetch(url, init);
     if (!status.includes(response.status))
         throw new Error(`response.ok:${response.ok},response.status:${response.status}`);
-    if (response.ok !== status.includes(200))
+    if (response.ok !== status.some((value) => value >= 200 && value < 300))
         throw new Error(`response.ok:${response.ok},response.status:${response.status}`);
     const json = await response.json();
     return json;

@@ -3,6 +3,14 @@ import { runTestProcess } from "../helper/async-run-test-process.js";
 import { formatTestProcessResult } from "../helper/format-test-process-result.js";
 
 describe("Server integration api", () => {
+    it("supports route parameters, explicit statuses, and method errors", async () => {
+        const fixtureUrl = new URL("../fixtures/api/route-params-and-status.ts", import.meta.url);
+        const result = await runTestProcess(fixtureUrl);
+        const debag = formatTestProcessResult(result);
+
+        expect(result.error, debag).toBeUndefined();
+        expect(result.status, debag).toBe(0);
+    });
     it("GETができる", async () => {
         const fixtureUrl = new URL("../fixtures/api/access-api-get.ts", import.meta.url);
         const result = await runTestProcess(fixtureUrl);

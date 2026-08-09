@@ -2,7 +2,13 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-08-09
+
 ### Added
+
+- Express 5互換のHTTP APIルートパラメータ、ワイルドカード、省略可能部分に対応
+- `apiResponse()` と `ApiResponse<T>` を追加し、ハンドラーからHTTP statusを指定可能に変更
+- パス一致・メソッド不一致時の `405 Method Not Allowed` と `Allow` ヘッダーに対応
 
 - `ShortHandler` と `tyoi()` に HTTP API・WebSocket の型付き登録キーを追加
 
@@ -161,7 +167,8 @@
 - 使用中ポートの自動切り替え対応
 - Express middleware　対応
 
-[Unreleased]: https://github.com/donneko/tyoi-server/compare/v0.0.8...HEAD
+[Unreleased]: https://github.com/donneko/tyoi-server/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/donneko/tyoi-server/compare/v0.0.8...v1.0.0
 [0.0.8]: https://github.com/donneko/tyoi-server/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/donneko/tyoi-server/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/donneko/tyoi-server/compare/v0.0.5...v0.0.6
