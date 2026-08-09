@@ -11,7 +11,6 @@ export async function apiProcess(
 
         if (!context.apiRegistry.has(key)) {
             res.status(404).json({
-                ok: false,
                 code: "API_NOT_FOUND",
                 message: context.messageManager.message("http.api.notFound"),
             });
@@ -24,13 +23,9 @@ export async function apiProcess(
             headers: req.headers,
         });
 
-        res.json({
-            ok: true,
-            data: result,
-        });
+        res.json(result);
     } catch {
         res.status(500).json({
-            ok: false,
             code: "API_INTERNAL_ERROR",
             message: context.messageManager.message("http.api.internalError"),
         });

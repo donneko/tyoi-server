@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Added
+
+- `ShortHandler` と `tyoi()` に HTTP API・WebSocket の型付き登録キーを追加
+
+### Changed
+
+- HTTP API の成功レスポンスから `{ ok, data }` ラッパーを削除し、ハンドラーの戻り値を直接返すよう変更
+- 未登録 API とハンドラー例外の JSON レスポンスから `ok` を削除
+- npm パッケージから VitePress 用の `docs/` を除外して配布容量を削減
+
 ## [0.0.8] - 2026-07-27
 
 ### Added
@@ -151,11 +161,11 @@
 - 使用中ポートの自動切り替え対応
 - Express middleware　対応
 
-[Unreleased]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.8...HEAD
-[0.0.8]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.7...v0.0.8
-[0.0.7]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.6...v0.0.7
-[0.0.6]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.5...v0.0.6
-[0.0.5]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.4...v0.0.5
-[0.0.4]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.3...v0.0.4
-[0.0.3]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.2...v0.0.3
-[0.0.2]: https://github.com/donneko/tyoi-api-node-server/compare/v0.0.1...v0.0.2
+[Unreleased]: https://github.com/donneko/tyoi-server/compare/v0.0.8...HEAD
+[0.0.8]: https://github.com/donneko/tyoi-server/compare/v0.0.7...v0.0.8
+[0.0.7]: https://github.com/donneko/tyoi-server/compare/v0.0.6...v0.0.7
+[0.0.6]: https://github.com/donneko/tyoi-server/compare/v0.0.5...v0.0.6
+[0.0.5]: https://github.com/donneko/tyoi-server/compare/v0.0.4...v0.0.5
+[0.0.4]: https://github.com/donneko/tyoi-server/compare/v0.0.3...v0.0.4
+[0.0.3]: https://github.com/donneko/tyoi-server/compare/v0.0.2...v0.0.3
+[0.0.2]: https://github.com/donneko/tyoi-server/compare/v0.0.1...v0.0.2

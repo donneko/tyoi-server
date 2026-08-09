@@ -7,4 +7,3 @@ __MACOSX
 test/playground/
 *.tgz
 cache
-docs/api

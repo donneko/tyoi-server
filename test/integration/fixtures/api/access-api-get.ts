@@ -14,9 +14,9 @@ await server.start();
 const port = server.getPort();
 
 const response = await fetch(`http://localhost:${port}/api/a`);
-if (!(response.ok && [404, 200].includes(response.status)))
+if (!(response.ok && response.status === 200))
     throw new Error(`response.ok:${response.ok},response.status:${response.status}`);
 const json = await response.json();
-if (!(json.ok && json.data === "hello")) throw new Error(JSON.stringify(json));
+if (json !== "hello") throw new Error(JSON.stringify(json));
 
 await server.stop();

@@ -5,6 +5,7 @@ const requestHandlerSchema = z.custom<express.RequestHandler>(
     (value) => typeof value === "function"
 );
 
+/** 利用者が指定できるサーバー設定のスキーマです。 / Schema for user-provided server configuration. */
 export const serverConfigSchema = z
     .object({
         root: z.string().optional(),
@@ -21,6 +22,7 @@ export const serverConfigSchema = z
     })
     .strict();
 
+/** 解決済みサーバー設定のスキーマです。 / Schema for resolved server configuration. */
 export const resolvedServerConfigSchema = z.object({
     root: z.string().optional(),
     public: z.string(),
@@ -35,4 +37,5 @@ export const resolvedServerConfigSchema = z.object({
     language: z.string(),
 });
 
+/** 解決済みサーバー設定です。 / Resolved server configuration. */
 export type ResolvedServerConfig = z.infer<typeof resolvedServerConfigSchema>;

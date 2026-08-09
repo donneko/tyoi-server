@@ -24,7 +24,7 @@ const res = async (url: string, init?: RequestInit | undefined): Promise<object>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 await res(`http://localhost:${port}/api/get/a`).then((json: any) => {
-    if (!(!json?.ok && json?.code === "API_INTERNAL_ERROR" && typeof json?.message === "string"))
+    if (!(json?.code === "API_INTERNAL_ERROR" && typeof json?.message === "string"))
         throw new Error();
 });
 
