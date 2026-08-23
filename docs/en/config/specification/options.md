@@ -13,6 +13,7 @@
 | `autoPort` | `boolean` | `false` | Increments the port until an available one is found when the requested port is in use |
 | `signalClose` | `boolean` | `true` | Runs shutdown handling on `SIGINT` / `SIGTERM` |
 | `language` | `string` | `"ja-JP"` | Language for server and CLI messages |
+| `gui` | `boolean \| { allowLan?: boolean }` | `false` | Serves the built-in management GUI at `/__tyoi/` |
 
 ## `browser`
 
@@ -28,6 +29,12 @@
 When the requested port is in use and `autoPort: true`, the server increments the port number until one is available. When it is `false`, the CLI asks whether to use the next port and startup fails if you decline.
 
 After startup, `getPort()` returns the port that is actually in use.
+
+## `gui`
+
+Set `gui: true` to view Summary, Status, and Live Log at `/__tyoi/` on the same server. The management APIs use `/__tyoi/api/*` and real-time logs use `/__tyoi/ws`, independently of the public `api` setting.
+
+Only loopback connections are allowed by default. `gui: { allowLan: true }` permits LAN access, but exposes project paths, configuration, and logs without authentication. Enable it only on a trusted network.
 
 ## Validation
 

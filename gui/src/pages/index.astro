@@ -1,0 +1,102 @@
+---
+import "@donneko/window-system/window-style.css";
+---
+
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>tyoi-server GUI</title>
+        <style>
+            :global(*) {
+                box-sizing: border-box;
+            }
+            :global(html, body, #desktop) {
+                width: 100%;
+                min-height: 100%;
+                margin: 0;
+            }
+            :global(body) {
+                min-height: 100vh;
+                overflow: hidden;
+                background: linear-gradient(135deg, #0f172a, #155e75);
+                font-family: system-ui, sans-serif;
+            }
+            :global(#desktop) {
+                position: relative;
+                min-height: 100vh;
+            }
+            :global(.desktop-icons) {
+                display: grid;
+                grid-template-columns: repeat(3, 88px);
+                gap: 16px;
+                padding: 24px;
+            }
+            :global(.desktop-icon) {
+                display: grid;
+                gap: 7px;
+                justify-items: center;
+                min-height: 96px;
+                padding: 8px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                color: #f8fafc;
+                background: transparent;
+                font: inherit;
+                cursor: pointer;
+            }
+            :global(.desktop-icon:hover),
+            :global(.desktop-icon:focus-visible) {
+                border-color: #7dd3fc;
+                background: rgb(14 116 144 / 45%);
+                outline: none;
+            }
+            :global(.desktop-icon-symbol) {
+                display: grid;
+                width: 46px;
+                height: 46px;
+                place-items: center;
+                border-radius: 10px;
+                background: #e0f2fe;
+                color: #0f172a;
+                font-size: 25px;
+                box-shadow: 0 4px 8px rgb(0 0 0 / 25%);
+            }
+            :global(.desktop-icon-label) {
+                font-size: 13px;
+                text-shadow: 0 1px 2px #0f172a;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="desktop">
+            <nav class="desktop-icons" aria-label="管理画面">
+                <button class="desktop-icon" type="button" data-window-id="summary"
+                    ><span class="desktop-icon-symbol" aria-hidden="true">▤</span><span
+                        class="desktop-icon-label">Summary</span
+                    ></button
+                >
+                <button class="desktop-icon" type="button" data-window-id="status"
+                    ><span class="desktop-icon-symbol" aria-hidden="true">●</span><span
+                        class="desktop-icon-label">Status</span
+                    ></button
+                >
+                <button class="desktop-icon" type="button" data-window-id="log"
+                    ><span class="desktop-icon-symbol" aria-hidden="true">≡</span><span
+                        class="desktop-icon-label">Log</span
+                    ></button
+                >
+            </nav>
+        </div>
+        <script>
+            import { WindowManager } from "@donneko/window-system";
+            import { desktopWindows } from "../client/desktop/definitions";
+            import { startDesktop } from "../client/desktop/start";
+            const windows = new WindowManager({
+                container: document.querySelector<HTMLElement>("#desktop")!,
+            });
+            startDesktop({ document, windows, definitions: desktopWindows });
+        </script>
+    </body>
+</html>

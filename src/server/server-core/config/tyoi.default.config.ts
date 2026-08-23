@@ -17,4 +17,6 @@ export default defineDefaultConfig({
     signalClose: true,
 
     language: "ja-JP",
+
+    gui: false,
 });

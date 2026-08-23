@@ -3,6 +3,12 @@ import type express from "express";
 /** ブラウザーを開く対象です。 / Target used when opening a browser. */
 export type BrowserTarget = boolean | "local" | "lan";
 
+/** 組み込み管理GUIの設定です。 / Built-in management GUI options. */
+export type GuiOptions = {
+    /** LANからの未認証アクセスを許可します。 / Allows unauthenticated access from the LAN. */
+    allowLan?: boolean;
+};
+
 /** 利用者が指定できるサーバー設定です。 / Server configuration that users can provide. */
 export type ServerConfig = {
     root?: string;
@@ -16,6 +22,7 @@ export type ServerConfig = {
     autoPort?: boolean;
     signalClose?: boolean;
     language?: string;
+    gui?: boolean | GuiOptions;
 };
 
 /** `Server` をコードから作成するための設定です。 / Options for creating a `Server` in code. */

@@ -56,6 +56,15 @@ describe("defineConfig", () => {
         expectTypeOf(config.port).toEqualTypeOf<3000>();
     });
 
+    it("accepts local-only and LAN-enabled GUI settings", () => {
+        expect(defineConfig({ gui: true }).gui).toBe(true);
+        expect(defineConfig({ gui: { allowLan: true } }).gui).toEqual({ allowLan: true });
+    });
+
+    it("rejects unknown GUI settings", () => {
+        expect(() => defineConfig({ gui: { token: "secret" } } as never)).toThrow();
+    });
+
     it("rejects removed v0 config names", () => {
         if (process.env.TYPECHECK_ONLY === "true") {
             // @ts-expect-error Removed config names are rejected by the config type.

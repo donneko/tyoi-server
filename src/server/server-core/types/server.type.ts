@@ -6,6 +6,7 @@ export type {
     ServerOptions,
     StartOptions,
     BrowserTarget,
+    GuiOptions,
 } from "./public/config.type.js";
 export type { RequestData, RequestEventMap } from "./public/api.type.js";
 export type { WsHandler } from "./public/websocket.type.js";

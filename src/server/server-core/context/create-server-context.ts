@@ -14,7 +14,10 @@ import { fileURLToPath } from "node:url";
 export function createServerContext<
     RequestNameList extends string = string,
     WebSocketNameList extends string = string,
->(stop: () => Promise<void>): ServerContext<WebSocketNameList, RequestNameList> {
+>(
+    stop: () => Promise<void>,
+    runtime: ServerContext["runtime"]
+): ServerContext<WebSocketNameList, RequestNameList> {
     const outEventBus = new EventBus<OutEventBusMap>();
     const innerEventBus = new EventBus<InnerEventBusMap>();
     const languagesPath = fileURLToPath(new URL("../../../../languages", import.meta.url));
@@ -32,5 +35,6 @@ export function createServerContext<
         stopHandler: async () => {
             await stop();
         },
+        runtime,
     };
 }

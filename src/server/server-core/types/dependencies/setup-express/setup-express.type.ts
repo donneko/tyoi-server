@@ -6,6 +6,7 @@ import type {
     SetupApiProcessContext,
     ApiProcessContext,
     SetupStaticFileContext,
+    SetupGuiContext,
 } from "../../context/setup-express/stop-express.type.js";
 import express from "express";
 
@@ -14,6 +15,7 @@ export type SetupExpressDependencies = {
     setupMiddleware: SetupMiddleware;
     setupDefaultMiddleware: SetupDefaultMiddleware;
     setupApiProcess: SetupApiProcess;
+    setupGui: SetupGui;
     setupStaticFile: SetupStaticFile;
 };
 
@@ -27,6 +29,8 @@ export type SetupMiddleware = (
 ) => void;
 
 export type SetupDefaultMiddleware = (context: SetupDefaultMiddlewareContext) => void;
+
+export type SetupGui = (context: SetupGuiContext) => void;
 
 export type SetupApiProcess = (
     api: string,

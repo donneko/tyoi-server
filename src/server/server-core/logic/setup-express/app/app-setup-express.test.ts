@@ -14,6 +14,7 @@ describe("setupExpress", () => {
             setupMiddleware: vi.fn(),
             setupDefaultMiddleware: vi.fn(),
             setupApiProcess: vi.fn(),
+            setupGui: vi.fn(),
             setupStaticFile: vi.fn(),
         };
 
@@ -25,10 +26,14 @@ describe("setupExpress", () => {
             context
         );
         expect(dependencies.setupDefaultMiddleware).toHaveBeenCalledWith(context);
+        expect(dependencies.setupGui).toHaveBeenCalledWith(context);
         expect(dependencies.setupApiProcess).toHaveBeenCalledWith("/api", context);
         expect(dependencies.setupStaticFile).toHaveBeenCalledWith("/project/public", context);
         expect(dependencies.setupMiddleware.mock.invocationCallOrder[0]).toBeLessThan(
             dependencies.setupStaticFile.mock.invocationCallOrder[0] ?? 0
+        );
+        expect(dependencies.setupGui.mock.invocationCallOrder[0]).toBeLessThan(
+            dependencies.setupApiProcess.mock.invocationCallOrder[0] ?? 0
         );
     });
 });

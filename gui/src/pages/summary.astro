@@ -1,0 +1,21 @@
+---
+import "../styles/panel.css";
+---
+
+<!doctype html>
+<html lang="ja">
+    <head
+        ><meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><title>
+            Summary
+        </title></head
+    >
+    <body>
+        <h1>Server Summary</h1><div id="content">読み込み中...</div>
+        <script>
+            import { createApiClient } from "../client/api/create-api-client";
+            import { startSummaryPage } from "../client/pages/summary";
+            const api = createApiClient({ fetch, baseUrl: `${import.meta.env.BASE_URL}api` });
+            void startSummaryPage(document, api);
+        </script>
+    </body>
+</html>

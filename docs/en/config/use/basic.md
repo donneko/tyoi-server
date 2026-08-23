@@ -40,6 +40,19 @@ await app.start();
 
 `root` is required when creating a server programmatically.
 
+## Enable the management GUI
+
+```ts
+const app = tyoi({
+    root: import.meta.dirname,
+    gui: true,
+});
+
+await app.start();
+```
+
+After startup, open `http://127.0.0.1:3000/__tyoi/` to view the server summary, status, and the latest 30 log entries. Use `gui: { allowLan: true }` only when the GUI must be visible from the LAN.
+
 ## Pass options only when starting
 
 ```ts

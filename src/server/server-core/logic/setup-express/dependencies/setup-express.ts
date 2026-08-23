@@ -8,6 +8,7 @@ import { setupDefaultMiddleware } from "../service/setup-default-middleware.js";
 import { setupApiProcess } from "../app/app-setup-api-process.js";
 import { setupStaticFile } from "../app/app-setup-static.js";
 import { apiProcess } from "../service/api-process.js";
+import { setupGui } from "../app/app-setup-gui.js";
 
 export function defaultSetupExpressDependencies(): SetupExpressDependencies {
     return {
@@ -15,6 +16,7 @@ export function defaultSetupExpressDependencies(): SetupExpressDependencies {
         setupMiddleware: setupMiddleware,
         setupDefaultMiddleware: setupDefaultMiddleware,
         setupApiProcess: setupApiProcess,
+        setupGui: setupGui,
         setupStaticFile: setupStaticFile,
     };
 }

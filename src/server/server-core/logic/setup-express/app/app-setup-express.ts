@@ -21,6 +21,9 @@ export function setupExpress(
     // JSONを受け取れるようにする
     deps.setupDefaultMiddleware(context);
 
+    // 組み込み管理GUI（利用者APIや静的ファイルより先に予約パスへ登録）
+    deps.setupGui(context);
+
     // API
     deps.setupApiProcess(expressConfig.api, context);
 
