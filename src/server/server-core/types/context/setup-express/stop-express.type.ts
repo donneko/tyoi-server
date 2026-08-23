@@ -5,6 +5,7 @@ export type ServerExpressContext = CreateExpressConfigContext &
     SetupMiddlewareContext &
     SetupDefaultMiddlewareContext &
     SetupApiProcessContext &
+    SetupGuiContext &
     SetupStaticFileContext;
 
 export type CreateExpressConfigContext = Pick<ServerContext, "serverConfig" | "serverRegister">;
@@ -18,3 +19,8 @@ export type SetupApiProcessContext = Pick<ServerContext, "expressServer"> & ApiP
 export type ApiProcessContext = Pick<ServerContext, "apiRegistry" | "messageManager">;
 
 export type SetupStaticFileContext = Pick<ServerContext, "expressServer" | "messageManager">;
+
+export type SetupGuiContext = Pick<
+    ServerContext,
+    "expressServer" | "serverConfig" | "webSocketRouter" | "outEventBus" | "runtime"
+>;

@@ -23,4 +23,8 @@ export type ServerContext<
     expressServer: express.Express;
     apiRegistry: ApiRouter<RequestEventMap<RequestNameList>>;
     stopHandler: () => Promise<void> | void;
+    runtime: {
+        isRunning: () => boolean;
+        getStartedAt: () => number | undefined;
+    };
 };

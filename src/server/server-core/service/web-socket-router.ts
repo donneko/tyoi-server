@@ -6,6 +6,7 @@ import type { WsHandler } from "../types/server.type.js";
 
 export class WebSocketRouter<typeMAP extends string> {
     private webSocketRegistry = new HandlerRegistry<Record<typeMAP, WsHandler>>();
+    private internalWebSocketRegistry = new HandlerRegistry<Record<string, WsHandler>>();
     private webSocket: WebSocketServer | null = null;
     start(server: Server) {
         const ws = new WebSocketServer({
@@ -22,13 +23,17 @@ export class WebSocketRouter<typeMAP extends string> {
             }
             const pathname = url.pathname;
 
-            if (!this.webSocketRegistry.has(pathname)) {
+            const registry = this.internalWebSocketRegistry.has(pathname)
+                ? this.internalWebSocketRegistry
+                : this.webSocketRegistry;
+
+            if (!registry.has(pathname)) {
                 socket.destroy();
                 return;
             }
 
             ws.handleUpgrade(req, socket as Duplex, head, (client) => {
-                void this.webSocketRegistry
+                void registry
                     .emit(pathname, { ws: client, req })
                     .catch(() => client.close(1011, "WebSocket handler failed"));
             });
@@ -85,5 +90,10 @@ export class WebSocketRouter<typeMAP extends string> {
     // WebSocketが存在するか？
     has(type: string) {
         return this.webSocketRegistry.has(type);
+    }
+
+    /** Registers a framework-owned route that cannot be replaced by public handlers. */
+    onInternal(type: string, fn: Handler<WsHandler>) {
+        return this.internalWebSocketRegistry.on(type, fn);
     }
 }

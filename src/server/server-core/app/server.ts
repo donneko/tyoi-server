@@ -19,11 +19,16 @@ export class Server<
     RequestNameList extends string = string,
     WebSocketNameList extends string = string,
 > {
-    private serverContext = createServerContext<RequestNameList, WebSocketNameList>(
-        this.stop.bind(this)
-    );
-
     private httpServer: http.Server | null = null;
+    private startedAt: number | undefined;
+
+    private serverContext = createServerContext<RequestNameList, WebSocketNameList>(
+        this.stop.bind(this),
+        {
+            isRunning: () => this.isRunning(),
+            getStartedAt: () => this.startedAt,
+        }
+    );
 
     /**
      * サーバーを作成し、ルーティングと静的ファイル配信を初期化します。
@@ -102,6 +107,7 @@ export class Server<
         });
 
         this.httpServer = httpServer;
+        this.startedAt = Date.now();
 
         return httpServer;
     }
@@ -136,6 +142,7 @@ export class Server<
         await stopServer(httpServer, context).finally(() => {
             if (!httpServer.listening) {
                 this.httpServer = null;
+                this.startedAt = undefined;
             }
             this.isStopping = false;
         });

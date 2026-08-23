@@ -40,6 +40,19 @@ await app.start();
 
 プログラムから生成する場合は `root` が必須です。
 
+## 管理GUIを有効にする
+
+```ts
+const app = tyoi({
+    root: import.meta.dirname,
+    gui: true,
+});
+
+await app.start();
+```
+
+起動後に `http://127.0.0.1:3000/__tyoi/` を開くと、サーバーの概要、状態、最新30件のログを確認できます。LANからの閲覧も必要な場合だけ `gui: { allowLan: true }` を指定します。
+
 ## 起動時だけ設定を渡す
 
 ```ts

@@ -28,7 +28,7 @@ A server that provides HTTP APIs, WebSocket endpoints, and static file serving.
 
 > **new Server**\<`RequestNameList`, `WebSocketNameList`\>(`options`): `Server`\<`RequestNameList`, `WebSocketNameList`\>
 
-Defined in: [server-core/app/server.ts:54](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L54)
+Defined in: [server-core/app/server.ts:59](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L59)
 
 サーバーを作成し、ルーティングと静的ファイル配信を初期化します。
 
@@ -75,7 +75,7 @@ import { Server } from "@donneko/tyoi-server";
 
 > **emitApi**: \<`Key`\>(`type`, `arg`) => `Promise`\<`unknown`\>
 
-Defined in: [server-core/app/server.ts:177](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L177)
+Defined in: [server-core/app/server.ts:184](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L184)
 
 HTTP API ハンドラをリクエストなしで実行します。 / Invokes an HTTP API handler without an HTTP request.
 
@@ -117,7 +117,7 @@ router.emit("GET:/users/:id", { params: { id: "1" } });
 
 > **getConfig**: \<`K`\>(`key`) => `object`\[`K`\]
 
-Defined in: [server-core/app/server.ts:157](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L157)
+Defined in: [server-core/app/server.ts:164](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L164)
 
 解決済みのサーバー設定を取得します。 / Returns the resolved server configuration.
 
@@ -125,7 +125,7 @@ Defined in: [server-core/app/server.ts:157](https://github.com/donneko/tyoi-serv
 
 ##### K
 
-`K` *extends* `"lan"` \| `"port"` \| `"qr"` \| `"browser"` \| `"autoPort"` \| `"root"` \| `"public"` \| `"api"` \| `"middlewares"` \| `"signalClose"` \| `"language"`
+`K` *extends* `"lan"` \| `"port"` \| `"qr"` \| `"browser"` \| `"autoPort"` \| `"root"` \| `"public"` \| `"api"` \| `"middlewares"` \| `"signalClose"` \| `"language"` \| `"gui"`
 
 #### Parameters
 
@@ -143,7 +143,7 @@ Defined in: [server-core/app/server.ts:157](https://github.com/donneko/tyoi-serv
 
 > **hasApi**: (`type`) => `type is Extract<RequestNameList, string>`
 
-Defined in: [server-core/app/server.ts:175](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L175)
+Defined in: [server-core/app/server.ts:182](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L182)
 
 指定した HTTP API ハンドラが登録されているかを返します。 / Returns whether the HTTP API has a registered handler.
 
@@ -175,7 +175,7 @@ console.log(router.has("GET:/users/:id"));
 
 > **hasEvent**: (`type`) => `type is "server/log:*"`
 
-Defined in: [server-core/app/server.ts:166](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L166)
+Defined in: [server-core/app/server.ts:173](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L173)
 
 指定したイベントにハンドラが登録されているかを返します。 / Returns whether the event has a registered handler.
 
@@ -207,7 +207,7 @@ console.log(eventBus.has("foo"));
 
 > **hasWebSocket**: (`type`) => `type is Extract<WebSocketNameList, string>`
 
-Defined in: [server-core/app/server.ts:188](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L188)
+Defined in: [server-core/app/server.ts:195](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L195)
 
 指定した WebSocket ハンドラが登録されているかを返します。 / Returns whether the WebSocket path has a registered handler.
 
@@ -227,7 +227,7 @@ Defined in: [server-core/app/server.ts:188](https://github.com/donneko/tyoi-serv
 
 > **offApi**: \<`Key`\>(`type`) => `void`
 
-Defined in: [server-core/app/server.ts:173](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L173)
+Defined in: [server-core/app/server.ts:180](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L180)
 
 HTTP API ハンドラを解除します。 / Removes an HTTP API handler.
 
@@ -263,7 +263,7 @@ router.off("GET:/users/:id");
 
 > **offEvent**: \<`Key`\>(`type`, `fn`) => `void`
 
-Defined in: [server-core/app/server.ts:164](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L164)
+Defined in: [server-core/app/server.ts:171](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L171)
 
 イベントハンドラを解除します。 / Removes an event handler.
 
@@ -303,7 +303,7 @@ eventBus.off("foo",handler);
 
 > **offWebSocket**: \<`Key`\>(`type`) => `void`
 
-Defined in: [server-core/app/server.ts:186](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L186)
+Defined in: [server-core/app/server.ts:193](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L193)
 
 WebSocket ハンドラを解除します。 / Removes a WebSocket handler.
 
@@ -329,7 +329,7 @@ WebSocket ハンドラを解除します。 / Removes a WebSocket handler.
 
 > **onApi**: \<`KEY`\>(`type`, `fn`) => () => `void`
 
-Defined in: [server-core/app/server.ts:169](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L169)
+Defined in: [server-core/app/server.ts:176](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L176)
 
 HTTP API ハンドラを登録します。 / Registers an HTTP API handler.
 
@@ -374,7 +374,7 @@ unsubscribe();
 
 > **onceApi**: \<`Key`\>(`type`, `fn`) => () => `void`
 
-Defined in: [server-core/app/server.ts:171](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L171)
+Defined in: [server-core/app/server.ts:178](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L178)
 
 一度だけ実行する HTTP API ハンドラを登録します。 / Registers a one-time HTTP API handler.
 
@@ -416,7 +416,7 @@ router.once("GET:/users/:id", handler);
 
 > **onceEvent**: \<`Key`\>(`type`, `fn`) => () => `void`
 
-Defined in: [server-core/app/server.ts:162](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L162)
+Defined in: [server-core/app/server.ts:169](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L169)
 
 一度だけ実行するイベントハンドラを登録します。 / Registers a one-time event handler.
 
@@ -458,7 +458,7 @@ eventBus.once("foo", handler);
 
 > **onceWebSocket**: \<`Key`\>(`type`, `fn`) => () => `void`
 
-Defined in: [server-core/app/server.ts:182](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L182)
+Defined in: [server-core/app/server.ts:189](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L189)
 
 一度だけ実行する WebSocket ハンドラを登録します。 / Registers a one-time WebSocket handler.
 
@@ -488,7 +488,7 @@ Defined in: [server-core/app/server.ts:182](https://github.com/donneko/tyoi-serv
 
 > **onEvent**: \<`Key`\>(`type`, `fn`) => () => `void`
 
-Defined in: [server-core/app/server.ts:160](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L160)
+Defined in: [server-core/app/server.ts:167](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L167)
 
 イベントハンドラを登録します。 / Registers an event handler.
 
@@ -533,7 +533,7 @@ unsubscribe(); // ハンドラを解除 / Unregister the handler
 
 > **onWebSocket**: \<`Key`\>(`type`, `fn`) => () => `void`
 
-Defined in: [server-core/app/server.ts:180](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L180)
+Defined in: [server-core/app/server.ts:187](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L187)
 
 WebSocket ハンドラを登録します。 / Registers a WebSocket handler.
 
@@ -563,7 +563,7 @@ WebSocket ハンドラを登録します。 / Registers a WebSocket handler.
 
 > **close**(): `Promise`\<`void`\>
 
-Defined in: [server-core/app/server.ts:110](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L110)
+Defined in: [server-core/app/server.ts:116](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L116)
 
 `stop()` の別名です。 / Alias for `stop()`.
 
@@ -577,7 +577,7 @@ Defined in: [server-core/app/server.ts:110](https://github.com/donneko/tyoi-serv
 
 > **getHttpServer**(): `Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `null`
 
-Defined in: [server-core/app/server.ts:153](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L153)
+Defined in: [server-core/app/server.ts:160](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L160)
 
 基盤となる Node.js の HTTP サーバーを取得します。 / Returns the underlying Node.js HTTP server.
 
@@ -591,7 +591,7 @@ Defined in: [server-core/app/server.ts:153](https://github.com/donneko/tyoi-serv
 
 > **getPort**(): `number`
 
-Defined in: [server-core/app/server.ts:149](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L149)
+Defined in: [server-core/app/server.ts:156](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L156)
 
 現在設定されているポート番号を返します。 / Returns the currently configured port.
 
@@ -605,7 +605,7 @@ Defined in: [server-core/app/server.ts:149](https://github.com/donneko/tyoi-serv
 
 > **isRunning**(): `boolean`
 
-Defined in: [server-core/app/server.ts:145](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L145)
+Defined in: [server-core/app/server.ts:152](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L152)
 
 サーバーが起動中かを返します。 / Returns whether the server is running.
 
@@ -619,7 +619,7 @@ Defined in: [server-core/app/server.ts:145](https://github.com/donneko/tyoi-serv
 
 > **listen**(`options?`): `Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
 
-Defined in: [server-core/app/server.ts:62](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L62)
+Defined in: [server-core/app/server.ts:67](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L67)
 
 `start()` の別名です。 / Alias for `start()`.
 
@@ -639,7 +639,7 @@ Defined in: [server-core/app/server.ts:62](https://github.com/donneko/tyoi-serve
 
 > **start**(`options?`): `Promise`\<`Server`\<*typeof* `IncomingMessage`, *typeof* `ServerResponse`\> \| `undefined`\>
 
-Defined in: [server-core/app/server.ts:87](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L87)
+Defined in: [server-core/app/server.ts:92](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L92)
 
 HTTP サーバーを起動します。
 
@@ -683,7 +683,7 @@ await server.start({
 
 > **stop**(): `Promise`\<`void`\>
 
-Defined in: [server-core/app/server.ts:128](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L128)
+Defined in: [server-core/app/server.ts:134](https://github.com/donneko/tyoi-server/blob/main/src/server/server-core/app/server.ts#L134)
 
 HTTP サーバーを停止し、既存の接続を終了します。
 

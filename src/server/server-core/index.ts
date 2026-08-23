@@ -1,5 +1,6 @@
 export type {
     BrowserTarget,
+    GuiOptions,
     RequestData,
     RequestEventMap,
     ServerConfig,

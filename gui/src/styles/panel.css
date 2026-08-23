@@ -1,0 +1,76 @@
+:root {
+    color-scheme: dark;
+    font-family: system-ui, sans-serif;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 16px;
+    color: #e2e8f0;
+    background: #0f172a;
+    font-size: 14px;
+}
+h1 {
+    margin: 0 0 16px;
+    font-size: 18px;
+}
+.card {
+    padding: 12px;
+    border-radius: 6px;
+    background: #1e293b;
+}
+.summary-list {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    margin: 0;
+    gap: 8px;
+}
+.summary-list dt,
+dt {
+    color: #94a3b8;
+}
+.summary-list dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+dd {
+    margin: 3px 0 12px;
+    font-size: 18px;
+}
+.error {
+    color: #fca5a5;
+}
+#connection {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #475569;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+#connection.connected {
+    background: #15803d;
+}
+#connection.error,
+#connection.disconnected {
+    background: #b91c1c;
+}
+#logs {
+    padding: 0;
+    margin: 12px 0 0;
+    list-style: none;
+    font-family: ui-monospace, monospace;
+}
+#logs li {
+    padding: 7px 0;
+    border-bottom: 1px solid #334155;
+}
+#logs .warn {
+    color: #fbbf24;
+}
+#logs .error {
+    color: #fca5a5;
+}

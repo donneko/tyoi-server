@@ -19,6 +19,7 @@ and `defineConfig()` validates configuration used by the CLI.
 - [ApiResponse](type-aliases/ApiResponse.md)
 - [BrowserTarget](type-aliases/BrowserTarget.md)
 - [EventBusHandler](type-aliases/EventBusHandler.md)
+- [GuiOptions](type-aliases/GuiOptions.md)
 - [Handler](type-aliases/Handler.md)
 - [LoggerCreateData](type-aliases/LoggerCreateData.md)
 - [OutEventBusMap](type-aliases/OutEventBusMap.md)

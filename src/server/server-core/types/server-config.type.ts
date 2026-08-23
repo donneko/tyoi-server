@@ -5,6 +5,14 @@ const requestHandlerSchema = z.custom<express.RequestHandler>(
     (value) => typeof value === "function"
 );
 
+const guiOptionsSchema = z
+    .object({
+        allowLan: z.boolean().optional(),
+    })
+    .strict();
+
+const guiSchema = z.union([z.boolean(), guiOptionsSchema]);
+
 /** 利用者が指定できるサーバー設定のスキーマです。 / Schema for user-provided server configuration. */
 export const serverConfigSchema = z
     .object({
@@ -19,6 +27,7 @@ export const serverConfigSchema = z
         autoPort: z.boolean().optional(),
         signalClose: z.boolean().optional(),
         language: z.string().optional(),
+        gui: guiSchema.optional(),
     })
     .strict();
 
@@ -35,6 +44,7 @@ export const resolvedServerConfigSchema = z.object({
     autoPort: z.boolean(),
     signalClose: z.boolean(),
     language: z.string(),
+    gui: guiSchema,
 });
 
 /** 解決済みサーバー設定です。 / Resolved server configuration. */

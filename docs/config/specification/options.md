@@ -13,6 +13,7 @@
 | `autoPort` | `boolean` | `false` | 使用中ならポート番号を 1 ずつ増やして空きを探す |
 | `signalClose` | `boolean` | `true` | `SIGINT` / `SIGTERM` で停止処理を実行 |
 | `language` | `string` | `"ja-JP"` | サーバーと CLI のメッセージ言語 |
+| `gui` | `boolean \| { allowLan?: boolean }` | `false` | `/__tyoi/` で組み込み管理GUIを提供 |
 
 ## `browser`
 
@@ -28,6 +29,12 @@
 指定ポートが使用中で `autoPort: true` の場合、利用可能になるまでポート番号を 1 ずつ増やします。`false` の場合は次のポートを使用するか対話で確認し、拒否されると起動に失敗します。
 
 起動後の `getPort()` は実際に使われたポートを返します。
+
+## `gui`
+
+`gui: true` にすると、同じサーバーの `/__tyoi/` で Summary、Status、Live Logを確認できます。管理APIは `/__tyoi/api/*`、リアルタイムログは `/__tyoi/ws` を使用し、利用者の `api` 設定には影響しません。
+
+既定ではループバック接続だけを許可します。`gui: { allowLan: true }` にするとLANからもアクセスできますが、GUIにはプロジェクトのパス、設定、ログが認証なしで表示されます。信頼できるネットワークでだけ有効にしてください。
 
 ## 検証
 

@@ -5,7 +5,15 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default tseslint.config(
     {
-        ignores: ["dist", "coverage", "docs", "node_modules", "package-lock.json", ".github"],
+        ignores: [
+            ".astro",
+            "dist",
+            "coverage",
+            "docs",
+            "node_modules",
+            "package-lock.json",
+            ".github",
+        ],
     },
 
     js.configs.recommended,

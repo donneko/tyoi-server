@@ -14,6 +14,7 @@ describe("server config schemas", () => {
             autoPort: false,
             signalClose: true,
             language: "ja-JP",
+            gui: false,
         };
 
         expect(serverConfigSchema.parse(config)).toEqual(config);
@@ -36,6 +37,7 @@ describe("server config schemas", () => {
             autoPort: false,
             signalClose: true,
             language: "ja-JP",
+            gui: false,
         };
 
         expect(resolvedServerConfigSchema.parse(config)).toEqual(config);
