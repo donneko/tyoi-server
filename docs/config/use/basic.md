@@ -42,16 +42,7 @@ await app.start();
 
 ## 管理GUIを有効にする
 
-```ts
-const app = tyoi({
-    root: import.meta.dirname,
-    gui: true,
-});
-
-await app.start();
-```
-
-起動後に `http://127.0.0.1:3000/__tyoi/` を開くと、サーバーの概要、状態、最新30件のログを確認できます。LANからの閲覧も必要な場合だけ `gui: { allowLan: true }` を指定します。
+`gui: true` を指定すると、`/__tyoi/` でサーバーの概要、状態、最新ログを確認できます。設定例、管理エンドポイント、LAN公開時の注意事項は[組み込み管理GUI](./management-gui.md)を参照してください。
 
 ## 起動時だけ設定を渡す
 

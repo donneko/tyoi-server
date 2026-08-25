@@ -6,6 +6,7 @@
 
 - `gui` 設定と、Summary・Status・Live Logを表示するローカル限定の組み込み管理GUIを追加
 - `gui: { allowLan: true }` による管理GUIの明示的なLAN公開に対応
+- `/__tyoi/api/*` の読み取り専用管理APIと `/__tyoi/ws` のリアルタイムログ配信を追加
 
 ## [1.0.0] - 2026-08-09
 

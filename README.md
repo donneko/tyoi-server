@@ -51,7 +51,7 @@ await app.start();
 
 この API はデフォルト設定では `GET /api/hello` で呼び出せます。
 
-`gui: true` を設定すると、同じサーバーの `/__tyoi/` で概要・状態・最新ログを確認できます。既定ではローカル接続だけに限定されます。
+`gui: true` を設定すると、同じサーバーの `/__tyoi/` で概要・状態・最新ログを確認できます。既定ではローカル接続だけに限定されます。設定例とLAN公開時の注意事項は[組み込み管理GUI](https://donneko.github.io/tyoi-server/config/use/management-gui.html)を参照してください。
 
 ## ライセンス
 
