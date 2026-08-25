@@ -32,9 +32,11 @@ After startup, `getPort()` returns the port that is actually in use.
 
 ## `gui`
 
-Set `gui: true` to view Summary, Status, and Live Log at `/__tyoi/` on the same server. The management APIs use `/__tyoi/api/*` and real-time logs use `/__tyoi/ws`, independently of the public `api` setting.
+With `false`, the management GUI is not registered. `true` is equivalent to `{ allowLan: false }` and provides Summary, Status, and Live Log at `/__tyoi/` on the same server. The management APIs use `/__tyoi/api/*` and real-time logs use `/__tyoi/ws`, independently of the public `api` setting.
 
-Only loopback connections are allowed by default. `gui: { allowLan: true }` permits LAN access, but exposes project paths, configuration, and logs without authentication. Enable it only on a trusted network.
+By default, HTTP and WebSocket requests are accepted only when the socket peer is a loopback address. LAN access requires both `lan: true` and `gui: { allowLan: true }`. With this configuration, project paths, configuration, and logs are visible without authentication to everyone who can reach the server. Enable it only on a trusted network.
+
+See [Built-in management GUI](../use/management-gui.md) for screen and endpoint details.
 
 ## Validation
 

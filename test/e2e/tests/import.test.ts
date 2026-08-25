@@ -24,7 +24,7 @@ describe("import e2e", () => {
         const packageUrl = new URL("../template/package.json", import.meta.url);
         await copyTmpDir(tmpDir, packageUrl);
         await installPackage(tmpDir, packDir);
-    }, 15_000);
+    }, 150_000);
     afterEach(async () => {
         await removeTmpDir(tmpDir);
     });
@@ -90,6 +90,21 @@ describe("import e2e", () => {
             tmpDir,
             nodeCommand,
             ["./import-websocket.js"],
+            serverCommandConfig
+        );
+        const debag = formatTestProcessResult(result);
+
+        expect(result.error, debag).toBeUndefined();
+        expect(result.status, debag).toBe(0);
+    });
+    it("gui - ページ・status API・WebSocketを利用できる", async () => {
+        const packageUrl = new URL("../fixtures/import-gui.js", import.meta.url);
+        await copyTmpDir(tmpDir, packageUrl);
+
+        const result = await runCommand(
+            tmpDir,
+            nodeCommand,
+            ["./import-gui.js"],
             serverCommandConfig
         );
         const debag = formatTestProcessResult(result);

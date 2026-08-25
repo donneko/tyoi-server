@@ -50,7 +50,7 @@ await app.start();
 
 With the default configuration, this API is available at `GET /api/hello`.
 
-Set `gui: true` to view the summary, status, and latest logs at `/__tyoi/` on the same server. Access is restricted to local connections by default.
+Set `gui: true` to view the summary, status, and latest logs at `/__tyoi/` on the same server. Access is restricted to local connections by default. See [Built-in management GUI](https://donneko.github.io/tyoi-server/en/config/use/management-gui.html) for configuration examples and LAN security notes.
 
 ## License
 

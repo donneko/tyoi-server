@@ -75,6 +75,10 @@ export default defineConfig({
                         items: [
                             { text: "基本設定", link: "/config/use/basic" },
                             {
+                                text: "組み込み管理GUI",
+                                link: "/config/use/management-gui",
+                            },
+                            {
                                 text: "LAN と middleware",
                                 link: "/config/use/lan-and-middleware",
                             },
@@ -225,6 +229,10 @@ export default defineConfig({
                         collapsed: false,
                         items: [
                             { text: "Basic configuration", link: "/en/config/use/basic" },
+                            {
+                                text: "Built-in management GUI",
+                                link: "/en/config/use/management-gui",
+                            },
                             {
                                 text: "LAN and middleware",
                                 link: "/en/config/use/lan-and-middleware",

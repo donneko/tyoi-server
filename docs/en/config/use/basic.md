@@ -42,16 +42,7 @@ await app.start();
 
 ## Enable the management GUI
 
-```ts
-const app = tyoi({
-    root: import.meta.dirname,
-    gui: true,
-});
-
-await app.start();
-```
-
-After startup, open `http://127.0.0.1:3000/__tyoi/` to view the server summary, status, and the latest 30 log entries. Use `gui: { allowLan: true }` only when the GUI must be visible from the LAN.
+Set `gui: true` to view the server summary, status, and latest logs at `/__tyoi/`. See [Built-in management GUI](./management-gui.md) for examples, management endpoints, and LAN security notes.
 
 ## Pass options only when starting
 
