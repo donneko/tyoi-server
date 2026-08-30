@@ -10,14 +10,34 @@ describe("mainProcessSetup", () => {
             }),
             kill: vi.fn(),
         };
-        const cleanup = mainProcessSetup(child as never);
+        const controller = mainProcessSetup(child as never);
 
         try {
             process.emit("SIGINT");
             expect(child.kill).toHaveBeenCalledOnce();
             expect(child.kill).toHaveBeenCalledWith("SIGKILL");
         } finally {
-            cleanup();
+            controller.cleanup();
+        }
+    });
+
+    it("二回目の終了シグナルでは子プロセスを強制終了する", () => {
+        const child = {
+            connected: true,
+            send: vi.fn(),
+            kill: vi.fn(),
+        };
+        const controller = mainProcessSetup(child as never);
+
+        try {
+            process.emit("SIGINT");
+            process.emit("SIGINT");
+
+            expect(child.send).toHaveBeenCalledOnce();
+            expect(child.kill).toHaveBeenCalledOnce();
+            expect(child.kill).toHaveBeenCalledWith("SIGKILL");
+        } finally {
+            controller.cleanup();
         }
     });
 });
