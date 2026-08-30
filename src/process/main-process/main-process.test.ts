@@ -52,6 +52,7 @@ describe("serverRuntime", () => {
         await expect(promise).rejects.toThrow("shutdown failed");
         expect(child.disconnect).toHaveBeenCalledOnce();
         expect(child.kill).toHaveBeenCalledOnce();
+        expect(child.kill).toHaveBeenCalledWith("SIGKILL");
     });
 
     it.each([
@@ -109,6 +110,7 @@ describe("serverRuntime", () => {
         expect(cleanup).toHaveBeenCalledOnce();
         expect(child.disconnect).toHaveBeenCalledOnce();
         expect(child.kill).toHaveBeenCalledOnce();
+        expect(child.kill).toHaveBeenCalledWith("SIGKILL");
     });
 
     it("エラー通知時の disconnect 失敗でも子プロセスを kill する", async () => {
@@ -131,5 +133,6 @@ describe("serverRuntime", () => {
 
         await expect(promise).rejects.toThrow(error.message);
         expect(child.kill).toHaveBeenCalledOnce();
+        expect(child.kill).toHaveBeenCalledWith("SIGKILL");
     });
 });

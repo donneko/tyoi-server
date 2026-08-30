@@ -12,7 +12,7 @@ export function mainProcessSetup(child: ChildProcess): () => void {
             processSend<MainMessage>(child, { type: "shutdown" });
         } catch {
             try {
-                child.kill();
+                child.kill("SIGKILL");
             } catch {
                 // The child may already have exited while shutting down.
             }
