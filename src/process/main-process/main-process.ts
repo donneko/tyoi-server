@@ -22,11 +22,11 @@ export function serverRuntime(
         processSend,
         ...dependencies,
     };
-    const SERVER_MESSAGE_TYPES = ["ready", "error", "stopped"];
+    const SERVER_MESSAGE_TYPES = ["ready", "error", "stopped", "shutdownRequest"];
 
     const child = deps.fork(new URL("../server-process/server-process.js", import.meta.url));
 
-    const cleanupSignalHandlers = deps.mainProcessSetup(child);
+    const processController = deps.mainProcessSetup(child);
 
     return new Promise<void>((resolve, reject) => {
         let settled = false;
@@ -36,13 +36,17 @@ export function serverRuntime(
         const settle = (callback: () => void) => {
             if (settled) return;
             settled = true;
-            cleanupSignalHandlers?.();
+            processController.cleanup();
             callback();
         };
 
         child.once("error", (error) => settle(() => reject(error)));
         child.once("exit", (code, signal) => {
             if (hasStopped) return;
+            if (processController.isShuttingDown()) {
+                settle(resolve);
+                return;
+            }
 
             const phase = hasStarted ? "after startup" : "before startup";
             settle(() =>
@@ -51,6 +55,15 @@ export function serverRuntime(
         });
         child.once("disconnect", () => {
             if (hasStopped) return;
+            if (processController.isShuttingDown()) {
+                try {
+                    child.kill("SIGKILL");
+                } catch {
+                    // The child may already have exited after disconnecting.
+                }
+                settle(resolve);
+                return;
+            }
 
             settle(() => reject(new Error("Server process disconnected unexpectedly")));
         });
@@ -59,6 +72,10 @@ export function serverRuntime(
 
             if (message.type === "ready") {
                 hasStarted = true;
+                return;
+            }
+            if (message.type === "shutdownRequest") {
+                processController.shutdown(message.force);
                 return;
             }
             if (message.type === "error") {

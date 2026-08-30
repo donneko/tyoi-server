@@ -12,7 +12,12 @@ class FakeChildProcess extends EventEmitter {
 function createRuntime() {
     const child = new FakeChildProcess();
     const processSend = vi.fn();
-    const mainProcessSetup = vi.fn();
+    const processController = {
+        cleanup: vi.fn(),
+        isShuttingDown: vi.fn(() => false),
+        shutdown: vi.fn(),
+    };
+    const mainProcessSetup = vi.fn(() => processController);
     const promise = serverRuntime(
         "config.js",
         { port: 3000 },
@@ -23,7 +28,7 @@ function createRuntime() {
         }
     );
 
-    return { child, processSend, mainProcessSetup, promise };
+    return { child, processController, processSend, mainProcessSetup, promise };
 }
 
 describe("serverRuntime", () => {
@@ -90,6 +95,35 @@ describe("serverRuntime", () => {
         });
     });
 
+    it("子プロセスの終了要求を shutdown controller へ転送する", () => {
+        const { child, processController } = createRuntime();
+
+        child.emit("message", { type: "shutdownRequest", force: false });
+        child.emit("message", { type: "shutdownRequest", force: true });
+
+        expect(processController.shutdown).toHaveBeenNthCalledWith(1, false);
+        expect(processController.shutdown).toHaveBeenNthCalledWith(2, true);
+    });
+
+    it("shutdown 中の子プロセス終了は正常終了として扱う", async () => {
+        const { child, processController, promise } = createRuntime();
+        processController.isShuttingDown.mockReturnValue(true);
+
+        child.emit("exit", null, "SIGTERM");
+
+        await expect(promise).resolves.toBeUndefined();
+    });
+
+    it("shutdown 中に stopped なしで切断した子プロセスを強制終了する", async () => {
+        const { child, processController, promise } = createRuntime();
+        processController.isShuttingDown.mockReturnValue(true);
+
+        child.emit("disconnect");
+
+        await expect(promise).resolves.toBeUndefined();
+        expect(child.kill).toHaveBeenCalledWith("SIGKILL");
+    });
+
     it("初期 IPC 送信に失敗した場合もシグナル cleanup を実行する", async () => {
         const child = new FakeChildProcess();
         const error = new Error("IPC send failed");
@@ -99,7 +133,11 @@ describe("serverRuntime", () => {
             { port: 3000 },
             {
                 fork: vi.fn(() => child) as never,
-                mainProcessSetup: vi.fn(() => cleanup),
+                mainProcessSetup: vi.fn(() => ({
+                    cleanup,
+                    isShuttingDown: vi.fn(() => false),
+                    shutdown: vi.fn(),
+                })),
                 processSend: vi.fn(() => {
                     throw error;
                 }),
@@ -124,7 +162,11 @@ describe("serverRuntime", () => {
             { port: 3000 },
             {
                 fork: vi.fn(() => child) as never,
-                mainProcessSetup: vi.fn(() => vi.fn()),
+                mainProcessSetup: vi.fn(() => ({
+                    cleanup: vi.fn(),
+                    isShuttingDown: vi.fn(() => false),
+                    shutdown: vi.fn(),
+                })),
                 processSend: vi.fn(),
             }
         );

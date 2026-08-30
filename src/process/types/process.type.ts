@@ -26,4 +26,8 @@ export type ServerMessage =
       }
     | {
           type: "stopped";
+      }
+    | {
+          type: "shutdownRequest";
+          force: boolean;
       };

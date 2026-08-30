@@ -8,7 +8,7 @@ import { isServer } from "./is-server.js";
 import { reportServerError } from "./report-error.js";
 import { serverProcessSetup } from "./server-process-setup.js";
 
-export function serverBoot() {
+export function serverBoot(cleanup: () => void = () => undefined) {
     let server: Server | undefined;
     let isWork: boolean = false;
 
@@ -34,6 +34,7 @@ export function serverBoot() {
                     case "shutdown":
                         if (!isServer(server)) return;
                         await serverShutdownLogic(server);
+                        cleanup();
                         break;
                 }
             }
@@ -51,5 +52,5 @@ export function serverBoot() {
     });
 }
 
-serverProcessSetup();
-serverBoot();
+const processController = serverProcessSetup();
+serverBoot(processController.cleanup);
