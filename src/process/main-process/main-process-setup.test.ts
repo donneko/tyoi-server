@@ -15,6 +15,7 @@ describe("mainProcessSetup", () => {
         try {
             process.emit("SIGINT");
             expect(child.kill).toHaveBeenCalledOnce();
+            expect(child.kill).toHaveBeenCalledWith("SIGKILL");
         } finally {
             cleanup();
         }

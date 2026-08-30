@@ -69,7 +69,7 @@ export function serverRuntime(
                     // The child may already have disconnected while reporting the error.
                 }
                 try {
-                    child.kill();
+                    child.kill("SIGKILL");
                 } catch {
                     // The child may already have exited while reporting the error.
                 }
@@ -97,7 +97,7 @@ export function serverRuntime(
                 // The child may already have disconnected while reporting the error.
             }
             try {
-                child.kill();
+                child.kill("SIGKILL");
             } catch {
                 // The child may already have exited while reporting the error.
             }
