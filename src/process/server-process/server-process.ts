@@ -6,6 +6,7 @@ import serverStartLogic from "./logic/start.js";
 import serverShutdownLogic from "./logic/shutdown.js";
 import { isServer } from "./is-server.js";
 import { reportServerError } from "./report-error.js";
+import { serverProcessSetup } from "./server-process-setup.js";
 
 export function serverBoot() {
     let server: Server | undefined;
@@ -50,4 +51,5 @@ export function serverBoot() {
     });
 }
 
+serverProcessSetup();
 serverBoot();
