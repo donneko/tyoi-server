@@ -2,11 +2,17 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-31
+
 ### Added
 
 - `gui` 設定と、Summary・Status・Live Logを表示するローカル限定の組み込み管理GUIを追加
 - `gui: { allowLan: true }` による管理GUIの明示的なLAN公開に対応
 - `/__tyoi/api/*` の読み取り専用管理APIと `/__tyoi/ws` のリアルタイムログ配信を追加
+
+### Fixed
+
+- CLIを `Ctrl+C` または終了シグナルで停止した際の予期しないIPC切断エラーと、サーバープロセス・ポートが残留する問題を修正
 
 ## [1.0.0] - 2026-08-09
 
@@ -173,7 +179,8 @@
 - 使用中ポートの自動切り替え対応
 - Express middleware　対応
 
-[Unreleased]: https://github.com/donneko/tyoi-server/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/donneko/tyoi-server/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/donneko/tyoi-server/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/donneko/tyoi-server/compare/v0.0.8...v1.0.0
 [0.0.8]: https://github.com/donneko/tyoi-server/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/donneko/tyoi-server/compare/v0.0.6...v0.0.7
